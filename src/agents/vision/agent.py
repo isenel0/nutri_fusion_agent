@@ -1,74 +1,81 @@
-"""Vision agent baseline with EfficientNet-B0."""
+import json
+import numpy as np
+from ultralytics import YOLO
 
-from __future__ import annotations
+# Ayrı dosyadan tüm 103 sınıfı içe aktar
+from class_mapping import FOODSEG103_CLASSES
 
-from io import BytesIO
-from typing import Any
+class VisionAgent:
+    def __init__(self, model_path="best.pt"):
+        print(f"Görüntü Modeli ({model_path}) yükleniyor...")
+        self.model = YOLO(model_path)
+        
+        # Artık o küçük manuel sözlük yerine doğrudan tam listeyi kullanıyoruz
+        self.class_names = FOODSEG103_CLASSES
 
-import torch
-from PIL import Image
-from torchvision.models import EfficientNet_B0_Weights, efficientnet_b0
+    def analyze_image(self, image_path):
+        results = self.model.predict(image_path, conf=0.25, verbose=False)
+        result = results[0]
+        
+        if result.masks is None:
+            return json.dumps({
+                "source": "vision_agent",
+                "error": "No food detected", 
+                "detected_items": []
+            }, indent=4)
+        
+        masks = result.masks.data.cpu().numpy()
+        classes = result.boxes.cls.cpu().numpy()
+        
+        total_food_pixels = 0
+        item_pixel_counts = []
+        
+        for i, mask in enumerate(masks):
+            pixel_count = np.sum(mask > 0)
+            total_food_pixels += pixel_count
+            
+            class_id = int(classes[i])
+            raw_class_name = result.names[class_id]
+            
+            # Sözlükte eşleşeni bul (örn: food_48 -> chicken duck)
+            actual_name = self.class_names.get(raw_class_name, raw_class_name)
+            
+            item_pixel_counts.append({
+                "name": actual_name,
+                "pixel_count": int(pixel_count)
+            })
+            
+        merged_pixels = {}
+        for item in item_pixel_counts:
+            name = item["name"]
+            if name in merged_pixels:
+                merged_pixels[name] += item["pixel_count"]
+            else:
+                merged_pixels[name] = item["pixel_count"]
+                
+        detected_items = []
+        for name, p_count in merged_pixels.items():
+            ratio = p_count / total_food_pixels if total_food_pixels > 0 else 0
+            detected_items.append({
+                "name": name,
+                "pixel_ratio": round(ratio, 4)
+            })
+            
+        final_output = {
+            "source": "vision_agent",
+            "detected_items": detected_items
+        }
+        
+        return json.dumps(final_output, indent=4)
 
-from agents.base_agent import BaseAgent
-from schemas import AgentResponse
-
-
-class VisionAgent(BaseAgent):
-    """Simple image classifier using EfficientNet-B0."""
-
-    def __init__(self) -> None:
-        self.weights = EfficientNet_B0_Weights.DEFAULT
-        self.model = efficientnet_b0(weights=self.weights)
-        self.model.eval()
-
-        self.preprocess = self.weights.transforms()
-        self.labels = self.weights.meta["categories"]
-
-    async def process(self, input_data: Any) -> AgentResponse:
-        """Run one forward pass and return top-1 prediction."""
-        try:
-            image = self._load_image(input_data)
-
-            tensor = self.preprocess(image).unsqueeze(0)
-
-            with torch.inference_mode():
-                logits = self.model(tensor)
-                probs = torch.softmax(logits[0], dim=0)
-                confidence, index = torch.max(probs, dim=0)
-
-            class_index = int(index.item())
-            predicted_label = self.labels[class_index]
-
-            return AgentResponse(
-                source="vision",
-                confidence=float(confidence.item()),
-                data={
-                    "model": "efficientnet_b0",
-                    "predicted_label": predicted_label,
-                },
-                error=None,
-            )
-        except Exception as exc:
-            return AgentResponse(
-                source="vision",
-                confidence=0.0,
-                data={"model": "efficientnet_b0"},
-                error=f"Vision inference failed: {exc}",
-            )
-
-    def _load_image(self, input_data: Any) -> Image.Image:
-        """Accept either image bytes dict or image path string."""
-        if isinstance(input_data, str):
-            return Image.open(input_data).convert("RGB")
-
-        if isinstance(input_data, dict):
-            image_bytes = input_data.get("bytes") or input_data.get("image_bytes")
-            image_path = input_data.get("image_path")
-
-            if image_bytes is not None:
-                return Image.open(BytesIO(image_bytes)).convert("RGB")
-
-            if image_path:
-                return Image.open(image_path).convert("RGB")
-
-        raise ValueError("Expected image path or payload with image bytes.")
+if __name__ == "__main__":
+    TEST_IMAGE = "test_tabak.jpg" 
+    
+    agent = VisionAgent("best.pt")
+    
+    try:
+        output = agent.analyze_image(TEST_IMAGE)
+        print("\n--- VISION AGENT ÇIKTISI ---")
+        print(output)
+    except Exception as e:
+        print(f"Bir hata oluştu: {e}")
