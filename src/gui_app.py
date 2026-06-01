@@ -10,15 +10,15 @@ from tkinter import filedialog, ttk
 from tkinter.scrolledtext import ScrolledText
 from typing import Any
 
-from agents.barcode.agent import BarcodeAgent
+from agents.decision.agent import FusionDecisionAgent
 from agents.fusion.agent import FusionAgent
-from agents.text.agent import TextAgent
-from agents.vision.agent import VisionAgent
 from schemas import AgentResponse
+from agents.orchestrator.agent import OrchestratorAgent
 
 
 async def run_multimodal_pipeline(
     image_path: str | None,
+    depth_image_path: str | None,
     text_input: str | None,
     barcode_image_path: str | None,
 ) -> dict[str, Any]:
@@ -30,6 +30,8 @@ async def run_multimodal_pipeline(
 
     image_bytes: bytes | None = None
     image_filename: str | None = None
+    depth_image_bytes: bytes | None = None
+    depth_image_filename: str | None = None
     barcode_image_bytes: bytes | None = None
     barcode_image_filename: str | None = None
 
@@ -40,6 +42,13 @@ async def run_multimodal_pipeline(
         image_bytes = path.read_bytes()
         image_filename = path.name
 
+    if depth_image_path:
+        path = Path(depth_image_path)
+        if not path.exists() or not path.is_file():
+            raise FileNotFoundError(f"Depth image path is invalid: {depth_image_path}")
+        depth_image_bytes = path.read_bytes()
+        depth_image_filename = path.name
+
     if barcode_image_path:
         path = Path(barcode_image_path)
         if not path.exists() or not path.is_file():
@@ -47,53 +56,36 @@ async def run_multimodal_pipeline(
         barcode_image_bytes = path.read_bytes()
         barcode_image_filename = path.name
 
-    vision_agent = VisionAgent()
-    text_agent = TextAgent()
-    barcode_agent = BarcodeAgent()
+    orchestrator = OrchestratorAgent()
+    decision_agent = FusionDecisionAgent()
     fusion_agent = FusionAgent()
 
-    tasks: dict[str, asyncio.Task[AgentResponse]] = {}
-
-    if image_bytes is not None:
-        vision_payload: dict[str, Any] = {
-            "filename": image_filename,
-            "content_type": None,
-            "bytes": image_bytes,
-        }
-        tasks["vision"] = asyncio.create_task(vision_agent.process(vision_payload))
-
-    if text_input:
-        tasks["text"] = asyncio.create_task(text_agent.process(text_input))
-
-    if barcode_image_bytes is not None:
-        barcode_payload: dict[str, Any] = {
-            "barcode": None,
-            "image_bytes": barcode_image_bytes,
-            "image_filename": barcode_image_filename,
-        }
-        tasks["barcode"] = asyncio.create_task(barcode_agent.process(barcode_payload))
-
-    gathered = await asyncio.gather(*tasks.values(), return_exceptions=True)
-
-    outputs: dict[str, AgentResponse | None] = {
-        "vision": None,
-        "text": None,
-        "barcode": None,
+    payload: dict[str, Any] = {
+        "text": text_input,
     }
 
-    for key, result in zip(tasks.keys(), gathered):
-        if isinstance(result, Exception):
-            outputs[key] = AgentResponse(
-                source=key,
-                confidence=0.0,
-                data={},
-                error=f"{key} agent failed: {result}",
-            )
-        else:
-            outputs[key] = result
+    if image_bytes is not None:
+        payload["image_bytes"] = image_bytes
+        payload["image_filename"] = image_filename
+
+    if depth_image_bytes is not None:
+        payload["depth_bytes"] = depth_image_bytes
+        payload["depth_image_filename"] = depth_image_filename
+
+    if barcode_image_bytes is not None:
+        payload["barcode_image_bytes"] = barcode_image_bytes
+        payload["barcode_image_filename"] = barcode_image_filename
+
+    orchestrator_result = await orchestrator.process(payload)
+    decision_result = await decision_agent.process(orchestrator_result)
 
     try:
-        final_output = await fusion_agent.process(outputs)
+        final_output = await fusion_agent.process(
+            {
+                "orchestrator": orchestrator_result,
+                "decision": decision_result,
+            }
+        )
     except Exception as exc:
         # Keep a stable final output shape even when fusion fails.
         final_output = AgentResponse(
@@ -102,25 +94,23 @@ async def run_multimodal_pipeline(
             data={
                 "final_macros": None,
                 "reasoning_summary": "Fusion failed. Returning collected agent outputs only.",
-                "inputs_used": {
-                    "vision": outputs["vision"] is not None,
-                    "text": outputs["text"] is not None,
-                    "barcode": outputs["barcode"] is not None,
-                },
+                "inputs_used": {},
             },
             error=f"fusion agent failed: {exc}",
         )
 
+    outputs = (orchestrator_result.data.get("outputs") or {})
+
     return {
         "inputs": {
             "image_path": image_path,
+            "depth_image_path": depth_image_path,
             "text": text_input,
             "barcode_image_path": barcode_image_path,
         },
-        "agent_outputs": {
-            key: (value.model_dump() if value is not None else None)
-            for key, value in outputs.items()
-        },
+        "orchestrator_output": orchestrator_result.model_dump(),
+        "decision_output": decision_result.model_dump(),
+        "agent_outputs": outputs,
         "final_output": final_output.model_dump(),
     }
 
@@ -135,8 +125,10 @@ class MultiAgentGUI:
         self.root.minsize(980, 620)
 
         self.image_path_var = tk.StringVar(value="")
+        self.depth_image_path_var = tk.StringVar(value="")
         self.barcode_image_path_var = tk.StringVar(value="")
         self.status_var = tk.StringVar(value="Ready")
+        self._run_generation = 0
 
         self.text_input_widget: tk.Text
         self.vision_output: ScrolledText
@@ -162,15 +154,25 @@ class MultiAgentGUI:
 
         image_row = ttk.Frame(left)
         image_row.pack(fill=tk.X, pady=(0, 8))
-        ttk.Label(image_row, text="Image").pack(side=tk.LEFT)
+        ttk.Label(image_row, text="RGB Image", width=13).pack(side=tk.LEFT)
         ttk.Entry(image_row, textvariable=self.image_path_var).pack(
             side=tk.LEFT, fill=tk.X, expand=True, padx=8
         )
         ttk.Button(image_row, text="Browse", command=self.choose_image).pack(side=tk.LEFT)
 
+        depth_row = ttk.Frame(left)
+        depth_row.pack(fill=tk.X, pady=(0, 8))
+        ttk.Label(depth_row, text="Depth Image", width=13).pack(side=tk.LEFT)
+        ttk.Entry(depth_row, textvariable=self.depth_image_path_var).pack(
+            side=tk.LEFT, fill=tk.X, expand=True, padx=8
+        )
+        ttk.Button(depth_row, text="Browse", command=self.choose_depth_image).pack(
+            side=tk.LEFT
+        )
+
         barcode_row = ttk.Frame(left)
         barcode_row.pack(fill=tk.X, pady=(0, 8))
-        ttk.Label(barcode_row, text="Barcode Image").pack(side=tk.LEFT)
+        ttk.Label(barcode_row, text="Barcode Image", width=13).pack(side=tk.LEFT)
         ttk.Entry(barcode_row, textvariable=self.barcode_image_path_var).pack(
             side=tk.LEFT, fill=tk.X, expand=True, padx=8
         )
@@ -253,14 +255,38 @@ class MultiAgentGUI:
         if file_path:
             self.barcode_image_path_var.set(file_path)
 
+    def choose_depth_image(self) -> None:
+        file_path = filedialog.askopenfilename(
+            title="Select depth image",
+            filetypes=[
+                ("Image Files", "*.png *.jpg *.jpeg *.bmp *.webp *.tif *.tiff"),
+                ("All Files", "*.*"),
+            ],
+        )
+        if file_path:
+            self.depth_image_path_var.set(file_path)
+
     def clear_inputs(self) -> None:
+        self._run_generation += 1
         self.image_path_var.set("")
+        self.depth_image_path_var.set("")
         self.barcode_image_path_var.set("")
         self.text_input_widget.delete("1.0", tk.END)
+        self._reset_outputs()
         self.status_var.set("Ready")
+
+    def _reset_outputs(self) -> None:
+        self._set_text(self.vision_output, "Vision output will appear here.")
+        self._set_text(self.text_output, "Text output will appear here.")
+        self._set_text(self.barcode_output, "Barcode output will appear here.")
+        self._set_text(
+            self.final_output,
+            "Final orchestrated output will appear here, even when some agents fail.",
+        )
 
     def run_pipeline(self) -> None:
         image_path = self.image_path_var.get().strip() or None
+        depth_image_path = self.depth_image_path_var.get().strip() or None
         text_input = self.text_input_widget.get("1.0", tk.END).strip() or None
         barcode_image_path = self.barcode_image_path_var.get().strip() or None
 
@@ -270,18 +296,26 @@ class MultiAgentGUI:
             )
             return
 
-        self.status_var.set("Running agents in parallel...")
+        if depth_image_path is not None and image_path is None:
+            self.status_var.set("Depth image requires an RGB image.")
+            return
+
+        self.status_var.set("Running orchestrator, local LLM decision, and fusion...")
+        self._run_generation += 1
+        run_generation = self._run_generation
 
         thread = threading.Thread(
             target=self._run_pipeline_worker,
-            args=(image_path, text_input, barcode_image_path),
+            args=(run_generation, image_path, depth_image_path, text_input, barcode_image_path),
             daemon=True,
         )
         thread.start()
 
     def _run_pipeline_worker(
         self,
+        run_generation: int,
         image_path: str | None,
+        depth_image_path: str | None,
         text_input: str | None,
         barcode_image_path: str | None,
     ) -> None:
@@ -289,17 +323,28 @@ class MultiAgentGUI:
             result = asyncio.run(
                 run_multimodal_pipeline(
                     image_path=image_path,
+                    depth_image_path=depth_image_path,
                     text_input=text_input,
                     barcode_image_path=barcode_image_path,
                 )
             )
         except Exception as exc:
-            self.root.after(0, lambda: self.status_var.set(f"Pipeline failed: {exc}"))
+            self.root.after(
+                0,
+                lambda: self._set_failure_status(run_generation, exc),
+            )
             return
 
-        self.root.after(0, lambda: self._render_results(result))
+        self.root.after(0, lambda: self._render_results(run_generation, result))
 
-    def _render_results(self, payload: dict[str, Any]) -> None:
+    def _set_failure_status(self, run_generation: int, exc: Exception) -> None:
+        if run_generation == self._run_generation:
+            self.status_var.set(f"Pipeline failed: {exc}")
+
+    def _render_results(self, run_generation: int, payload: dict[str, Any]) -> None:
+        if run_generation != self._run_generation:
+            return
+
         outputs = payload.get("agent_outputs", {})
         final_output = payload.get("final_output", {})
 
@@ -355,7 +400,42 @@ class MultiAgentGUI:
             )
             return "\n".join(lines)
 
-        # Vision and text agents currently expose generic macros payload.
+        if source == "vision":
+            totals = data.get("totals") or {}
+            detected = data.get("detected_items") or []
+            detected_text = ", ".join(
+                f"{item.get('name')} ({self._fmt_number(item.get('pixel_ratio'))})"
+                for item in detected[:8]
+            )
+            lines.extend(
+                [
+                    f"Mode: {data.get('mode') or '-'}",
+                    f"Detected: {detected_text or '-'}",
+                    "",
+                    "Vision Totals",
+                    f"- Calories (kcal): {self._fmt_number(totals.get('calories_kcal'))}",
+                    f"- Mass (g): {self._fmt_number(totals.get('mass_g'))}",
+                    f"- Protein (g): {self._fmt_number(totals.get('protein_g'))}",
+                    f"- Carbs (g): {self._fmt_number(totals.get('carbs_g'))}",
+                    f"- Fat (g): {self._fmt_number(totals.get('fat_g'))}",
+                ]
+            )
+            return "\n".join(lines)
+
+        if source == "text":
+            parsed = data.get("parsed") or {}
+            lines.extend(
+                [
+                    f"Foods: {', '.join(parsed.get('foods') or []) or '-'}",
+                    f"Quantities: {', '.join(parsed.get('quantities') or []) or '-'}",
+                    f"Units: {', '.join(parsed.get('units') or []) or '-'}",
+                    f"Methods: {', '.join(parsed.get('methods') or []) or '-'}",
+                    f"Modifiers: {', '.join(parsed.get('modifiers') or []) or '-'}",
+                    f"Portion multiplier: {self._fmt_number(parsed.get('portion_multiplier'))}",
+                ]
+            )
+            return "\n".join(lines)
+
         macros = data.get("macros") or {}
         lines.extend(
             [
@@ -379,7 +459,9 @@ class MultiAgentGUI:
         data = payload.get("data") or {}
 
         final_macros = data.get("final_macros") or {}
+        calculation_ingredients = data.get("calculation_ingredients") or data.get("items") or []
         inputs_used = data.get("inputs_used") or {}
+        decision = data.get("fusion_decision") or {}
         reasoning = data.get("reasoning_summary") or "-"
 
         lines = [
@@ -393,14 +475,42 @@ class MultiAgentGUI:
             f"- Carbs (g): {self._fmt_number(final_macros.get('carbs_g'))}",
             f"- Fat (g): {self._fmt_number(final_macros.get('fat_g'))}",
             "",
+            "Calculation Ingredients",
+            *self._render_calculation_ingredients(calculation_ingredients),
+            "",
             "Inputs Used",
             f"- Vision: {bool(inputs_used.get('vision'))}",
             f"- Text: {bool(inputs_used.get('text'))}",
             f"- Barcode: {bool(inputs_used.get('barcode'))}",
             "",
+            "Fusion Decision",
+            f"- Primary source: {decision.get('primary_nutrition_source') or '-'}",
+            f"- Mass source: {decision.get('mass_source') or '-'}",
+            f"- Portion multiplier: {self._fmt_number(decision.get('portion_multiplier'))}",
+            f"- Hidden ingredients: {', '.join(decision.get('hidden_ingredients') or []) or '-'}",
+            "",
             f"Reasoning: {reasoning}",
         ]
         return "\n".join(lines)
+
+    def _render_calculation_ingredients(self, ingredients: list[dict[str, Any]]) -> list[str]:
+        if not ingredients:
+            return ["- -"]
+
+        lines = []
+        for ingredient in ingredients:
+            nutrition = ingredient.get("nutrition") or {}
+            lines.append(
+                "- "
+                + f"{ingredient.get('name') or 'unknown'}"
+                + f" ({ingredient.get('source') or '-'})"
+                + f": {self._fmt_number(nutrition.get('mass_g') or ingredient.get('mass_g'))}g,"
+                + f" {self._fmt_number(nutrition.get('calories_kcal'))} kcal,"
+                + f" P {self._fmt_number(nutrition.get('protein_g'))}g,"
+                + f" C {self._fmt_number(nutrition.get('carbs_g'))}g,"
+                + f" F {self._fmt_number(nutrition.get('fat_g'))}g"
+            )
+        return lines
 
     def _fmt_number(self, value: Any) -> str:
         if value is None:

@@ -10,7 +10,15 @@ from agents.base_agent import BaseAgent
 from agents.barcode.openfoodfacts_client import OpenFoodFactsClient
 from agents.barcode.service import BarcodeScanner
 from config import Settings
-from schemas import AgentResponse
+from schemas import (
+    AgentResponse,
+    BarcodeAgentData,
+    BarcodeIdentity,
+    BarcodeInputSummary,
+    BarcodeProduct,
+    BarcodeSource,
+    NutritionEstimate,
+)
 
 
 class BarcodeAgent(BaseAgent):
@@ -39,15 +47,14 @@ class BarcodeAgent(BaseAgent):
         try:
             resolved = await self._resolve_input(input_data)
         except Exception as exc:
+            contract = self._empty_contract(
+                input_meta={"barcode_text": None, "image_filename": None},
+                notes=["Barcode input could not be normalized or decoded."],
+            )
             return AgentResponse(
                 source="barcode",
                 confidence=self.settings.barcode_confidence_on_error,
-                data={
-                    "input": {"raw": str(input_data)},
-                    "barcode": None,
-                    "product": None,
-                    "nutrition_per_100g": None,
-                },
+                data=contract.model_dump(),
                 error=f"Barcode input resolution failed: {exc}",
             )
 
@@ -55,15 +62,14 @@ class BarcodeAgent(BaseAgent):
         input_meta = resolved.get("input", {})
 
         if not barcode_value:
+            contract = self._empty_contract(
+                input_meta=input_meta,
+                notes=["No barcode was available from text or image input."],
+            )
             return AgentResponse(
                 source="barcode",
                 confidence=self.settings.barcode_confidence_on_error,
-                data={
-                    "input": input_meta,
-                    "barcode": None,
-                    "product": None,
-                    "nutrition_per_100g": None,
-                },
+                data=contract.model_dump(),
                 error="No barcode could be resolved from the provided input.",
             )
 
@@ -75,15 +81,18 @@ class BarcodeAgent(BaseAgent):
                 include_raw_product=self.settings.include_raw_product_payload,
             )
         except Exception as exc:
+            contract = self._empty_contract(
+                input_meta=input_meta,
+                barcode_value=barcode_value,
+                notes=[
+                    "A barcode was resolved, but product nutrition lookup failed.",
+                    "Do not infer packaged-food macros from this barcode response.",
+                ],
+            )
             return AgentResponse(
                 source="barcode",
                 confidence=self.settings.barcode_confidence_without_macros,
-                data={
-                    "input": input_meta,
-                    "barcode": {"value": barcode_value},
-                    "product": None,
-                    "nutrition_per_100g": None,
-                },
+                data=contract.model_dump(),
                 error=f"Barcode detected, but nutrition lookup failed: {exc}",
             )
 
@@ -98,16 +107,19 @@ class BarcodeAgent(BaseAgent):
             else self.settings.barcode_confidence_without_macros
         )
 
-        standardized["input"] = input_meta
-        standardized["reasoning_summary"] = (
-            "Resolved barcode from explicit value or image decoding, then mapped "
-            "OpenFoodFacts fields into a standard nutrition_per_100g payload."
+        contract = self._contract_from_lookup(
+            standardized=standardized,
+            input_meta=input_meta,
+            notes=[
+                "Resolved barcode from explicit value or image decoding.",
+                "Mapped OpenFoodFacts fields into nutrition_per_100g for deterministic macro math.",
+            ],
         )
 
         return AgentResponse(
             source="barcode",
             confidence=confidence,
-            data=standardized,
+            data=contract.model_dump(),
             error=None,
         )
 
@@ -170,3 +182,70 @@ class BarcodeAgent(BaseAgent):
         if not self.BARCODE_PATTERN.match(barcode):
             raise ValueError(f"Invalid barcode format: {barcode}")
         return barcode
+
+    def _empty_contract(
+        self,
+        input_meta: dict[str, Any],
+        notes: list[str],
+        barcode_value: str | None = None,
+    ) -> BarcodeAgentData:
+        return BarcodeAgentData(
+            input=self._input_summary(input_meta),
+            barcode=(
+                BarcodeIdentity(value=barcode_value, type=None)
+                if barcode_value
+                else None
+            ),
+            product=None,
+            nutrition_per_100g=None,
+            source=BarcodeSource(fetched_barcode=barcode_value),
+            llm_notes=notes,
+        )
+
+    def _contract_from_lookup(
+        self,
+        standardized: dict[str, Any],
+        input_meta: dict[str, Any],
+        notes: list[str],
+    ) -> BarcodeAgentData:
+        barcode = standardized.get("barcode") or {}
+        product = standardized.get("product") or {}
+        nutrition = standardized.get("nutrition_per_100g") or {}
+        source = standardized.get("source") or {}
+        barcode_value = barcode.get("value") or source.get("fetched_barcode")
+
+        return BarcodeAgentData(
+            input=self._input_summary(input_meta),
+            barcode=BarcodeIdentity(
+                value=str(barcode_value),
+                type=barcode.get("type"),
+            ),
+            product=BarcodeProduct(
+                name=product.get("name"),
+                brand=product.get("brand"),
+                categories=product.get("categories"),
+                quantity=product.get("quantity"),
+                serving_size=product.get("serving_size"),
+            ),
+            nutrition_per_100g=NutritionEstimate(
+                calories_kcal=nutrition.get("calories_kcal"),
+                protein_g=nutrition.get("protein_g"),
+                carbs_g=nutrition.get("carbs_g"),
+                fat_g=nutrition.get("fat_g"),
+                fiber_g=nutrition.get("fiber_g"),
+                sugar_g=nutrition.get("sugar_g"),
+                sodium_g=nutrition.get("sodium_g"),
+            ),
+            source=BarcodeSource(
+                provider=source.get("provider", "openfoodfacts"),
+                fetched_barcode=source.get("fetched_barcode"),
+            ),
+            llm_notes=notes,
+            raw_product=standardized.get("raw_product"),
+        )
+
+    def _input_summary(self, input_meta: dict[str, Any]) -> BarcodeInputSummary:
+        return BarcodeInputSummary(
+            barcode_text=input_meta.get("barcode_text"),
+            image_filename=input_meta.get("image_filename"),
+        )

@@ -1,0 +1,41 @@
+{
+  "label2id": {
+    "O": 0,
+    "B-FOOD": 1,
+    "I-FOOD": 2,
+    "B-QUANTITY": 3,
+    "I-QUANTITY": 4,
+    "B-UNIT": 5,
+    "I-UNIT": 6,
+    "B-METHOD": 7,
+    "I-METHOD": 8,
+    "B-MODIFIER": 9,
+    "I-MODIFIER": 10
+  },
+  "id2label": {
+    "0": "O",
+    "1": "B-FOOD",
+    "2": "I-FOOD",
+    "3": "B-QUANTITY",
+    "4": "I-QUANTITY",
+    "5": "B-UNIT",
+    "6": "I-UNIT",
+    "7": "B-METHOD",
+    "8": "I-METHOD",
+    "9": "B-MODIFIER",
+    "10": "I-MODIFIER"
+  },
+  "labels": [
+    "O",
+    "B-FOOD",
+    "I-FOOD",
+    "B-QUANTITY",
+    "I-QUANTITY",
+    "B-UNIT",
+    "I-UNIT",
+    "B-METHOD",
+    "I-METHOD",
+    "B-MODIFIER",
+    "I-MODIFIER"
+  ]
+}

@@ -3,5 +3,16 @@ uvicorn
 pydantic
 requests
 Pillow
+numpy
 pyzbar
 opencv-python-headless
+ultralytics
+torch
+torchvision
+timm
+python-multipart
+transformers
+safetensors
+langchain
+langchain-core
+langchain-ollama

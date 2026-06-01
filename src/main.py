@@ -2,15 +2,13 @@
 
 from __future__ import annotations
 
-import asyncio
 from typing import Any
 
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 
-from agents.barcode.agent import BarcodeAgent
+from agents.decision.agent import FusionDecisionAgent
 from agents.fusion.agent import FusionAgent
-from agents.text.agent import TextAgent
-from agents.vision.agent import VisionAgent
+from agents.orchestrator.agent import OrchestratorAgent
 from schemas import AgentResponse
 
 app = FastAPI(
@@ -29,6 +27,7 @@ async def health_check() -> dict[str, str]:
 @app.post("/analyze-meal", response_model=AgentResponse)
 async def analyze_meal(
     image: UploadFile | None = File(default=None),
+    depth_image: UploadFile | None = File(default=None),
     barcode_image: UploadFile | None = File(default=None),
     text: str | None = Form(default=None),
     barcode: str | None = Form(default=None),
@@ -48,65 +47,34 @@ async def analyze_meal(
             ),
         )
 
-    vision_agent = VisionAgent()
-    text_agent = TextAgent()
-    barcode_agent = BarcodeAgent()
+    orchestrator = OrchestratorAgent()
+    decision_agent = FusionDecisionAgent()
     fusion_agent = FusionAgent()
 
-    # Prepare optional tasks so modalities can run concurrently.
-    tasks: dict[str, asyncio.Task[AgentResponse]] = {}
-    image_bytes: bytes | None = None
-    image_filename: str | None = None
-    barcode_image_bytes: bytes | None = None
-    barcode_image_filename: str | None = None
-
-    if image is not None:
-        image_bytes = await image.read()
-        image_filename = image.filename
-        # Pass a minimal payload for now; replace with richer metadata as needed.
-        image_payload: dict[str, Any] = {
-            "filename": image.filename,
-            "content_type": image.content_type,
-            "bytes": image_bytes,
-        }
-        tasks["vision"] = asyncio.create_task(vision_agent.process(image_payload))
-
-    if barcode_image is not None:
-        barcode_image_bytes = await barcode_image.read()
-        barcode_image_filename = barcode_image.filename
-
-    if text:
-        tasks["text"] = asyncio.create_task(text_agent.process(text))
-
-    if barcode or barcode_image_bytes is not None:
-        barcode_payload: dict[str, Any] = {
-            "barcode": barcode,
-            "image_bytes": barcode_image_bytes,
-            "image_filename": barcode_image_filename,
-        }
-        tasks["barcode"] = asyncio.create_task(barcode_agent.process(barcode_payload))
-
-    # Wait for all requested modality agents to complete.
-    gathered = await asyncio.gather(*tasks.values(), return_exceptions=True)
-
-    agent_outputs: dict[str, AgentResponse | None] = {
-        "vision": None,
-        "text": None,
-        "barcode": None,
+    payload: dict[str, Any] = {
+        "text": text,
+        "barcode": barcode,
     }
 
-    # Map gathered results back to their modality keys in insertion order.
-    for key, result in zip(tasks.keys(), gathered):
-        if isinstance(result, Exception):
-            agent_outputs[key] = AgentResponse(
-                source=key,
-                confidence=0.0,
-                data={},
-                error=f"{key} agent failed: {result}",
-            )
-        else:
-            agent_outputs[key] = result
+    if image is not None:
+        payload["image_bytes"] = await image.read()
+        payload["image_filename"] = image.filename
+        payload["image_content_type"] = image.content_type
 
-    # Fusion receives all modality outputs (including missing as None).
-    fusion_result = await fusion_agent.process(agent_outputs)
+    if depth_image is not None:
+        payload["depth_bytes"] = await depth_image.read()
+        payload["depth_image_filename"] = depth_image.filename
+
+    if barcode_image is not None:
+        payload["barcode_image_bytes"] = await barcode_image.read()
+        payload["barcode_image_filename"] = barcode_image.filename
+
+    orchestrator_result = await orchestrator.process(payload)
+    decision_result = await decision_agent.process(orchestrator_result)
+    fusion_result = await fusion_agent.process(
+        {
+            "orchestrator": orchestrator_result,
+            "decision": decision_result,
+        }
+    )
     return fusion_result
