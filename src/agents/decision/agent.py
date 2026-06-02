@@ -109,17 +109,30 @@ class FusionDecisionAgent(BaseAgent):
         barcode = context.get("barcode", {}).get("summary", {})
         vision = context.get("vision", {}).get("summary", {})
         text = context.get("text", {}).get("summary", {})
+        text_nutrition = context.get("text_nutrition", {}).get("summary", {})
+        ingredient_resolution = context.get("ingredient_resolution", {}).get("summary", {})
 
         barcode_nutrition = barcode.get("nutrition_per_100g") or {}
         vision_totals = vision.get("totals") or {}
+        text_nutrition_totals = text_nutrition.get("totals") or {}
+        ingredient_resolution_totals = ingredient_resolution.get("totals") or {}
         parsed = text.get("parsed") or {}
 
         if self._has_macros(barcode_nutrition):
             source = "barcode"
             mass_source = "vision" if vision_totals.get("mass_g") is not None else "assumed_100g"
+        elif self._has_macros(ingredient_resolution_totals):
+            source = "ingredient_resolution"
+            mass_source = "vision" if vision_totals.get("mass_g") is not None else "text"
+        elif self._has_macros(text_nutrition_totals) and self._has_explicit_text_mass(text_nutrition):
+            source = "text_nutrition"
+            mass_source = "text"
         elif self._has_macros(vision_totals):
             source = "vision"
             mass_source = "vision"
+        elif self._has_macros(text_nutrition_totals):
+            source = "text_nutrition"
+            mass_source = "text"
         else:
             source = "fallback"
             mass_source = "unknown"
@@ -138,13 +151,17 @@ class FusionDecisionAgent(BaseAgent):
     def _normalize_decision(self, value: Any) -> dict[str, Any]:
         decision = value if isinstance(value, dict) else {}
 
-        if decision.get("primary_nutrition_source") not in {"barcode", "vision", "fallback"}:
+        if decision.get("primary_nutrition_source") not in {"barcode", "vision", "text_nutrition", "ingredient_resolution", "fallback"}:
             decision["primary_nutrition_source"] = "fallback"
 
         if decision.get("mass_source") not in {"vision", "text", "assumed_100g", "unknown"}:
             if decision.get("primary_nutrition_source") == "barcode":
                 decision["mass_source"] = "assumed_100g"
             elif decision.get("primary_nutrition_source") == "vision":
+                decision["mass_source"] = "vision"
+            elif decision.get("primary_nutrition_source") == "text_nutrition":
+                decision["mass_source"] = "text"
+            elif decision.get("primary_nutrition_source") == "ingredient_resolution":
                 decision["mass_source"] = "vision"
             else:
                 decision["mass_source"] = "unknown"
@@ -172,6 +189,10 @@ class FusionDecisionAgent(BaseAgent):
             nutrition.get(key) is not None
             for key in ("calories_kcal", "protein_g", "carbs_g", "fat_g")
         )
+
+    def _has_explicit_text_mass(self, text_nutrition_summary: dict[str, Any]) -> bool:
+        items = text_nutrition_summary.get("items") or []
+        return bool(items) and all(item.get("mass_source") == "explicit_text" for item in items)
 
     def _fallback_name_overrides(self, context: dict[str, Any]) -> dict[str, str]:
         vision = context.get("vision", {}).get("summary", {})

@@ -13,6 +13,7 @@ timm
 python-multipart
 transformers
 safetensors
+accelerate
 langchain
 langchain-core
 langchain-ollama

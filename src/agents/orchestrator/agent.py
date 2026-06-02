@@ -6,7 +6,14 @@ import asyncio
 from typing import Any
 
 from agents.base_agent import BaseAgent
-from agents.orchestrator.tools import analyze_barcode, analyze_text, analyze_vision
+from agents.orchestrator.tools import (
+    analyze_barcode,
+    analyze_text,
+    analyze_text_nutrition,
+    analyze_vision,
+    generate_depth,
+    resolve_ingredients,
+)
 from schemas import (
     AgentResponse,
     OrchestratorAgentData,
@@ -23,17 +30,6 @@ class OrchestratorAgent(BaseAgent):
 
         tasks: dict[str, asyncio.Task[AgentResponse]] = {}
 
-        if input_summary.image_provided:
-            vision_payload = {
-                "image_path": payload.get("image_path"),
-                "image_bytes": payload.get("image_bytes") or payload.get("bytes"),
-                "filename": payload.get("image_filename") or payload.get("filename"),
-                "content_type": payload.get("image_content_type"),
-                "depth_path": payload.get("depth_path"),
-                "depth_bytes": payload.get("depth_bytes"),
-            }
-            tasks["vision"] = asyncio.create_task(analyze_vision(vision_payload))
-
         if input_summary.text_provided:
             tasks["text"] = asyncio.create_task(
                 analyze_text({"text": payload.get("text")})
@@ -49,8 +45,11 @@ class OrchestratorAgent(BaseAgent):
             tasks["barcode"] = asyncio.create_task(analyze_barcode(barcode_payload))
 
         outputs: dict[str, AgentResponse | None] = {
+            "depth": None,
             "vision": None,
             "text": None,
+            "text_nutrition": None,
+            "ingredient_resolution": None,
             "barcode": None,
         }
         errors: dict[str, str] = {}
@@ -72,9 +71,87 @@ class OrchestratorAgent(BaseAgent):
                     if result.error:
                         errors[key] = result.error
 
+        task_order = list(tasks.keys())
+
+        if input_summary.image_provided:
+            vision_payload = {
+                "image_path": payload.get("image_path"),
+                "image_bytes": payload.get("image_bytes") or payload.get("bytes"),
+                "filename": payload.get("image_filename") or payload.get("filename"),
+                "content_type": payload.get("image_content_type"),
+                "depth_path": payload.get("depth_path"),
+                "depth_bytes": payload.get("depth_bytes"),
+            }
+
+            if not input_summary.depth_image_provided:
+                depth_payload = {
+                    "image_path": payload.get("image_path"),
+                    "image_bytes": payload.get("image_bytes") or payload.get("bytes"),
+                    "image_filename": payload.get("image_filename") or payload.get("filename"),
+                }
+                depth_result = await generate_depth(depth_payload)
+                outputs["depth"] = depth_result
+                task_order.append("depth")
+                if depth_result.error:
+                    errors["depth"] = depth_result.error
+                elif depth_result.data.get("depth_path"):
+                    vision_payload["depth_path"] = depth_result.data["depth_path"]
+
+            vision_result = await analyze_vision(vision_payload)
+            outputs["vision"] = vision_result
+            task_order.append("vision")
+            if vision_result.error:
+                errors["vision"] = vision_result.error
+
+        if outputs.get("text") is not None:
+            try:
+                text_nutrition = await analyze_text_nutrition(
+                    {
+                        "text": outputs.get("text"),
+                        "vision": outputs.get("vision"),
+                    }
+                )
+                outputs["text_nutrition"] = text_nutrition
+                if text_nutrition.error:
+                    errors["text_nutrition"] = text_nutrition.error
+                task_order = [*task_order, "text_nutrition"]
+            except Exception as exc:
+                message = f"text_nutrition tool failed: {exc}"
+                errors["text_nutrition"] = message
+                outputs["text_nutrition"] = AgentResponse(
+                    source="text_nutrition",
+                    confidence=0.0,
+                    data={},
+                    error=message,
+                )
+                task_order = [*tasks.keys(), "text_nutrition"]
+
+        if outputs.get("vision") is not None or outputs.get("text_nutrition") is not None:
+            try:
+                ingredient_resolution = await resolve_ingredients(
+                    {
+                        "vision": outputs.get("vision"),
+                        "text_nutrition": outputs.get("text_nutrition"),
+                    }
+                )
+                outputs["ingredient_resolution"] = ingredient_resolution
+                if ingredient_resolution.error:
+                    errors["ingredient_resolution"] = ingredient_resolution.error
+                task_order = [*task_order, "ingredient_resolution"]
+            except Exception as exc:
+                message = f"ingredient_resolution tool failed: {exc}"
+                errors["ingredient_resolution"] = message
+                outputs["ingredient_resolution"] = AgentResponse(
+                    source="ingredient_resolution",
+                    confidence=0.0,
+                    data={},
+                    error=message,
+                )
+                task_order = [*task_order, "ingredient_resolution"]
+
         contract = OrchestratorAgentData(
             input=input_summary,
-            tool_order=list(tasks.keys()),
+            tool_order=task_order,
             outputs=outputs,
             errors=errors,
             llm_context=self._llm_context(outputs),
@@ -146,11 +223,35 @@ class OrchestratorAgent(BaseAgent):
                 "totals": data.get("totals"),
                 "missing_requirements": data.get("missing_requirements", []),
             }
+        if key == "depth":
+            return {
+                "mode": data.get("mode"),
+                "model_name": data.get("model_name"),
+                "depth_path": data.get("depth_path"),
+                "output_format": data.get("output_format"),
+            }
         if key == "text":
             return {
                 "raw_text": (data.get("input") or {}).get("raw_text"),
                 "parsed": data.get("parsed", {}),
                 "entities": data.get("entities", []),
+            }
+        if key == "text_nutrition":
+            return {
+                "items": data.get("items", []),
+                "totals": data.get("totals"),
+                "assumptions": data.get("assumptions", []),
+                "warnings": data.get("warnings", []),
+            }
+        if key == "ingredient_resolution":
+            return {
+                "items": data.get("items", []),
+                "totals": data.get("totals"),
+                "replacements": data.get("replacements", {}),
+                "unmatched_vision": data.get("unmatched_vision", []),
+                "unmatched_text": data.get("unmatched_text", []),
+                "assumptions": data.get("assumptions", []),
+                "warnings": data.get("warnings", []),
             }
         if key == "barcode":
             return {

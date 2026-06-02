@@ -30,12 +30,17 @@ class FusionAgent(BaseAgent):
     async def process(self, input_data: Any) -> AgentResponse:
         outputs = self._extract_outputs(input_data)
         llm_decision = self._extract_decision(input_data)
+        depth = outputs.get("depth")
         vision = outputs.get("vision")
         text = outputs.get("text")
+        text_nutrition = outputs.get("text_nutrition")
+        ingredient_resolution = outputs.get("ingredient_resolution")
         barcode = outputs.get("barcode")
 
         vision_data = vision.data if vision else {}
         text_data = text.data if text else {}
+        text_nutrition_data = text_nutrition.data if text_nutrition else {}
+        ingredient_resolution_data = ingredient_resolution.data if ingredient_resolution else {}
         barcode_data = barcode.data if barcode else {}
 
         portion_multiplier = self._portion_multiplier(text_data, llm_decision)
@@ -49,13 +54,31 @@ class FusionAgent(BaseAgent):
         has_barcode_macros = self._has_any_macro(barcode_nutrition)
         vision_totals = vision_data.get("totals") or {}
         has_vision_totals = self._has_any_macro(vision_totals)
+        text_nutrition_totals = text_nutrition_data.get("totals") or {}
+        has_text_nutrition = self._has_any_macro(text_nutrition_totals)
+        has_explicit_text_mass = self._has_explicit_text_mass(text_nutrition_data)
+        ingredient_resolution_totals = ingredient_resolution_data.get("totals") or {}
 
         primary_source = self._primary_source(
             llm_decision=llm_decision,
             has_barcode_macros=has_barcode_macros,
+            has_text_nutrition=has_text_nutrition,
+            has_explicit_text_mass=has_explicit_text_mass,
             has_vision_totals=has_vision_totals,
             warnings=warnings,
         )
+        if primary_source != "barcode" and self._has_any_macro(ingredient_resolution_totals):
+            primary_source = "ingredient_resolution"
+        if (
+            primary_source == "text_nutrition"
+            and has_vision_totals
+            and vision_data.get("ingredients")
+            and not self._explicit_text_covers_vision(text_nutrition_data, vision_data, llm_decision)
+        ):
+            primary_source = "vision"
+            warnings.append(
+                "Text has explicit quantities for only part of the meal; vision was kept for missing visible ingredients."
+            )
 
         if primary_source == "barcode":
             applied_rules.append("barcode_nutrition_overrides_generic_estimates")
@@ -72,8 +95,14 @@ class FusionAgent(BaseAgent):
         elif primary_source == "vision":
             applied_rules.append("vision_late_fusion_totals_used")
             final_macros = self._scale_totals(vision_totals, portion_multiplier)
+        elif primary_source == "text_nutrition":
+            applied_rules.append("text_nutrition_with_explicit_or_assumed_mass_used")
+            final_macros = self._scale_totals(text_nutrition_totals, portion_multiplier)
+        elif primary_source == "ingredient_resolution":
+            applied_rules.append("ingredient_resolution_totals_used")
+            final_macros = self._scale_totals(ingredient_resolution_totals, portion_multiplier)
         else:
-            warnings.append("No numeric nutrition estimate was available from barcode or vision.")
+            warnings.append("No numeric nutrition estimate was available from barcode, vision, text nutrition, or ingredient resolution.")
             final_macros = NutritionEstimate()
 
         if portion_multiplier != 1.0:
@@ -104,18 +133,54 @@ class FusionAgent(BaseAgent):
             if self._normalize_food_name(food) not in hidden_tokens
         ]
         text_guided_items = False
-        if self._should_use_text_guided_vision_items(
+        mixed_text_vision_items = False
+        if primary_source != "barcode" and ingredient_resolution_data.get("items"):
+            items = self._items_from_resolution(
+                ingredient_resolution_data=ingredient_resolution_data,
+                confidence=self._confidence(outputs, conflicts=conflicts),
+            )
+            final_macros = self._sum_item_nutrition(items)
+            applied_rules.append("ingredient_resolution_used")
+            assumptions.extend(ingredient_resolution_data.get("assumptions") or [])
+            warnings.extend(ingredient_resolution_data.get("warnings") or [])
+            if ingredient_resolution_data.get("replacements"):
+                name_overrides = {
+                    **name_overrides,
+                    **{
+                        str(key): str(value)
+                        for key, value in ingredient_resolution_data.get("replacements", {}).items()
+                    },
+                }
+        elif primary_source == "vision" and self._has_any_explicit_text_mass(text_nutrition_data):
+            mixed_text_vision_items = True
+            items = self._build_mixed_text_vision_items(
+                vision_data=vision_data,
+                text_nutrition_data=text_nutrition_data,
+                portion_multiplier=portion_multiplier,
+                name_overrides=name_overrides,
+                anchor=final_macros,
+                confidence=self._confidence(outputs, conflicts=conflicts),
+                warnings=warnings,
+            )
+            final_macros = self._sum_item_nutrition(items)
+            applied_rules.append("partial_text_quantities_combined_with_remaining_vision_items")
+            assumptions.append(
+                "Explicit text quantities were used for matching ingredients; vision supplied remaining visible ingredients and remaining mass/calorie budget."
+            )
+        elif self._should_use_text_guided_vision_items(
             primary_source=primary_source,
-            vision_data=vision_data,
-            text_foods=calculation_text_foods,
-            hidden_ingredients=hidden_ingredients,
-            name_overrides=name_overrides,
+                vision_data=vision_data,
+                text_nutrition_data=text_nutrition_data,
+                text_foods=calculation_text_foods,
+                hidden_ingredients=hidden_ingredients,
+                name_overrides=name_overrides,
             llm_decision=llm_decision,
         ):
             text_guided_items = True
             items = self._build_text_guided_vision_items(
                 text_foods=calculation_text_foods,
                 final_macros=final_macros,
+                text_nutrition_data=text_nutrition_data,
                 confidence=self._confidence(
                     outputs,
                     conflicts=conflicts,
@@ -137,6 +202,7 @@ class FusionAgent(BaseAgent):
             items = self._build_items(
                 primary_source=primary_source,
                 vision_data=vision_data,
+                text_nutrition_data=text_nutrition_data,
                 barcode_data=barcode_data,
                 final_macros=final_macros,
                 mass_g=mass_g,
@@ -155,7 +221,7 @@ class FusionAgent(BaseAgent):
             outputs,
             conflicts=conflicts,
             warnings=warnings,
-            text_guided_items=text_guided_items,
+            text_guided_items=text_guided_items or mixed_text_vision_items,
         )
 
         decision = FusionDecision(
@@ -177,7 +243,10 @@ class FusionAgent(BaseAgent):
             fusion_decision=decision,
             inputs_used={
                 "vision": vision is not None,
+                "depth": depth is not None,
                 "text": text is not None,
+                "text_nutrition": text_nutrition is not None,
+                "ingredient_resolution": ingredient_resolution is not None,
                 "barcode": barcode is not None,
             },
             confidence=confidence,
@@ -209,13 +278,19 @@ class FusionAgent(BaseAgent):
             nested = input_data.get("outputs") or {}
             return {
                 "vision": self._coerce_response(nested.get("vision")),
+                "depth": self._coerce_response(nested.get("depth")),
                 "text": self._coerce_response(nested.get("text")),
+                "text_nutrition": self._coerce_response(nested.get("text_nutrition")),
+                "ingredient_resolution": self._coerce_response(nested.get("ingredient_resolution")),
                 "barcode": self._coerce_response(nested.get("barcode")),
             }
 
         return {
             "vision": self._coerce_response(input_data.get("vision")),
+            "depth": self._coerce_response(input_data.get("depth")),
             "text": self._coerce_response(input_data.get("text")),
+            "text_nutrition": self._coerce_response(input_data.get("text_nutrition")),
+            "ingredient_resolution": self._coerce_response(input_data.get("ingredient_resolution")),
             "barcode": self._coerce_response(input_data.get("barcode")),
         }
 
@@ -265,6 +340,8 @@ class FusionAgent(BaseAgent):
         self,
         llm_decision: dict[str, Any] | None,
         has_barcode_macros: bool,
+        has_text_nutrition: bool,
+        has_explicit_text_mass: bool,
         has_vision_totals: bool,
         warnings: list[str],
     ) -> str:
@@ -273,17 +350,31 @@ class FusionAgent(BaseAgent):
             if has_barcode_macros:
                 return "barcode"
             warnings.append("LLM selected barcode, but barcode nutrition is unavailable.")
+        if has_text_nutrition and has_explicit_text_mass and not has_vision_totals:
+            if requested == "vision":
+                warnings.append(
+                    "LLM selected vision, but explicit text quantities are available; text nutrition was used."
+                )
+            return "text_nutrition"
         if requested == "vision":
             if has_vision_totals:
                 return "vision"
             warnings.append("LLM selected vision, but vision totals are unavailable.")
+        if requested == "text_nutrition":
+            if has_text_nutrition:
+                return "text_nutrition"
+            warnings.append("LLM selected text nutrition, but text nutrition is unavailable.")
         if requested == "fallback":
             return "fallback"
 
         if has_barcode_macros:
             return "barcode"
+        if has_text_nutrition and has_explicit_text_mass:
+            return "text_nutrition"
         if has_vision_totals:
             return "vision"
+        if has_text_nutrition:
+            return "text_nutrition"
         return "fallback"
 
     def _resolve_mass_g(
@@ -374,6 +465,7 @@ class FusionAgent(BaseAgent):
         self,
         primary_source: str,
         vision_data: dict[str, Any],
+        text_nutrition_data: dict[str, Any],
         barcode_data: dict[str, Any],
         final_macros: NutritionEstimate,
         mass_g: float | None,
@@ -399,6 +491,13 @@ class FusionAgent(BaseAgent):
                 )
             ]
 
+        if primary_source == "text_nutrition":
+            return self._items_from_text_nutrition(
+                text_nutrition_data=text_nutrition_data,
+                portion_multiplier=portion_multiplier,
+                confidence=confidence,
+            )
+
         if primary_source == "vision" and vision_data.get("ingredients"):
             items = []
             for ingredient in vision_data["ingredients"]:
@@ -423,10 +522,57 @@ class FusionAgent(BaseAgent):
 
         return []
 
+    def _build_mixed_text_vision_items(
+        self,
+        vision_data: dict[str, Any],
+        text_nutrition_data: dict[str, Any],
+        portion_multiplier: float,
+        name_overrides: dict[str, str],
+        anchor: NutritionEstimate,
+        confidence: float,
+        warnings: list[str],
+    ) -> list[MealItemResult]:
+        explicit_text_items = self._items_from_text_nutrition(
+            text_nutrition_data=text_nutrition_data,
+            portion_multiplier=portion_multiplier,
+            confidence=confidence,
+            mass_sources={"explicit_text"},
+        )
+        explicit_tokens = self._text_nutrition_tokens(
+            text_nutrition_data,
+            mass_sources={"explicit_text"},
+        )
+        replacement_map = self._vision_text_replacement_map(
+            vision_data=vision_data,
+            text_nutrition_data=text_nutrition_data,
+            name_overrides=name_overrides,
+        )
+        explicit_total = self._sum_item_nutrition(explicit_text_items)
+
+        remaining_vision_items = self._remaining_vision_items(
+            vision_data=vision_data,
+            portion_multiplier=portion_multiplier,
+            name_overrides=name_overrides,
+            covered_tokens=explicit_tokens,
+            replacement_map=replacement_map,
+            confidence=confidence,
+        )
+        if not remaining_vision_items:
+            return explicit_text_items
+
+        remaining_anchor = self._remaining_anchor(anchor, explicit_total, warnings)
+        scaled_vision_items = self._scale_items_to_anchor(
+            remaining_vision_items,
+            remaining_anchor,
+            note="Scaled to the remaining vision mass/calorie budget after explicit text quantities.",
+        )
+        return [*explicit_text_items, *scaled_vision_items]
+
     def _should_use_text_guided_vision_items(
         self,
         primary_source: str,
         vision_data: dict[str, Any],
+        text_nutrition_data: dict[str, Any],
         text_foods: list[str],
         hidden_ingredients: list[Any],
         name_overrides: dict[str, str],
@@ -442,6 +588,8 @@ class FusionAgent(BaseAgent):
             return False
         if self._llm_rule_contains(llm_decision, "kept vision"):
             return False
+        if self._has_explicit_text_mass(text_nutrition_data):
+            return True
 
         vision_names = [
             str(ingredient.get("name"))
@@ -466,8 +614,17 @@ class FusionAgent(BaseAgent):
         self,
         text_foods: list[str],
         final_macros: NutritionEstimate,
+        text_nutrition_data: dict[str, Any],
         confidence: float,
     ) -> list[MealItemResult]:
+        text_items = self._items_from_text_nutrition(
+            text_nutrition_data=text_nutrition_data,
+            portion_multiplier=1.0,
+            confidence=confidence,
+        )
+        if text_items:
+            return self._scale_items_to_anchor(text_items, final_macros)
+
         if not text_foods:
             return []
 
@@ -546,6 +703,222 @@ class FusionAgent(BaseAgent):
             )
         return items
 
+    def _items_from_text_nutrition(
+        self,
+        text_nutrition_data: dict[str, Any],
+        portion_multiplier: float,
+        confidence: float,
+        mass_sources: set[str] | None = None,
+    ) -> list[MealItemResult]:
+        items = []
+        for item in text_nutrition_data.get("items") or []:
+            if mass_sources is not None and item.get("mass_source") not in mass_sources:
+                continue
+            nutrition = self._scale_totals(item.get("nutrition") or {}, portion_multiplier)
+            items.append(
+                MealItemResult(
+                    name=str(item.get("name") or item.get("lookup_name") or "unknown food"),
+                    source="text_nutrition",
+                    mass_g=nutrition.mass_g,
+                    nutrition=nutrition,
+                    confidence=min(float(item.get("confidence") or confidence), confidence),
+                    notes=[
+                        f"Text nutrition estimate using {item.get('mass_source') or 'unknown'} mass.",
+                        *[str(value) for value in item.get("assumptions", [])],
+                    ],
+                )
+            )
+        return items
+
+    def _items_from_resolution(
+        self,
+        ingredient_resolution_data: dict[str, Any],
+        confidence: float,
+    ) -> list[MealItemResult]:
+        items = []
+        for item in ingredient_resolution_data.get("items") or []:
+            nutrition = NutritionEstimate.model_validate(item.get("nutrition") or {})
+            notes = list(item.get("notes") or [])
+            links = item.get("links") or []
+            for link in links:
+                action = link.get("action")
+                source = link.get("source")
+                name = link.get("name")
+                if action and source and name:
+                    notes.append(f"{action}: {source} '{name}'.")
+            items.append(
+                MealItemResult(
+                    name=str(item.get("display_name") or item.get("canonical_name") or "unknown food"),
+                    source=(
+                        "text_nutrition"
+                        if item.get("source") in {"text_nutrition", "mixed"}
+                        else str(item.get("source") or "vision")
+                    ),
+                    mass_g=nutrition.mass_g,
+                    nutrition=nutrition,
+                    confidence=min(float(item.get("confidence") or confidence), confidence),
+                    notes=notes,
+                )
+            )
+        return items
+
+    def _scale_items_to_anchor(
+        self,
+        items: list[MealItemResult],
+        anchor: NutritionEstimate,
+        note: str = "Scaled to the selected vision calorie/mass anchor.",
+    ) -> list[MealItemResult]:
+        item_total = self._sum_item_nutrition(items)
+        calorie_scale = (
+            anchor.calories_kcal / item_total.calories_kcal
+            if anchor.calories_kcal is not None and item_total.calories_kcal
+            else 1.0
+        )
+        mass_scale = (
+            anchor.mass_g / item_total.mass_g
+            if anchor.mass_g is not None and item_total.mass_g
+            else 1.0
+        )
+        scaled = []
+        for item in items:
+            scaled_nutrition = NutritionEstimate(
+                calories_kcal=self._scale_value(item.nutrition.calories_kcal, calorie_scale),
+                mass_g=self._scale_value(item.nutrition.mass_g, mass_scale),
+                protein_g=self._scale_value(item.nutrition.protein_g, calorie_scale),
+                carbs_g=self._scale_value(item.nutrition.carbs_g, calorie_scale),
+                fat_g=self._scale_value(item.nutrition.fat_g, calorie_scale),
+            )
+            scaled.append(
+                MealItemResult(
+                    name=item.name,
+                    source=item.source,
+                    mass_g=scaled_nutrition.mass_g,
+                    nutrition=scaled_nutrition,
+                    confidence=item.confidence,
+                    notes=[
+                        *item.notes,
+                        note,
+                    ],
+                )
+            )
+        return scaled
+
+    def _remaining_vision_items(
+        self,
+        vision_data: dict[str, Any],
+        portion_multiplier: float,
+        name_overrides: dict[str, str],
+        covered_tokens: set[str],
+        replacement_map: dict[str, str],
+        confidence: float,
+    ) -> list[MealItemResult]:
+        items = []
+        for ingredient in vision_data.get("ingredients") or []:
+            original_name = str(ingredient.get("name") or "unknown food")
+            corrected_name = self._corrected_name(original_name, name_overrides)
+            if self._normalize_food_name(original_name) in replacement_map:
+                continue
+            if self._normalize_food_name(original_name) in covered_tokens:
+                continue
+            if self._normalize_food_name(corrected_name) in covered_tokens:
+                continue
+
+            nutrition = ingredient.get("nutrition") or {}
+            scaled_nutrition = self._scale_totals(nutrition, portion_multiplier)
+            notes = ["Remaining visible ingredient from vision after text quantities were applied."]
+            if corrected_name != original_name:
+                notes.append(f"Displayed name corrected from {original_name}.")
+            items.append(
+                MealItemResult(
+                    name=corrected_name,
+                    source="vision",
+                    mass_g=scaled_nutrition.mass_g,
+                    nutrition=scaled_nutrition,
+                    confidence=confidence,
+                    notes=notes,
+                )
+            )
+        return items
+
+    def _vision_text_replacement_map(
+        self,
+        vision_data: dict[str, Any],
+        text_nutrition_data: dict[str, Any],
+        name_overrides: dict[str, str],
+    ) -> dict[str, str]:
+        explicit_items = [
+            item
+            for item in text_nutrition_data.get("items") or []
+            if item.get("mass_source") == "explicit_text"
+        ]
+        vision_names = [
+            str(ingredient.get("name"))
+            for ingredient in vision_data.get("ingredients") or []
+            if ingredient.get("name")
+        ]
+        if not explicit_items or not vision_names:
+            return {}
+
+        explicit_tokens = self._text_nutrition_tokens(
+            text_nutrition_data,
+            mass_sources={"explicit_text"},
+        )
+        replacement_map: dict[str, str] = {}
+
+        for vision_name in vision_names:
+            corrected_name = self._corrected_name(vision_name, name_overrides)
+            corrected_token = self._normalize_food_name(corrected_name)
+            original_token = self._normalize_food_name(vision_name)
+            if corrected_token in explicit_tokens:
+                replacement_map[original_token] = corrected_token
+
+        if replacement_map:
+            return replacement_map
+
+        if len(vision_names) == 1 and len(explicit_items) == 1:
+            vision_token = self._normalize_food_name(vision_names[0])
+            text_token = self._normalize_food_name(
+                str(explicit_items[0].get("lookup_name") or explicit_items[0].get("name"))
+            )
+            return {vision_token: text_token}
+
+        return {}
+
+    def _remaining_anchor(
+        self,
+        anchor: NutritionEstimate,
+        used: NutritionEstimate,
+        warnings: list[str],
+    ) -> NutritionEstimate:
+        if (
+            anchor.mass_g is not None
+            and used.mass_g is not None
+            and used.mass_g > anchor.mass_g
+        ):
+            warnings.append("Explicit text mass exceeds vision total mass; final mass may exceed vision estimate.")
+        if (
+            anchor.calories_kcal is not None
+            and used.calories_kcal is not None
+            and used.calories_kcal > anchor.calories_kcal
+        ):
+            warnings.append("Explicit text calories exceed vision total calories; final calories may exceed vision estimate.")
+
+        return NutritionEstimate(
+            calories_kcal=self._subtract_floor(anchor.calories_kcal, used.calories_kcal),
+            mass_g=self._subtract_floor(anchor.mass_g, used.mass_g),
+            protein_g=self._subtract_floor(anchor.protein_g, used.protein_g),
+            carbs_g=self._subtract_floor(anchor.carbs_g, used.carbs_g),
+            fat_g=self._subtract_floor(anchor.fat_g, used.fat_g),
+            fiber_g=self._subtract_floor(anchor.fiber_g, used.fiber_g),
+            sugar_g=self._subtract_floor(anchor.sugar_g, used.sugar_g),
+            sodium_g=self._subtract_floor(anchor.sodium_g, used.sodium_g),
+        )
+
+    def _subtract_floor(self, left: float | None, right: float | None) -> float | None:
+        if left is None:
+            return None
+        return max(float(left) - float(right or 0.0), 0.0)
+
     def _sum_item_nutrition(self, items: list[MealItemResult]) -> NutritionEstimate:
         return NutritionEstimate(
             calories_kcal=self._sum_optional(item.nutrition.calories_kcal for item in items),
@@ -561,6 +934,66 @@ class FusionAgent(BaseAgent):
     def _sum_optional(self, values: Any) -> float | None:
         present = [float(value) for value in values if value is not None]
         return sum(present) if present else None
+
+    def _has_explicit_text_mass(self, text_nutrition_data: dict[str, Any]) -> bool:
+        items = text_nutrition_data.get("items") or []
+        return bool(items) and all(item.get("mass_source") == "explicit_text" for item in items)
+
+    def _has_any_explicit_text_mass(self, text_nutrition_data: dict[str, Any]) -> bool:
+        return any(
+            item.get("mass_source") == "explicit_text"
+            for item in text_nutrition_data.get("items") or []
+        )
+
+    def _explicit_text_covers_vision(
+        self,
+        text_nutrition_data: dict[str, Any],
+        vision_data: dict[str, Any],
+        llm_decision: dict[str, Any] | None,
+    ) -> bool:
+        covered_tokens = self._text_nutrition_tokens(
+            text_nutrition_data,
+            mass_sources={"explicit_text"},
+        )
+        if not covered_tokens:
+            return False
+        explicit_items = [
+            item
+            for item in text_nutrition_data.get("items") or []
+            if item.get("mass_source") == "explicit_text"
+        ]
+        vision_items = [
+            ingredient
+            for ingredient in vision_data.get("ingredients") or []
+            if ingredient.get("name")
+        ]
+        if len(explicit_items) == 1 and len(vision_items) == 1:
+            return True
+
+        name_overrides = (llm_decision or {}).get("corrected_food_names") or {}
+        for ingredient in vision_items:
+            original_name = str(ingredient.get("name") or "")
+            corrected_name = self._corrected_name(original_name, name_overrides)
+            if self._normalize_food_name(original_name) not in covered_tokens and (
+                self._normalize_food_name(corrected_name) not in covered_tokens
+            ):
+                return False
+        return True
+
+    def _text_nutrition_tokens(
+        self,
+        text_nutrition_data: dict[str, Any],
+        mass_sources: set[str] | None = None,
+    ) -> set[str]:
+        tokens: set[str] = set()
+        for item in text_nutrition_data.get("items") or []:
+            if mass_sources is not None and item.get("mass_source") not in mass_sources:
+                continue
+            for key in ("name", "lookup_name"):
+                value = item.get(key)
+                if value:
+                    tokens.add(self._normalize_food_name(str(value)))
+        return tokens
 
     def _name_overrides(
         self,

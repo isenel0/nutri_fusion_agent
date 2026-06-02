@@ -40,6 +40,26 @@ class NutritionEstimate(BaseModel):
     sodium_g: float | None = Field(default=None, ge=0.0)
 
 
+class DepthInputSummary(BaseModel):
+    """Input used by the depth generation agent."""
+
+    image_filename: str | None = None
+    image_provided: bool = True
+
+
+class DepthAgentData(BaseModel):
+    """Structured DepthAgent payload for generated monocular depth."""
+
+    contract_version: Literal["depth.v1"] = "depth.v1"
+    agent: Literal["depth"] = "depth"
+    input: DepthInputSummary
+    mode: Literal["generated_from_rgb"] = "generated_from_rgb"
+    model_name: str
+    depth_path: str
+    output_format: Literal["8bit_grayscale_png"] = "8bit_grayscale_png"
+    llm_notes: list[str] = Field(default_factory=list)
+
+
 class VisionModelBundle(BaseModel):
     """Model bundle used by the vision agent."""
 
@@ -185,6 +205,78 @@ class TextAgentData(BaseModel):
     missing_requirements: list[str] = Field(default_factory=list)
 
 
+class TextNutritionInputSummary(BaseModel):
+    """Inputs used by text-based nutrition resolution."""
+
+    raw_text: str
+    vision_mass_g: float | None = Field(default=None, ge=0.0)
+
+
+class TextNutritionItemEstimate(BaseModel):
+    """Per-food nutrition estimate derived from text and nutrition priors."""
+
+    name: str
+    lookup_name: str
+    canonicalization_source: Literal["llm", "alias_fallback", "raw"] = "raw"
+    mass_g: float | None = Field(default=None, ge=0.0)
+    mass_source: Literal["explicit_text", "vision_distributed", "default_serving", "unknown"]
+    nutrition: NutritionEstimate
+    confidence: float = Field(..., ge=0.0, le=1.0)
+    assumptions: list[str] = Field(default_factory=list)
+
+
+class TextNutritionAgentData(BaseModel):
+    """Structured text nutrition payload for fusion."""
+
+    contract_version: Literal["text_nutrition.v1"] = "text_nutrition.v1"
+    agent: Literal["text_nutrition"] = "text_nutrition"
+    input: TextNutritionInputSummary
+    items: list[TextNutritionItemEstimate] = Field(default_factory=list)
+    totals: NutritionEstimate | None = None
+    assumptions: list[str] = Field(default_factory=list)
+    warnings: list[str] = Field(default_factory=list)
+    llm_notes: list[str] = Field(default_factory=list)
+
+
+class IngredientSourceLink(BaseModel):
+    """Source evidence linked to a resolved ingredient."""
+
+    source: Literal["vision", "text", "text_nutrition", "barcode"]
+    name: str
+    confidence: float | None = Field(default=None, ge=0.0, le=1.0)
+    mass_g: float | None = Field(default=None, ge=0.0)
+    action: Literal["match", "replace", "add", "preserve"]
+
+
+class ResolvedIngredient(BaseModel):
+    """Canonical ingredient selected after cross-agent identity resolution."""
+
+    display_name: str
+    canonical_name: str
+    source: Literal["vision", "text_nutrition", "barcode", "mixed"]
+    mass_g: float | None = Field(default=None, ge=0.0)
+    mass_source: Literal["vision", "explicit_text", "vision_remaining", "default_serving", "barcode", "unknown"]
+    nutrition: NutritionEstimate
+    confidence: float = Field(..., ge=0.0, le=1.0)
+    links: list[IngredientSourceLink] = Field(default_factory=list)
+    notes: list[str] = Field(default_factory=list)
+
+
+class IngredientResolutionAgentData(BaseModel):
+    """Resolved ingredient identities before final macro fusion."""
+
+    contract_version: Literal["ingredient_resolution.v1"] = "ingredient_resolution.v1"
+    agent: Literal["ingredient_resolution"] = "ingredient_resolution"
+    items: list[ResolvedIngredient] = Field(default_factory=list)
+    totals: NutritionEstimate | None = None
+    replacements: dict[str, str] = Field(default_factory=dict)
+    unmatched_vision: list[str] = Field(default_factory=list)
+    unmatched_text: list[str] = Field(default_factory=list)
+    assumptions: list[str] = Field(default_factory=list)
+    warnings: list[str] = Field(default_factory=list)
+    llm_notes: list[str] = Field(default_factory=list)
+
+
 class OrchestratorInputSummary(BaseModel):
     """Raw modality availability received by the orchestrator."""
 
@@ -212,7 +304,7 @@ class MealItemResult(BaseModel):
     """Final per-item estimate after fusion."""
 
     name: str
-    source: Literal["vision", "barcode", "text", "fallback"]
+    source: Literal["vision", "barcode", "text", "text_nutrition", "fallback"]
     mass_g: float | None = Field(default=None, ge=0.0)
     nutrition: NutritionEstimate
     confidence: float = Field(..., ge=0.0, le=1.0)
@@ -222,7 +314,7 @@ class MealItemResult(BaseModel):
 class FusionDecision(BaseModel):
     """Deterministic fusion choices used to build the final meal result."""
 
-    primary_nutrition_source: Literal["barcode", "vision", "fallback"]
+    primary_nutrition_source: Literal["barcode", "vision", "text_nutrition", "ingredient_resolution", "fallback"]
     mass_source: Literal["vision", "text", "assumed_100g", "unknown"]
     portion_multiplier: float = Field(default=1.0, ge=0.0)
     corrected_food_names: dict[str, str] = Field(default_factory=dict)

@@ -349,7 +349,12 @@ class MultiAgentGUI:
         final_output = payload.get("final_output", {})
 
         self._set_text(self.vision_output, self._render_agent_block("vision", outputs.get("vision")))
-        self._set_text(self.text_output, self._render_agent_block("text", outputs.get("text")))
+        text_blocks = [
+            self._render_agent_block("text", outputs.get("text")),
+            "",
+            self._render_agent_block("text_nutrition", outputs.get("text_nutrition")),
+        ]
+        self._set_text(self.text_output, "\n".join(text_blocks))
         self._set_text(
             self.barcode_output,
             self._render_agent_block("barcode", outputs.get("barcode")),
@@ -436,6 +441,33 @@ class MultiAgentGUI:
             )
             return "\n".join(lines)
 
+        if source == "text_nutrition":
+            totals = data.get("totals") or {}
+            items = data.get("items") or []
+            lines.extend(
+                [
+                    "Text Nutrition Totals",
+                    f"- Calories (kcal): {self._fmt_number(totals.get('calories_kcal'))}",
+                    f"- Mass (g): {self._fmt_number(totals.get('mass_g'))}",
+                    f"- Protein (g): {self._fmt_number(totals.get('protein_g'))}",
+                    f"- Carbs (g): {self._fmt_number(totals.get('carbs_g'))}",
+                    f"- Fat (g): {self._fmt_number(totals.get('fat_g'))}",
+                    "",
+                    "Text Nutrition Items",
+                ]
+            )
+            for item in items:
+                nutrition = item.get("nutrition") or {}
+                lines.append(
+                    "- "
+                    + f"{item.get('name') or '-'}"
+                    + f" -> {item.get('lookup_name') or '-'}"
+                    + f": {self._fmt_number(item.get('mass_g'))}g"
+                    + f" ({item.get('mass_source') or '-'})"
+                    + f", {self._fmt_number(nutrition.get('calories_kcal'))} kcal"
+                )
+            return "\n".join(lines)
+
         macros = data.get("macros") or {}
         lines.extend(
             [
@@ -462,6 +494,8 @@ class MultiAgentGUI:
         calculation_ingredients = data.get("calculation_ingredients") or data.get("items") or []
         inputs_used = data.get("inputs_used") or {}
         decision = data.get("fusion_decision") or {}
+        agent_outputs = data.get("agent_outputs") or {}
+        resolution = ((agent_outputs.get("ingredient_resolution") or {}).get("data") or {})
         reasoning = data.get("reasoning_summary") or "-"
 
         lines = [
@@ -471,6 +505,7 @@ class MultiAgentGUI:
             "",
             "Final Macros",
             f"- Calories (kcal): {self._fmt_number(final_macros.get('calories_kcal'))}",
+            f"- Mass (g): {self._fmt_number(final_macros.get('mass_g'))}",
             f"- Protein (g): {self._fmt_number(final_macros.get('protein_g'))}",
             f"- Carbs (g): {self._fmt_number(final_macros.get('carbs_g'))}",
             f"- Fat (g): {self._fmt_number(final_macros.get('fat_g'))}",
@@ -480,8 +515,14 @@ class MultiAgentGUI:
             "",
             "Inputs Used",
             f"- Vision: {bool(inputs_used.get('vision'))}",
+            f"- Depth: {bool(inputs_used.get('depth'))}",
             f"- Text: {bool(inputs_used.get('text'))}",
+            f"- Text nutrition: {bool(inputs_used.get('text_nutrition'))}",
+            f"- Ingredient resolution: {bool(inputs_used.get('ingredient_resolution'))}",
             f"- Barcode: {bool(inputs_used.get('barcode'))}",
+            "",
+            "Ingredient Resolution",
+            *self._render_resolution_summary(resolution),
             "",
             "Fusion Decision",
             f"- Primary source: {decision.get('primary_nutrition_source') or '-'}",
@@ -492,6 +533,23 @@ class MultiAgentGUI:
             f"Reasoning: {reasoning}",
         ]
         return "\n".join(lines)
+
+    def _render_resolution_summary(self, resolution: dict[str, Any]) -> list[str]:
+        if not resolution:
+            return ["- -"]
+        lines = []
+        replacements = resolution.get("replacements") or {}
+        if replacements:
+            lines.append(
+                "- Replacements: "
+                + ", ".join(f"{old} -> {new}" for old, new in replacements.items())
+            )
+        assumptions = resolution.get("assumptions") or []
+        if assumptions:
+            lines.extend(f"- {assumption}" for assumption in assumptions[:4])
+        if not lines:
+            lines.append("- No replacements.")
+        return lines
 
     def _render_calculation_ingredients(self, ingredients: list[dict[str, Any]]) -> list[str]:
         if not ingredients:

@@ -31,6 +31,17 @@ DEFAULT_PRIOR = NutritionPrior(
 )
 
 
+MANUAL_PRIORS: dict[str, NutritionPrior] = {
+    "spinach": NutritionPrior(
+        source_name="spinach",
+        calories_per_g=0.23,
+        fat_per_g=0.004,
+        carbs_per_g=0.036,
+        protein_per_g=0.029,
+    ),
+}
+
+
 ALIASES: dict[str, str | tuple[str, ...]] = {
     "candy": "candies",
     "egg tart": "pies",
@@ -51,6 +62,8 @@ ALIASES: dict[str, str | tuple[str, ...]] = {
     "sauce": "barbecue sauce",
     "shellfish": "shrimp",
     "soup": "broth",
+    "ıspanak": "spinach",
+    "ispanak": "spinach",
     "hamburg": "hamburger",
     "hanamaki baozi": "dumplings",
     "wonton dumplings": "dumplings",
@@ -101,6 +114,8 @@ class NutritionLookup:
         key = self._normalize(label)
         if key == DEFAULT_PRIOR.source_name:
             return DEFAULT_PRIOR
+        if key in MANUAL_PRIORS:
+            return MANUAL_PRIORS[key]
 
         entry = self._entries.get(key)
         source_name = key
