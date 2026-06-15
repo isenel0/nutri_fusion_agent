@@ -35,14 +35,12 @@ class OrchestratorAgent(BaseAgent):
                 analyze_text({"text": payload.get("text")})
             )
 
+        barcode_payloads = self._barcode_payloads(payload)
         if input_summary.barcode_text_provided or input_summary.barcode_image_provided:
-            barcode_payload = {
-                "barcode": payload.get("barcode"),
-                "image_path": payload.get("barcode_image_path"),
-                "image_bytes": payload.get("barcode_image_bytes"),
-                "image_filename": payload.get("barcode_image_filename"),
-            }
-            tasks["barcode"] = asyncio.create_task(analyze_barcode(barcode_payload))
+            if len(barcode_payloads) <= 1:
+                tasks["barcode"] = asyncio.create_task(
+                    analyze_barcode(barcode_payloads[0] if barcode_payloads else {})
+                )
 
         outputs: dict[str, AgentResponse | None] = {
             "depth": None,
@@ -72,6 +70,40 @@ class OrchestratorAgent(BaseAgent):
                         errors[key] = result.error
 
         task_order = list(tasks.keys())
+
+        if len(barcode_payloads) > 1:
+            barcode_results = await asyncio.gather(
+                *(analyze_barcode(barcode_payload) for barcode_payload in barcode_payloads),
+                return_exceptions=True,
+            )
+            candidates: list[AgentResponse] = []
+            for index, result in enumerate(barcode_results):
+                if isinstance(result, Exception):
+                    candidates.append(
+                        AgentResponse(
+                            source="barcode",
+                            confidence=0.0,
+                            data={
+                                "candidate_index": index,
+                                "input_filename": barcode_payloads[index].get("image_filename"),
+                            },
+                            error=f"barcode candidate failed: {result}",
+                        )
+                    )
+                else:
+                    result.data["candidate_index"] = index
+                    result.data["input_filename"] = barcode_payloads[index].get("image_filename")
+                    candidates.append(result)
+
+            selected_barcode = self._select_barcode_candidate(candidates)
+            if selected_barcode is not None:
+                selected_barcode.data["candidates"] = [
+                    candidate.model_dump() for candidate in candidates
+                ]
+                outputs["barcode"] = selected_barcode
+                task_order.append("barcode")
+                if selected_barcode.error:
+                    errors["barcode"] = selected_barcode.error
 
         if input_summary.image_provided:
             vision_payload = {
@@ -165,7 +197,11 @@ class OrchestratorAgent(BaseAgent):
             source="orchestrator",
             confidence=self._bundle_confidence(outputs),
             data=contract.model_dump(),
-            error=None if tasks else "No modality inputs were provided.",
+            error=(
+                None
+                if any(output is not None for output in outputs.values())
+                else "No modality inputs were provided."
+            ),
         )
 
     def _input_summary(self, payload: dict[str, Any]) -> OrchestratorInputSummary:
@@ -184,8 +220,46 @@ class OrchestratorAgent(BaseAgent):
             barcode_image_provided=bool(
                 payload.get("barcode_image_path")
                 or payload.get("barcode_image_bytes")
+                or payload.get("barcode_image_payloads")
             ),
         )
+
+    def _barcode_payloads(self, payload: dict[str, Any]) -> list[dict[str, Any]]:
+        explicit_payloads = payload.get("barcode_image_payloads") or []
+        if explicit_payloads:
+            return [
+                item
+                for item in explicit_payloads
+                if isinstance(item, dict)
+            ]
+
+        if payload.get("barcode") or payload.get("barcode_image_path") or payload.get("barcode_image_bytes"):
+            return [
+                {
+                    "barcode": payload.get("barcode"),
+                    "image_path": payload.get("barcode_image_path"),
+                    "image_bytes": payload.get("barcode_image_bytes"),
+                    "image_filename": payload.get("barcode_image_filename"),
+                }
+            ]
+        return []
+
+    def _select_barcode_candidate(
+        self,
+        candidates: list[AgentResponse],
+    ) -> AgentResponse | None:
+        if not candidates:
+            return None
+
+        def score(candidate: AgentResponse) -> tuple[int, float]:
+            nutrition = candidate.data.get("nutrition_per_100g") or {}
+            has_macros = any(
+                nutrition.get(key) is not None
+                for key in ("calories_kcal", "protein_g", "carbs_g", "fat_g")
+            )
+            return (1 if candidate.error is None and has_macros else 0, candidate.confidence)
+
+        return max(candidates, key=score)
 
     def _bundle_confidence(self, outputs: dict[str, AgentResponse | None]) -> float:
         confidences = [

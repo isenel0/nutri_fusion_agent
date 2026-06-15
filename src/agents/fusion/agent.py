@@ -28,6 +28,18 @@ class FusionAgent(BaseAgent):
         self.nutrition_lookup = NutritionLookup()
 
     async def process(self, input_data: Any) -> AgentResponse:
+        decision_response = self._extract_decision_response(input_data)
+        if decision_response is not None and decision_response.error:
+            return AgentResponse(
+                source="fusion",
+                confidence=0.0,
+                data={},
+                error=(
+                    "Qwen fusion decision is required, but the decision agent failed: "
+                    f"{decision_response.error}"
+                ),
+            )
+
         outputs = self._extract_outputs(input_data)
         llm_decision = self._extract_decision(input_data)
         depth = outputs.get("depth")
@@ -114,7 +126,13 @@ class FusionAgent(BaseAgent):
             conflicts.extend(llm_decision.get("conflicts", []))
             assumptions.extend(llm_decision.get("assumptions", []))
 
-        name_overrides = self._name_overrides(vision_data, text_data, barcode_data, llm_decision)
+        name_overrides = self._name_overrides(
+            vision_data,
+            text_data,
+            barcode_data,
+            llm_decision,
+            ingredient_resolution_data if ingredient_resolution is not None else None,
+        )
         if name_overrides:
             applied_rules.append("ingredient_names_reconciled_from_text_and_llm")
             assumptions.append(
@@ -134,13 +152,59 @@ class FusionAgent(BaseAgent):
         ]
         text_guided_items = False
         mixed_text_vision_items = False
-        if primary_source != "barcode" and ingredient_resolution_data.get("items"):
+        barcode_match_items = (
+            ingredient_resolution_data.get("items")
+            or self._resolution_items_from_text_nutrition(text_nutrition_data)
+        )
+        barcode_target_map = self._barcode_target_map(
+            barcode_data=barcode_data,
+            resolution_items=barcode_match_items,
+        )
+        if (
+            barcode_target_map
+            and barcode_match_items
+        ):
+            primary_source = "barcode"
+            items, used_explicit_barcode_mass = self._build_multi_barcode_guided_items(
+                barcode_data=barcode_data,
+                resolution_items=barcode_match_items,
+                barcode_target_map=barcode_target_map,
+                fallback_mass_g=mass_g,
+                portion_multiplier=portion_multiplier,
+                confidence=self._confidence(outputs, conflicts=conflicts),
+            )
+            final_macros = self._sum_item_nutrition(items)
+            if used_explicit_barcode_mass:
+                mass_source = "text"
+                applied_rules.append("barcode_nutrition_scaled_by_explicit_text_mass")
+            applied_rules.append("barcode_nutrition_applied_to_matched_ingredient")
+            if ingredient_resolution_data.get("items"):
+                assumptions.extend(ingredient_resolution_data.get("assumptions") or [])
+                warnings.extend(ingredient_resolution_data.get("warnings") or [])
+        elif primary_source == "barcode" and has_barcode_macros:
+            items, used_explicit_barcode_mass = self._build_barcode_guided_items(
+                barcode_data=barcode_data,
+                resolution_items=barcode_match_items,
+                barcode_nutrition=barcode_nutrition,
+                fallback_mass_g=mass_g,
+                portion_multiplier=portion_multiplier,
+                name_overrides=name_overrides,
+                confidence=self._confidence(outputs, conflicts=conflicts),
+            )
+            final_macros = self._sum_item_nutrition(items)
+            if used_explicit_barcode_mass:
+                mass_source = "text"
+                applied_rules.append("barcode_nutrition_scaled_by_explicit_text_mass")
+        elif primary_source != "barcode" and ingredient_resolution_data.get("items"):
             items = self._items_from_resolution(
                 ingredient_resolution_data=ingredient_resolution_data,
                 confidence=self._confidence(outputs, conflicts=conflicts),
             )
             final_macros = self._sum_item_nutrition(items)
             applied_rules.append("ingredient_resolution_used")
+            if self._resolution_uses_only_explicit_text(ingredient_resolution_data):
+                mass_source = "text"
+                applied_rules.append("complete_explicit_text_mass_used")
             assumptions.extend(ingredient_resolution_data.get("assumptions") or [])
             warnings.extend(ingredient_resolution_data.get("warnings") or [])
             if ingredient_resolution_data.get("replacements"):
@@ -304,17 +368,25 @@ class FusionAgent(BaseAgent):
         return None
 
     def _extract_decision(self, input_data: Any) -> dict[str, Any] | None:
+        decision_response = self._extract_decision_response(input_data)
+        if decision_response is not None and decision_response.data:
+            return decision_response.data
         if isinstance(input_data, AgentResponse):
             return self._extract_decision(input_data.data)
         if not isinstance(input_data, dict):
             return None
-        decision_response = self._coerce_response(input_data.get("decision"))
-        if decision_response is not None and decision_response.data:
-            return decision_response.data
         decision = input_data.get("fusion_decision")
         if isinstance(decision, dict):
             return decision
         return None
+
+    def _extract_decision_response(self, input_data: Any) -> AgentResponse | None:
+        if isinstance(input_data, AgentResponse):
+            return self._extract_decision_response(input_data.data)
+        if not isinstance(input_data, dict):
+            return None
+        decision_response = self._coerce_response(input_data.get("decision"))
+        return decision_response
 
     def _portion_multiplier(
         self,
@@ -521,6 +593,268 @@ class FusionAgent(BaseAgent):
             return items
 
         return []
+
+    def _build_barcode_guided_items(
+        self,
+        barcode_data: dict[str, Any],
+        resolution_items: list[dict[str, Any]],
+        barcode_nutrition: dict[str, Any],
+        fallback_mass_g: float | None,
+        portion_multiplier: float,
+        name_overrides: dict[str, str],
+        confidence: float,
+    ) -> tuple[list[MealItemResult], bool]:
+        target_index = self._barcode_resolution_target_index(
+            barcode_data,
+            resolution_items,
+        )
+
+        if target_index is None:
+            mass_g = fallback_mass_g if fallback_mass_g is not None else 100.0
+            nutrition = self._scale_per_100g(
+                barcode_nutrition,
+                mass_g * portion_multiplier,
+            )
+            product = barcode_data.get("product") or {}
+            original_name = product.get("name") or "packaged food"
+            name = self._corrected_name(original_name, name_overrides)
+            return [
+                MealItemResult(
+                    name=name,
+                    source="barcode",
+                    mass_g=nutrition.mass_g,
+                    nutrition=nutrition,
+                    confidence=confidence,
+                    notes=[
+                        "Nutrition computed from barcode nutrition_per_100g.",
+                        "No explicit matching text ingredient was found, so fallback meal mass was used.",
+                    ],
+                )
+            ], False
+
+        items: list[MealItemResult] = []
+        used_explicit_barcode_mass = False
+        for index, item in enumerate(resolution_items):
+            if index == target_index:
+                target_mass = item.get("mass_g")
+                try:
+                    mass_g = float(target_mass)
+                except (TypeError, ValueError):
+                    mass_g = fallback_mass_g if fallback_mass_g is not None else 100.0
+                nutrition = self._scale_per_100g(
+                    barcode_nutrition,
+                    mass_g * portion_multiplier,
+                )
+                product = barcode_data.get("product") or {}
+                name = str(
+                    item.get("display_name")
+                    or product.get("name")
+                    or item.get("canonical_name")
+                    or "packaged food"
+                )
+                if item.get("mass_source") == "explicit_text":
+                    used_explicit_barcode_mass = True
+                items.append(
+                    MealItemResult(
+                        name=name,
+                        source="barcode",
+                        mass_g=nutrition.mass_g,
+                        nutrition=nutrition,
+                        confidence=confidence,
+                        notes=[
+                            "Nutrition density came from barcode nutrition_per_100g.",
+                            f"Serving mass came from {item.get('mass_source') or 'unknown'} ingredient resolution.",
+                        ],
+                    )
+                )
+                continue
+
+            items.append(
+                self._item_from_resolution_item(
+                    item,
+                    confidence=confidence,
+                    portion_multiplier=portion_multiplier,
+                )
+            )
+
+        return items, used_explicit_barcode_mass
+
+    def _build_multi_barcode_guided_items(
+        self,
+        barcode_data: dict[str, Any],
+        resolution_items: list[dict[str, Any]],
+        barcode_target_map: dict[int, dict[str, Any]],
+        fallback_mass_g: float | None,
+        portion_multiplier: float,
+        confidence: float,
+    ) -> tuple[list[MealItemResult], bool]:
+        items: list[MealItemResult] = []
+        used_explicit_barcode_mass = False
+        for index, item in enumerate(resolution_items):
+            barcode_record = barcode_target_map.get(index)
+            if barcode_record is None:
+                items.append(
+                    self._item_from_resolution_item(
+                        item,
+                        confidence=confidence,
+                        portion_multiplier=portion_multiplier,
+                    )
+                )
+                continue
+
+            nutrition_per_100g = barcode_record.get("nutrition_per_100g") or {}
+            try:
+                mass_g = float(item.get("mass_g"))
+            except (TypeError, ValueError):
+                mass_g = fallback_mass_g if fallback_mass_g is not None else 100.0
+            nutrition = self._scale_per_100g(
+                nutrition_per_100g,
+                mass_g * portion_multiplier,
+            )
+            if item.get("mass_source") == "explicit_text":
+                used_explicit_barcode_mass = True
+            items.append(
+                MealItemResult(
+                    name=str(
+                        item.get("display_name")
+                        or (barcode_record.get("product") or {}).get("name")
+                        or item.get("canonical_name")
+                        or "packaged food"
+                    ),
+                    source="barcode",
+                    mass_g=nutrition.mass_g,
+                    nutrition=nutrition,
+                    confidence=confidence,
+                    notes=[
+                        "Nutrition density came from barcode nutrition_per_100g.",
+                        f"Barcode product: {(barcode_record.get('product') or {}).get('name') or '-'}",
+                        f"Serving mass came from {item.get('mass_source') or 'unknown'} ingredient resolution.",
+                    ],
+                )
+            )
+        return items, used_explicit_barcode_mass
+
+    def _barcode_records(self, barcode_data: dict[str, Any]) -> list[dict[str, Any]]:
+        candidates = barcode_data.get("candidates") or []
+        records: list[dict[str, Any]] = []
+        for candidate in candidates:
+            if candidate.get("error"):
+                continue
+            data = candidate.get("data") or {}
+            if self._has_any_macro(data.get("nutrition_per_100g") or {}):
+                records.append(data)
+        if records:
+            return records
+        if self._has_any_macro(barcode_data.get("nutrition_per_100g") or {}):
+            return [barcode_data]
+        return []
+
+    def _barcode_target_map(
+        self,
+        barcode_data: dict[str, Any],
+        resolution_items: list[dict[str, Any]],
+    ) -> dict[int, dict[str, Any]]:
+        target_map: dict[int, dict[str, Any]] = {}
+        for record in self._barcode_records(barcode_data):
+            target_index = self._barcode_resolution_target_index(record, resolution_items)
+            if target_index is None or target_index in target_map:
+                continue
+            target_map[target_index] = record
+        return target_map
+
+    def _resolution_items_from_text_nutrition(
+        self,
+        text_nutrition_data: dict[str, Any],
+    ) -> list[dict[str, Any]]:
+        items: list[dict[str, Any]] = []
+        for item in text_nutrition_data.get("items") or []:
+            items.append(
+                {
+                    "display_name": item.get("name"),
+                    "canonical_name": item.get("lookup_name"),
+                    "source": "text_nutrition",
+                    "mass_g": item.get("mass_g"),
+                    "mass_source": item.get("mass_source"),
+                    "nutrition": item.get("nutrition") or {},
+                    "confidence": item.get("confidence"),
+                    "notes": [
+                        f"Text nutrition estimate using {item.get('mass_source') or 'unknown'} mass.",
+                        *[str(value) for value in item.get("assumptions", [])],
+                    ],
+                }
+            )
+        return items
+
+    def _barcode_resolution_target_index(
+        self,
+        barcode_data: dict[str, Any],
+        resolution_items: list[dict[str, Any]],
+    ) -> int | None:
+        if not resolution_items:
+            return None
+
+        product = barcode_data.get("product") or {}
+        product_text = " ".join(
+            str(value)
+            for value in (
+                product.get("name"),
+                product.get("brand"),
+                product.get("categories"),
+            )
+            if value
+        )
+        product_tokens = set(self._normalize_food_name(product_text).split())
+        if not product_tokens:
+            return 0 if len(resolution_items) == 1 else None
+
+        best_index: int | None = None
+        best_score = 0
+        for index, item in enumerate(resolution_items):
+            item_text = " ".join(
+                str(value)
+                for value in (
+                    item.get("display_name"),
+                    item.get("canonical_name"),
+                )
+                if value
+            )
+            item_tokens = set(self._normalize_food_name(item_text).split())
+            score = len(product_tokens & item_tokens)
+            if score > best_score:
+                best_score = score
+                best_index = index
+
+        if best_index is not None and best_score > 0:
+            return best_index
+        return 0 if len(resolution_items) == 1 else None
+
+    def _item_from_resolution_item(
+        self,
+        item: dict[str, Any],
+        confidence: float,
+        portion_multiplier: float,
+    ) -> MealItemResult:
+        nutrition = self._scale_totals(item.get("nutrition") or {}, portion_multiplier)
+        notes = list(item.get("notes") or [])
+        links = item.get("links") or []
+        for link in links:
+            action = link.get("action")
+            source = link.get("source")
+            name = link.get("name")
+            if action and source and name:
+                notes.append(f"{action}: {source} '{name}'.")
+        return MealItemResult(
+            name=str(item.get("display_name") or item.get("canonical_name") or "unknown food"),
+            source=(
+                "text_nutrition"
+                if item.get("source") in {"text_nutrition", "mixed"}
+                else str(item.get("source") or "vision")
+            ),
+            mass_g=nutrition.mass_g,
+            nutrition=nutrition,
+            confidence=min(float(item.get("confidence") or confidence), confidence),
+            notes=notes,
+        )
 
     def _build_mixed_text_vision_items(
         self,
@@ -762,6 +1096,16 @@ class FusionAgent(BaseAgent):
             )
         return items
 
+    def _resolution_uses_only_explicit_text(self, ingredient_resolution_data: dict[str, Any]) -> bool:
+        items = ingredient_resolution_data.get("items") or []
+        if not items:
+            return False
+        return all(
+            item.get("mass_source") == "explicit_text"
+            and item.get("source") in {"text_nutrition", "mixed"}
+            for item in items
+        )
+
     def _scale_items_to_anchor(
         self,
         items: list[MealItemResult],
@@ -1001,14 +1345,24 @@ class FusionAgent(BaseAgent):
         text_data: dict[str, Any],
         barcode_data: dict[str, Any],
         llm_decision: dict[str, Any] | None,
+        ingredient_resolution_data: dict[str, Any] | None = None,
     ) -> dict[str, str]:
-        overrides = {
+        accepted_replacements = {
             str(key): str(value)
-            for key, value in ((llm_decision or {}).get("corrected_food_names") or {}).items()
+            for key, value in ((ingredient_resolution_data or {}).get("replacements") or {}).items()
             if key and value
         }
-        if overrides:
-            return overrides
+        if ingredient_resolution_data is not None:
+            return accepted_replacements
+
+        if ingredient_resolution_data is None:
+            overrides = {
+                str(key): str(value)
+                for key, value in ((llm_decision or {}).get("corrected_food_names") or {}).items()
+                if key and value
+            }
+            if overrides:
+                return overrides
 
         vision_names = [
             str(ingredient.get("name"))
@@ -1024,10 +1378,7 @@ class FusionAgent(BaseAgent):
         if vision_tokens & text_tokens:
             return {}
 
-        if len(text_foods) == len(vision_names):
-            return dict(zip(vision_names, text_foods))
-
-        if len(text_foods) == 1 and len(vision_names) == 1:
+        if len(text_foods) == 1 and len(vision_names) == 1 and not ingredient_resolution_data:
             return {vision_names[0]: text_foods[0]}
 
         product = barcode_data.get("product") or {}

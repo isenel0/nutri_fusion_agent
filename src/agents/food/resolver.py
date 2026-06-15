@@ -39,10 +39,18 @@ class IngredientResolverAgent(BaseAgent):
         "cheese": "dairy",
         "feta cheese": "dairy",
         "yogurt": "dairy",
+        "ice cream": "dairy",
         "chicken": "meat",
+        "duck": "meat",
         "beef": "meat",
+        "grilled beef": "meat",
+        "beef tenderloin": "meat",
+        "beef doner": "meat",
+        "lamb": "meat",
         "pork": "meat",
         "fried meat": "meat",
+        "roasted chicken": "meat",
+        "boiled chicken breast": "meat",
         "sausage": "meat",
         "egg": "egg",
         "apple": "fruit",
@@ -57,11 +65,14 @@ class IngredientResolverAgent(BaseAgent):
     def __init__(
         self,
         aliases_path: Path | None = None,
+        visual_traits_path: Path | None = None,
         model: str | None = None,
         timeout_seconds: int | None = None,
     ) -> None:
         self.aliases_path = aliases_path or Path(__file__).with_name("aliases.json")
         self.aliases = self._load_aliases(self.aliases_path)
+        self.visual_traits_path = visual_traits_path or Path(__file__).with_name("visual_traits.json")
+        self.visual_traits = self._load_visual_traits(self.visual_traits_path)
         self.model = (
             model
             or os.getenv("OLLAMA_INGREDIENT_MODEL")
@@ -175,6 +186,13 @@ class IngredientResolverAgent(BaseAgent):
         used_vision: set[int] = set()
         used_explicit_text: set[int] = set()
         used_remaining_text: set[int] = set()
+        ignored_remaining_vision: list[str] = []
+        complete_explicit_text = self._complete_explicit_text(
+            explicit_text=explicit_text,
+            remaining_text=remaining_text,
+            vision_items=vision_items,
+            decision_data=decision_data,
+        )
 
         corrected = {
             self._canonical(str(key)): self._canonical(str(value))
@@ -257,6 +275,63 @@ class IngredientResolverAgent(BaseAgent):
                 )
             )
 
+        unresolved_remaining = [
+            item
+            for index, item in enumerate(remaining_text)
+            if index not in used_remaining_text
+        ]
+        if unresolved_remaining:
+            for item in unresolved_remaining:
+                remaining_index = self._text_index(remaining_text, item)
+                if remaining_index is not None:
+                    used_remaining_text.add(remaining_index)
+                resolved.append(self._resolved_from_text(item, vision_item=None, action="add"))
+            assumptions.append(
+                "Unmatched text ingredients were kept as mandatory calculation ingredients: "
+                + ", ".join(str(item.get("name")) for item in unresolved_remaining if item.get("name"))
+                + "."
+            )
+            if self._text_appears_to_cover_vision(text_items=text_items, vision_items=vision_items):
+                blocked_vision = [
+                    str(item.get("name"))
+                    for index, item in enumerate(vision_items)
+                    if index not in used_vision and item.get("name")
+                ]
+                if blocked_vision:
+                    used_vision.update(
+                        index
+                        for index, item in enumerate(vision_items)
+                        if index not in used_vision and item.get("name")
+                    )
+                    ignored_remaining_vision.extend(blocked_vision)
+                    assumptions.append(
+                        "Text ingredients were treated as the ingredient identity source; incompatible unmatched vision labels were excluded: "
+                        + ", ".join(blocked_vision)
+                        + "."
+                    )
+                    warnings.append(
+                        "Vision/text ingredient conflict: rejected visually incompatible replacements and avoided one-to-one forced mapping."
+                    )
+
+        if complete_explicit_text and used_explicit_text:
+            preserved_vision = [
+                item.display_name
+                for item in resolved
+                if item.source == "vision"
+            ]
+            if preserved_vision:
+                resolved = [
+                    item
+                    for item in resolved
+                    if item.source != "vision"
+                ]
+                ignored_remaining_vision.extend(preserved_vision)
+                assumptions.append(
+                    "Complete explicit text with gram quantities overrode preserved vision-only items to prevent duplicate nutrition counting: "
+                    + ", ".join(preserved_vision)
+                    + "."
+                )
+
         remaining_anchor = self._remaining_anchor(
             vision_totals=vision_data.get("totals") or {},
             used_text_items=[
@@ -270,9 +345,28 @@ class IngredientResolverAgent(BaseAgent):
             item for index, item in enumerate(vision_items) if index not in used_vision
         ]
         if remaining_vision:
-            if used_explicit_text:
+            if used_explicit_text and complete_explicit_text:
+                ignored_remaining_vision = [
+                    str(item.get("name"))
+                    for item in remaining_vision
+                    if item.get("name")
+                ]
+                if ignored_remaining_vision:
+                    assumptions.append(
+                        "Complete explicit text with gram quantities was used as the calculation base; "
+                        "unmatched vision detections were treated as duplicate/conflicting evidence and excluded: "
+                        + ", ".join(ignored_remaining_vision)
+                        + "."
+                    )
+            elif used_explicit_text:
                 for item in remaining_vision:
                     resolved.append(self._resolved_from_vision(item))
+            elif used_vision:
+                for item in remaining_vision:
+                    if self._should_preserve_remaining_vision(item, vision_data.get("totals") or {}):
+                        resolved.append(self._resolved_from_vision(item))
+                    elif item.get("name"):
+                        ignored_remaining_vision.append(str(item.get("name")))
             else:
                 scaled_remaining = self._scaled_vision_items(remaining_vision, remaining_anchor)
                 for item in scaled_remaining:
@@ -287,12 +381,84 @@ class IngredientResolverAgent(BaseAgent):
             for index, item in enumerate(vision_items)
             if index not in used_vision and not remaining_vision
         ]
+        unmatched_vision.extend(ignored_remaining_vision)
         unmatched_text = [
             str(item.get("name"))
             for index, item in enumerate(explicit_text)
             if index not in used_explicit_text
         ]
         return resolved, replacements, unmatched_vision, unmatched_text, assumptions, warnings
+
+    def _text_appears_to_cover_vision(
+        self,
+        text_items: list[dict[str, Any]],
+        vision_items: list[dict[str, Any]],
+    ) -> bool:
+        text_count = len([item for item in text_items if item.get("name") or item.get("lookup_name")])
+        vision_count = len([item for item in vision_items if item.get("name")])
+        return bool(text_count and vision_count and text_count >= min(2, vision_count))
+
+    def _should_preserve_remaining_vision(
+        self,
+        vision_item: dict[str, Any],
+        vision_totals: dict[str, Any],
+    ) -> bool:
+        nutrition = vision_item.get("nutrition") or {}
+        item_mass = float(nutrition.get("mass_g") or 0.0)
+        total_mass = float(vision_totals.get("mass_g") or 0.0)
+        confidence = float(vision_item.get("confidence") or 0.0)
+        mass_ratio = item_mass / total_mass if total_mass > 0 else 0.0
+        return confidence >= 0.5 and mass_ratio >= 0.03
+
+    def _complete_explicit_text(
+        self,
+        explicit_text: list[dict[str, Any]],
+        remaining_text: list[dict[str, Any]],
+        vision_items: list[dict[str, Any]],
+        decision_data: dict[str, Any],
+    ) -> bool:
+        if not explicit_text or remaining_text:
+            return False
+
+        decision_text = " ".join(
+            str(value)
+            for value in [
+                *(decision_data.get("applied_rules") or []),
+                *(decision_data.get("assumptions") or []),
+                *(decision_data.get("conflicts") or []),
+                decision_data.get("explanation") or "",
+            ]
+        ).lower()
+        partial_markers = (
+            "partial",
+            "incomplete",
+            "missing visible",
+            "preserve vision",
+            "kept vision",
+            "supplementary",
+            "not exhaustive",
+        )
+        if any(marker in decision_text for marker in partial_markers):
+            return False
+
+        explicit_complete_markers = (
+            "complete meal",
+            "complete text",
+            "all visible",
+            "all foods",
+            "all ingredients",
+            "only contains",
+            "contains only",
+            "single ingredient meal",
+        )
+        if any(marker in decision_text for marker in explicit_complete_markers):
+            return True
+
+        visible_count = len([item for item in vision_items if item.get("name")])
+        if visible_count > 1 and len(explicit_text) < visible_count:
+            return False
+
+        return True
 
     async def _llm_semantic_decisions(
         self,
@@ -307,13 +473,22 @@ class IngredientResolverAgent(BaseAgent):
                 "langchain, langchain-core, and langchain-ollama are required for semantic ingredient resolution."
             ) from exc
 
+        vision_totals = vision_data.get("totals") or {}
+        total_mass = float(vision_totals.get("mass_g") or 0.0)
         context = {
             "vision_items": [
                 {
                     "name": item.get("name"),
                     "confidence": item.get("confidence"),
                     "mass_g": (item.get("nutrition") or {}).get("mass_g"),
+                    "mass_ratio": (
+                        float((item.get("nutrition") or {}).get("mass_g") or 0.0) / total_mass
+                        if total_mass > 0
+                        else None
+                    ),
                     "calories_kcal": (item.get("nutrition") or {}).get("calories_kcal"),
+                    "food_group": self._food_group(self._canonical(str(item.get("name") or ""))),
+                    "visual_traits": self._visual_traits_for_name(str(item.get("name") or "")),
                 }
                 for item in vision_data.get("ingredients") or []
             ],
@@ -325,9 +500,21 @@ class IngredientResolverAgent(BaseAgent):
                     "mass_source": item.get("mass_source"),
                     "confidence": item.get("confidence"),
                     "canonicalization_source": item.get("canonicalization_source"),
+                    "food_group": self._food_group(
+                        self._canonical(str(item.get("lookup_name") or item.get("name") or ""))
+                    ),
+                    "visual_traits": self._visual_traits_for_name(
+                        str(item.get("lookup_name") or item.get("name") or "")
+                    ),
                 }
                 for item in text_nutrition_data.get("items") or []
             ],
+            "policy": {
+                "short_text_is_partial": True,
+                "preserve_uncontradicted_vision": True,
+                "replace_requires_same_physical_food_region": True,
+                "single_text_food_should_not_remove_all_vision_items": True,
+            },
         }
         prompt = ChatPromptTemplate.from_messages(
             [
@@ -338,17 +525,23 @@ class IngredientResolverAgent(BaseAgent):
                     "partial and may correct only one visible item. Return JSON only. Do not calculate nutrition, "
                     "calories, macros, or grams. Use only names from the provided JSON for text_food and vision_food. "
                     "Allowed actions: replace, match, add, preserve, ignore. "
-                    "Use replace when text likely corrects a vision misclassification. Use match when they are the "
-                    "same food. Use add when a text food is extra and not represented by vision. Use preserve for "
-                    "vision foods not contradicted by text. Use ignore for malformed/non-food text. "
+                    "Think about whether a text food and a vision item could be the same physical food region using "
+                    "the available visual proxies: vision class name, confidence, mass_ratio, and food_group. "
+                    "Use match when they are the same food. Use replace when text likely corrects a vision "
+                    "misclassification of the same physical region. Use add only when a text food is hidden/extra "
+                    "or not represented by any vision item. Use preserve for every vision food not contradicted by "
+                    "text. Use ignore for malformed/non-food text. "
+                    "A short text input with one food name is partial evidence by default; it must not remove all "
+                    "other vision foods. If one text food replaces or matches one vision item, preserve the other "
+                    "vision items unless the text clearly says the meal contains only that item. "
                     "If text has explicit mass and plausibly refers to a vision item, prefer replace/match with "
                     "mass_policy use_text_mass and nutrition_policy use_text_nutrition. If text has no explicit mass "
-                    "but corrects a vision item, use mass_policy use_vision_mass and nutrition_policy use_vision_nutrition.",
+                    "but corrects a vision item, use mass_policy use_vision_mass and nutrition_policy use_text_nutrition.",
                 ),
                 (
                     "human",
                     "Evidence JSON:\n{context_json}\n\n"
-                    "Return JSON exactly in this shape: "
+                    "Return JSON exactly in this shape. Include preserve decisions for uncontradicted vision items: "
                     "{{\"decisions\":[{{\"action\":\"replace|match|add|preserve|ignore\","
                     "\"text_food\":\"... or null\",\"vision_food\":\"... or null\","
                     "\"canonical_food\":\"...\",\"mass_policy\":\"use_text_mass|use_vision_mass|none\","
@@ -422,7 +615,7 @@ class IngredientResolverAgent(BaseAgent):
         used_explicit_text: set[int],
         used_remaining_text: set[int],
     ) -> None:
-        for decision in decisions:
+        for decision in self._prioritized_semantic_decisions(decisions):
             action = str(decision.get("action"))
             reason = str(decision.get("reason") or "").strip()
             confidence = float(decision.get("confidence") or 0.65)
@@ -436,11 +629,35 @@ class IngredientResolverAgent(BaseAgent):
             )
 
             if action in {"replace", "match"}:
-                if vision_index is None or text_location is None:
-                    warnings.append(f"LLM {action} decision ignored because referenced items were not available.")
+                if text_location is None:
+                    warnings.append(f"LLM {action} decision ignored because referenced text item was not available.")
                     continue
                 text_kind, text_index, text_item = text_location
+                exact_vision_index = self._exact_vision_match_for_text(
+                    text_item=text_item,
+                    vision_items=vision_items,
+                    used_vision=used_vision,
+                )
+                if exact_vision_index is not None:
+                    vision_index = exact_vision_index
+                if vision_index is None:
+                    vision_index = self._compatible_vision_match_for_text(
+                        text_item=text_item,
+                        vision_items=vision_items,
+                        used_vision=used_vision,
+                    )
+                if vision_index is None:
+                    warnings.append(f"LLM {action} decision ignored because no compatible vision item was available.")
+                    continue
                 vision_item = vision_items[vision_index]
+                if not self._visual_replacement_allowed(text_item=text_item, vision_item=vision_item):
+                    warnings.append(
+                        "LLM "
+                        + action
+                        + f" decision rejected by visual compatibility gate: "
+                        + f"vision '{vision_item.get('name')}' vs text '{text_item.get('name')}'."
+                    )
+                    continue
                 used_vision.add(vision_index)
                 if text_kind == "explicit":
                     used_explicit_text.add(text_index)
@@ -471,11 +688,32 @@ class IngredientResolverAgent(BaseAgent):
                     continue
                 text_kind, text_index, text_item = text_location
                 if text_item.get("mass_source") != "explicit_text":
-                    if text_kind == "remaining":
-                        used_remaining_text.add(text_index)
-                    assumptions.append(
-                        f"LLM marked text ingredient '{text_item.get('name')}' as extra, but it was not quantified; it was not added to numeric totals."
+                    compatible_vision_index = self._compatible_vision_match_for_text(
+                        text_item=text_item,
+                        vision_items=vision_items,
+                        used_vision=used_vision,
                     )
+                    if compatible_vision_index is not None:
+                        used_vision.add(compatible_vision_index)
+                        if text_kind == "remaining":
+                            used_remaining_text.add(text_index)
+                        vision_item = vision_items[compatible_vision_index]
+                        item = self._resolved_from_vision_relabel(
+                            vision_item=vision_item,
+                            text_item=text_item,
+                        )
+                        item.confidence = min(max((item.confidence + confidence) / 2, 0.0), 1.0)
+                        if reason:
+                            item.notes.append(reason)
+                        resolved.append(item)
+                        replacements[str(vision_item.get("name"))] = str(text_item.get("name"))
+                        assumptions.append(
+                            f"LLM add decision for text ingredient '{text_item.get('name')}' was linked to compatible vision item '{vision_item.get('name')}' to avoid dropping a visible text food."
+                        )
+                    else:
+                        warnings.append(
+                            f"LLM add decision for non-explicit text ingredient '{text_item.get('name')}' had no compatible vision item and was not added to numeric totals."
+                        )
                     continue
                 used_explicit_text.add(text_index)
                 item = self._resolved_from_text(text_item, vision_item=None, action="add")
@@ -509,6 +747,22 @@ class IngredientResolverAgent(BaseAgent):
                     f"LLM semantic resolver ignored text ingredient '{text_item.get('name')}'."
                 )
 
+    def _prioritized_semantic_decisions(
+        self,
+        decisions: list[dict[str, Any]],
+    ) -> list[dict[str, Any]]:
+        priority = {
+            "match": 0,
+            "replace": 0,
+            "add": 1,
+            "ignore": 2,
+            "preserve": 3,
+        }
+        return sorted(
+            decisions,
+            key=lambda decision: priority.get(str(decision.get("action")), 99),
+        )
+
     def _vision_index_for_decision(
         self,
         decision: dict[str, Any],
@@ -530,6 +784,104 @@ class IngredientResolverAgent(BaseAgent):
                 if item_name == normalized or self._normalize(str(item.get("name") or "")) == self._normalize(str(name)):
                     return index
         return None
+
+    def _exact_vision_match_for_text(
+        self,
+        text_item: dict[str, Any],
+        vision_items: list[dict[str, Any]],
+        used_vision: set[int],
+    ) -> int | None:
+        text_names = {
+            self._canonical(str(text_item.get("lookup_name") or "")),
+            self._canonical(str(text_item.get("name") or "")),
+        }
+        for index, item in enumerate(vision_items):
+            if index in used_vision:
+                continue
+            if self._canonical(str(item.get("name") or "")) in text_names:
+                return index
+        return None
+
+    def _compatible_vision_match_for_text(
+        self,
+        text_item: dict[str, Any],
+        vision_items: list[dict[str, Any]],
+        used_vision: set[int],
+    ) -> int | None:
+        exact = self._exact_vision_match_for_text(text_item, vision_items, used_vision)
+        if exact is not None:
+            return exact
+
+        text_canonical = self._canonical(str(text_item.get("lookup_name") or text_item.get("name") or ""))
+        text_group = self._food_group(text_canonical)
+        if text_group is None:
+            return None
+
+        grouped = [
+            index
+            for index, item in enumerate(vision_items)
+            if index not in used_vision
+            and self._food_group(self._canonical(str(item.get("name") or ""))) == text_group
+            and self._visual_replacement_allowed(text_item=text_item, vision_item=item)
+        ]
+        if len(grouped) == 1:
+            return grouped[0]
+        return None
+
+    def _visual_replacement_allowed(
+        self,
+        text_item: dict[str, Any],
+        vision_item: dict[str, Any],
+    ) -> bool:
+        text_canonical = self._canonical(str(text_item.get("lookup_name") or text_item.get("name") or ""))
+        return self._visual_replacement_allowed_by_canonical(text_canonical, vision_item)
+
+    def _visual_replacement_allowed_by_canonical(
+        self,
+        text_canonical: str,
+        vision_item: dict[str, Any],
+    ) -> bool:
+        vision_canonical = self._canonical(str(vision_item.get("name") or ""))
+        if not text_canonical or not vision_canonical:
+            return False
+        if text_canonical == vision_canonical:
+            return True
+
+        text_group = self._food_group(text_canonical)
+        vision_group = self._food_group(vision_canonical)
+        if text_group is None or vision_group is None or text_group != vision_group:
+            return False
+
+        text_traits = self._visual_traits_for_canonical(text_canonical)
+        vision_traits = self._visual_traits_for_canonical(vision_canonical)
+        if not text_traits or not vision_traits:
+            return text_group in {"dairy", "leafy_green", "meat", "grain", "starch"}
+
+        color_overlap = self._trait_overlap(text_traits, vision_traits, "colors")
+        texture_overlap = self._trait_overlap(text_traits, vision_traits, "textures")
+        shape_overlap = self._trait_overlap(text_traits, vision_traits, "shapes")
+        return color_overlap or texture_overlap or shape_overlap
+
+    def _visual_traits_for_name(self, value: str) -> dict[str, list[str]]:
+        return self._visual_traits_for_canonical(self._canonical(value))
+
+    def _visual_traits_for_canonical(self, canonical: str) -> dict[str, list[str]]:
+        traits = self.visual_traits.get(canonical) or {}
+        return {
+            key: [self._normalize(str(item)) for item in values if str(item).strip()]
+            for key, values in traits.items()
+            if isinstance(values, list)
+        }
+
+    def _trait_overlap(
+        self,
+        left: dict[str, list[str]],
+        right: dict[str, list[str]],
+        key: str,
+    ) -> bool:
+        left_values = set(left.get(key) or [])
+        right_values = set(right.get(key) or [])
+        return bool(left_values and right_values and left_values & right_values)
 
     def _text_location_for_decision(
         self,
@@ -595,7 +947,10 @@ class IngredientResolverAgent(BaseAgent):
             vision_canonical = self._canonical(str(item.get("name")))
             if vision_canonical == text_canonical:
                 return index
-            if corrected.get(vision_canonical) == text_canonical:
+            if (
+                corrected.get(vision_canonical) == text_canonical
+                and self._visual_replacement_allowed_by_canonical(text_canonical, item)
+            ):
                 return index
         return None
 
@@ -626,12 +981,6 @@ class IngredientResolverAgent(BaseAgent):
 
         if links:
             return links
-
-        if len(remaining_text) == len(available):
-            return [
-                (text_item, vision_index)
-                for text_item, vision_index in zip(remaining_text, available)
-            ]
 
         if len(remaining_text) == 1:
             text_canonical = self._canonical(
@@ -671,9 +1020,18 @@ class IngredientResolverAgent(BaseAgent):
                     return grouped[0]
 
         if len(explicit_text) == 1 and len(available) == 1:
-            return available[0]
+            candidate = available[0]
+            if self._visual_replacement_allowed_by_canonical(
+                self._canonical(str(explicit_text[0].get("lookup_name") or explicit_text[0].get("name"))),
+                vision_items[candidate],
+            ):
+                return candidate
         if len(explicit_text) == len(vision_items):
-            return available[0] if available else None
+            for text_item in explicit_text:
+                text_canonical = self._canonical(str(text_item.get("lookup_name") or text_item.get("name")))
+                for candidate in available:
+                    if self._visual_replacement_allowed_by_canonical(text_canonical, vision_items[candidate]):
+                        return candidate
         return None
 
     def _resolved_from_text(
@@ -711,7 +1069,7 @@ class IngredientResolverAgent(BaseAgent):
             canonical_name=canonical,
             source="mixed" if vision_item is not None else "text_nutrition",
             mass_g=nutrition.mass_g,
-            mass_source="explicit_text" if text_item.get("mass_source") == "explicit_text" else "default_serving",
+            mass_source=self._resolved_mass_source(text_item.get("mass_source")),
             nutrition=nutrition,
             confidence=float(text_item.get("confidence") or 0.7),
             links=links,
@@ -748,7 +1106,13 @@ class IngredientResolverAgent(BaseAgent):
     ) -> ResolvedIngredient:
         display_name = str(text_item.get("name") or text_item.get("lookup_name") or vision_item.get("name"))
         canonical_name = self._canonical(str(text_item.get("lookup_name") or display_name))
-        nutrition = NutritionEstimate.model_validate(vision_item.get("nutrition") or {})
+        vision_nutrition = NutritionEstimate.model_validate(vision_item.get("nutrition") or {})
+        nutrition = self._text_nutrition_scaled_to_mass(
+            text_item=text_item,
+            target_mass_g=vision_nutrition.mass_g,
+        )
+        if nutrition is None:
+            nutrition = vision_nutrition
         return ResolvedIngredient(
             display_name=display_name,
             canonical_name=canonical_name,
@@ -774,9 +1138,37 @@ class IngredientResolverAgent(BaseAgent):
                 ),
             ],
             notes=[
-                f"Display identity came from text; mass and nutrition remain from vision because text had no explicit grams."
+                "Display identity came from text; mass came from vision, and nutrition came from the text food prior scaled to that mass."
             ],
         )
+
+    def _text_nutrition_scaled_to_mass(
+        self,
+        text_item: dict[str, Any],
+        target_mass_g: float | None,
+    ) -> NutritionEstimate | None:
+        if target_mass_g is None:
+            return None
+        text_nutrition = NutritionEstimate.model_validate(text_item.get("nutrition") or {})
+        source_mass = text_nutrition.mass_g or text_item.get("mass_g")
+        if not source_mass:
+            return None
+        factor = float(target_mass_g) / float(source_mass)
+        return NutritionEstimate(
+            calories_kcal=self._scale(text_nutrition.calories_kcal, factor),
+            mass_g=float(target_mass_g),
+            protein_g=self._scale(text_nutrition.protein_g, factor),
+            carbs_g=self._scale(text_nutrition.carbs_g, factor),
+            fat_g=self._scale(text_nutrition.fat_g, factor),
+        )
+
+    def _resolved_mass_source(self, value: Any) -> str:
+        mass_source = str(value or "default_serving")
+        if mass_source == "vision_distributed":
+            return "vision"
+        if mass_source in {"vision", "explicit_text", "vision_remaining", "default_serving", "barcode", "unknown"}:
+            return mass_source
+        return "unknown"
 
     def _remaining_anchor(
         self,
@@ -876,3 +1268,19 @@ class IngredientResolverAgent(BaseAgent):
             return {}
         raw = json.loads(path.read_text(encoding="utf-8"))
         return {self._normalize(key): self._normalize(str(value)) for key, value in raw.items()}
+
+    def _load_visual_traits(self, path: Path) -> dict[str, dict[str, list[str]]]:
+        if not path.exists():
+            return {}
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        traits: dict[str, dict[str, list[str]]] = {}
+        for name, value in raw.items():
+            if not isinstance(value, dict):
+                continue
+            canonical = self._canonical(str(name))
+            traits[canonical] = {
+                key: [self._normalize(str(item)) for item in values if str(item).strip()]
+                for key, values in value.items()
+                if isinstance(values, list)
+            }
+        return traits

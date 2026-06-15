@@ -1,0 +1,112 @@
+{
+  "almond": {
+    "colors": ["brown", "beige"],
+    "textures": ["hard", "dry", "crunchy"],
+    "shapes": ["small", "oval"]
+  },
+  "banana": {
+    "colors": ["yellow", "cream"],
+    "textures": ["soft", "smooth"],
+    "shapes": ["long", "curved", "slice"]
+  },
+  "beef": {
+    "colors": ["brown", "dark brown", "red", "golden"],
+    "textures": ["fibrous", "grilled", "fried", "solid"],
+    "shapes": ["slice", "chunk", "piece", "strip"]
+  },
+  "beef doner": {
+    "colors": ["brown", "dark brown", "golden"],
+    "textures": ["fibrous", "grilled", "fried", "solid"],
+    "shapes": ["slice", "strip", "piece"]
+  },
+  "beef tenderloin": {
+    "colors": ["brown", "dark brown", "red"],
+    "textures": ["fibrous", "grilled", "solid"],
+    "shapes": ["slice", "chunk", "piece"]
+  },
+  "cheese": {
+    "colors": ["white", "yellow", "cream"],
+    "textures": ["smooth", "solid", "soft"],
+    "shapes": ["slice", "cube", "block", "piece"]
+  },
+  "chicken": {
+    "colors": ["white", "brown", "golden"],
+    "textures": ["fibrous", "grilled", "fried", "solid"],
+    "shapes": ["slice", "chunk", "piece", "strip"]
+  },
+  "cilantro mint": {
+    "colors": ["green"],
+    "textures": ["leafy", "thin"],
+    "shapes": ["leaf", "small"]
+  },
+  "cucumber": {
+    "colors": ["green", "white"],
+    "textures": ["crisp", "wet", "smooth"],
+    "shapes": ["slice", "round", "long"]
+  },
+  "duck": {
+    "colors": ["brown", "dark brown", "golden"],
+    "textures": ["fibrous", "grilled", "fried", "solid"],
+    "shapes": ["slice", "chunk", "piece", "strip"]
+  },
+  "feta cheese": {
+    "colors": ["white", "cream"],
+    "textures": ["crumbly", "soft", "solid"],
+    "shapes": ["cube", "block", "piece"]
+  },
+  "fried meat": {
+    "colors": ["brown", "dark brown", "golden"],
+    "textures": ["fibrous", "grilled", "fried", "solid"],
+    "shapes": ["slice", "chunk", "piece", "strip"]
+  },
+  "grilled beef": {
+    "colors": ["brown", "dark brown", "red"],
+    "textures": ["fibrous", "grilled", "solid"],
+    "shapes": ["slice", "chunk", "piece"]
+  },
+  "ice cream": {
+    "colors": ["white", "yellow", "cream"],
+    "textures": ["smooth", "soft", "creamy"],
+    "shapes": ["scoop", "piece", "blob"]
+  },
+  "olives": {
+    "colors": ["green", "black"],
+    "textures": ["smooth", "glossy", "firm"],
+    "shapes": ["small", "oval", "round"]
+  },
+  "pineapple": {
+    "colors": ["yellow", "gold"],
+    "textures": ["fibrous", "juicy"],
+    "shapes": ["chunk", "cube", "slice"]
+  },
+  "pork": {
+    "colors": ["white", "brown", "golden", "pink"],
+    "textures": ["fibrous", "grilled", "fried", "solid"],
+    "shapes": ["slice", "chunk", "piece", "strip"]
+  },
+  "roasted chicken": {
+    "colors": ["brown", "golden", "white"],
+    "textures": ["fibrous", "grilled", "fried", "solid"],
+    "shapes": ["slice", "chunk", "piece", "strip"]
+  },
+  "sausage": {
+    "colors": ["brown", "red", "dark brown"],
+    "textures": ["firm", "fried", "solid"],
+    "shapes": ["slice", "round", "strip", "piece"]
+  },
+  "spinach": {
+    "colors": ["green"],
+    "textures": ["leafy", "thin", "soft"],
+    "shapes": ["leaf"]
+  },
+  "tomato": {
+    "colors": ["red", "orange"],
+    "textures": ["juicy", "smooth", "soft"],
+    "shapes": ["round", "slice", "wedge"]
+  },
+  "yogurt": {
+    "colors": ["white", "cream"],
+    "textures": ["smooth", "creamy", "liquid"],
+    "shapes": ["spread", "blob"]
+  }
+}

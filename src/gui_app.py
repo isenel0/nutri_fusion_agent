@@ -10,6 +10,8 @@ from tkinter import filedialog, ttk
 from tkinter.scrolledtext import ScrolledText
 from typing import Any
 
+from PIL import Image, ImageTk
+
 from agents.decision.agent import FusionDecisionAgent
 from agents.fusion.agent import FusionAgent
 from schemas import AgentResponse
@@ -20,7 +22,8 @@ async def run_multimodal_pipeline(
     image_path: str | None,
     depth_image_path: str | None,
     text_input: str | None,
-    barcode_image_path: str | None,
+    barcode_image_path: str | None = None,
+    barcode_image_paths: list[str] | None = None,
 ) -> dict[str, Any]:
     """Run available modality agents in parallel and then fuse outputs.
 
@@ -32,8 +35,7 @@ async def run_multimodal_pipeline(
     image_filename: str | None = None
     depth_image_bytes: bytes | None = None
     depth_image_filename: str | None = None
-    barcode_image_bytes: bytes | None = None
-    barcode_image_filename: str | None = None
+    barcode_image_payloads: list[dict[str, Any]] = []
 
     if image_path:
         path = Path(image_path)
@@ -49,12 +51,24 @@ async def run_multimodal_pipeline(
         depth_image_bytes = path.read_bytes()
         depth_image_filename = path.name
 
-    if barcode_image_path:
+    selected_barcode_paths = barcode_image_paths or (
+        [barcode_image_path] if barcode_image_path else []
+    )
+    for barcode_path in selected_barcode_paths:
+        path = Path(barcode_path)
+        if not path.exists() or not path.is_file():
+            raise FileNotFoundError(f"Barcode image path is invalid: {barcode_path}")
+        barcode_image_payloads.append(
+            {
+                "image_bytes": path.read_bytes(),
+                "image_filename": path.name,
+            }
+        )
+
+    if barcode_image_path and not selected_barcode_paths:
         path = Path(barcode_image_path)
         if not path.exists() or not path.is_file():
             raise FileNotFoundError(f"Barcode image path is invalid: {barcode_image_path}")
-        barcode_image_bytes = path.read_bytes()
-        barcode_image_filename = path.name
 
     orchestrator = OrchestratorAgent()
     decision_agent = FusionDecisionAgent()
@@ -72,9 +86,12 @@ async def run_multimodal_pipeline(
         payload["depth_bytes"] = depth_image_bytes
         payload["depth_image_filename"] = depth_image_filename
 
-    if barcode_image_bytes is not None:
-        payload["barcode_image_bytes"] = barcode_image_bytes
-        payload["barcode_image_filename"] = barcode_image_filename
+    if barcode_image_payloads:
+        if len(barcode_image_payloads) == 1:
+            payload["barcode_image_bytes"] = barcode_image_payloads[0]["image_bytes"]
+            payload["barcode_image_filename"] = barcode_image_payloads[0]["image_filename"]
+        else:
+            payload["barcode_image_payloads"] = barcode_image_payloads
 
     orchestrator_result = await orchestrator.process(payload)
     decision_result = await decision_agent.process(orchestrator_result)
@@ -106,7 +123,7 @@ async def run_multimodal_pipeline(
             "image_path": image_path,
             "depth_image_path": depth_image_path,
             "text": text_input,
-            "barcode_image_path": barcode_image_path,
+            "barcode_image_paths": selected_barcode_paths,
         },
         "orchestrator_output": orchestrator_result.model_dump(),
         "decision_output": decision_result.model_dump(),
@@ -131,6 +148,14 @@ class MultiAgentGUI:
         self._run_generation = 0
 
         self.text_input_widget: tk.Text
+        self.vision_preview_frame: ttk.Frame
+        self.barcode_preview_frame: ttk.Frame
+        self.final_preview_frame: ttk.Frame
+        self.final_preview_canvas: tk.Canvas
+        self.final_popup_button: ttk.Button
+        self._last_final_rendered = "Final output will appear here."
+        self._last_final_output: dict[str, Any] = {}
+        self._preview_images: list[ImageTk.PhotoImage] = []
         self.vision_output: ScrolledText
         self.text_output: ScrolledText
         self.barcode_output: ScrolledText
@@ -172,7 +197,7 @@ class MultiAgentGUI:
 
         barcode_row = ttk.Frame(left)
         barcode_row.pack(fill=tk.X, pady=(0, 8))
-        ttk.Label(barcode_row, text="Barcode Image", width=13).pack(side=tk.LEFT)
+        ttk.Label(barcode_row, text="Barcodes", width=13).pack(side=tk.LEFT)
         ttk.Entry(barcode_row, textvariable=self.barcode_image_path_var).pack(
             side=tk.LEFT, fill=tk.X, expand=True, padx=8
         )
@@ -214,10 +239,21 @@ class MultiAgentGUI:
         tabs.add(barcode_tab, text="Barcode")
         tabs.add(final_tab, text="Final")
 
-        self.vision_output = self._build_output_box(vision_tab)
+        self.vision_preview_frame, self.vision_output = self._build_output_panel(
+            vision_tab,
+            "Input Images",
+        )
         self.text_output = self._build_output_box(text_tab)
-        self.barcode_output = self._build_output_box(barcode_tab)
-        self.final_output = self._build_output_box(final_tab)
+        self.barcode_preview_frame, self.barcode_output = self._build_output_panel(
+            barcode_tab,
+            "Barcode Images",
+        )
+        self.final_preview_frame, self.final_output = self._build_output_panel(
+            final_tab,
+            "Selected Images",
+            scroll_preview=True,
+            popup_button=True,
+        )
 
         self._set_text(self.vision_output, "Vision output will appear here.")
         self._set_text(self.text_output, "Text output will appear here.")
@@ -226,6 +262,70 @@ class MultiAgentGUI:
             self.final_output,
             "Final orchestrated output will appear here, even when some agents fail.",
         )
+        self._update_previews()
+
+    def _build_output_panel(
+        self,
+        parent: ttk.Frame,
+        preview_title: str,
+        scroll_preview: bool = False,
+        popup_button: bool = False,
+    ) -> tuple[ttk.Frame, ScrolledText]:
+        panel = ttk.Frame(parent)
+        panel.pack(fill=tk.BOTH, expand=True)
+
+        preview_container = ttk.Frame(panel, padding=(0, 0, 0, 8))
+        preview_container.pack(fill=tk.X)
+        ttk.Label(
+            preview_container,
+            text=preview_title,
+            font=("Helvetica", 11, "bold"),
+        ).pack(anchor="w", pady=(0, 6))
+
+        if scroll_preview:
+            preview_canvas = tk.Canvas(preview_container, height=290, highlightthickness=0)
+            preview_scrollbar = ttk.Scrollbar(
+                preview_container,
+                orient=tk.HORIZONTAL,
+                command=preview_canvas.xview,
+            )
+            preview_canvas.configure(xscrollcommand=preview_scrollbar.set)
+            preview_canvas.pack(fill=tk.X, expand=False)
+            preview_scrollbar.pack(fill=tk.X, pady=(4, 0))
+
+            preview_frame = ttk.Frame(preview_canvas)
+            window_id = preview_canvas.create_window(
+                (0, 0),
+                window=preview_frame,
+                anchor="nw",
+            )
+
+            def _sync_scrollregion(_event: tk.Event) -> None:
+                preview_canvas.configure(scrollregion=preview_canvas.bbox("all"))
+
+            def _sync_height(event: tk.Event) -> None:
+                preview_canvas.itemconfigure(window_id, height=event.height)
+
+            preview_frame.bind("<Configure>", _sync_scrollregion)
+            preview_canvas.bind("<Configure>", _sync_height)
+            self.final_preview_canvas = preview_canvas
+        else:
+            preview_frame = ttk.Frame(preview_container)
+            preview_frame.pack(fill=tk.X)
+
+        ttk.Separator(panel, orient=tk.HORIZONTAL).pack(fill=tk.X, pady=(4, 8))
+        if popup_button:
+            controls = ttk.Frame(panel)
+            controls.pack(fill=tk.X, pady=(0, 8))
+            self.final_popup_button = ttk.Button(
+                controls,
+                text="View Full Final Output",
+                command=self._open_final_popup,
+            )
+            self.final_popup_button.pack(side=tk.LEFT)
+
+        output = self._build_output_box(panel)
+        return preview_frame, output
 
     def _build_output_box(self, parent: ttk.Frame) -> ScrolledText:
         box = ScrolledText(parent, wrap=tk.WORD, font=("Menlo", 11), height=20)
@@ -243,17 +343,19 @@ class MultiAgentGUI:
         )
         if file_path:
             self.image_path_var.set(file_path)
+            self._update_previews()
 
     def choose_barcode_image(self) -> None:
-        file_path = filedialog.askopenfilename(
-            title="Select barcode image",
+        file_paths = filedialog.askopenfilenames(
+            title="Select barcode image(s)",
             filetypes=[
                 ("Image Files", "*.png *.jpg *.jpeg *.bmp *.webp"),
                 ("All Files", "*.*"),
             ],
         )
-        if file_path:
-            self.barcode_image_path_var.set(file_path)
+        if file_paths:
+            self.barcode_image_path_var.set("; ".join(file_paths))
+            self._update_previews()
 
     def choose_depth_image(self) -> None:
         file_path = filedialog.askopenfilename(
@@ -265,6 +367,7 @@ class MultiAgentGUI:
         )
         if file_path:
             self.depth_image_path_var.set(file_path)
+            self._update_previews()
 
     def clear_inputs(self) -> None:
         self._run_generation += 1
@@ -273,6 +376,7 @@ class MultiAgentGUI:
         self.barcode_image_path_var.set("")
         self.text_input_widget.delete("1.0", tk.END)
         self._reset_outputs()
+        self._update_previews()
         self.status_var.set("Ready")
 
     def _reset_outputs(self) -> None:
@@ -283,14 +387,16 @@ class MultiAgentGUI:
             self.final_output,
             "Final orchestrated output will appear here, even when some agents fail.",
         )
+        self._last_final_rendered = "Final orchestrated output will appear here, even when some agents fail."
 
     def run_pipeline(self) -> None:
         image_path = self.image_path_var.get().strip() or None
         depth_image_path = self.depth_image_path_var.get().strip() or None
         text_input = self.text_input_widget.get("1.0", tk.END).strip() or None
-        barcode_image_path = self.barcode_image_path_var.get().strip() or None
+        barcode_image_paths = self._barcode_image_paths()
+        self._update_previews()
 
-        if image_path is None and text_input is None and barcode_image_path is None:
+        if image_path is None and text_input is None and not barcode_image_paths:
             self.status_var.set(
                 "Please provide at least one input: meal image, text, or barcode image."
             )
@@ -306,10 +412,105 @@ class MultiAgentGUI:
 
         thread = threading.Thread(
             target=self._run_pipeline_worker,
-            args=(run_generation, image_path, depth_image_path, text_input, barcode_image_path),
+            args=(run_generation, image_path, depth_image_path, text_input, barcode_image_paths),
             daemon=True,
         )
         thread.start()
+
+    def _barcode_image_paths(self) -> list[str]:
+        raw_value = self.barcode_image_path_var.get().strip()
+        if not raw_value:
+            return []
+        return [
+            item.strip()
+            for item in raw_value.split(";")
+            if item.strip()
+        ]
+
+    def _update_previews(self) -> None:
+        if not hasattr(self, "vision_preview_frame"):
+            return
+
+        for frame in (
+            self.vision_preview_frame,
+            self.barcode_preview_frame,
+            self.final_preview_frame,
+        ):
+            for child in frame.winfo_children():
+                child.destroy()
+        self._preview_images = []
+
+        vision_specs: list[tuple[str, str]] = []
+        barcode_specs: list[tuple[str, str]] = []
+        final_specs: list[tuple[str, str]] = []
+        image_path = self.image_path_var.get().strip()
+        depth_path = self.depth_image_path_var.get().strip()
+        if image_path:
+            vision_specs.append(("RGB Image", image_path))
+            final_specs.append(("RGB Image", image_path))
+        if depth_path:
+            vision_specs.append(("Depth Image", depth_path))
+            final_specs.append(("Depth Image", depth_path))
+        for index, barcode_path in enumerate(self._barcode_image_paths(), start=1):
+            barcode_specs.append((f"Barcode Image {index}", barcode_path))
+            final_specs.append((f"Barcode Image {index}", barcode_path))
+
+        self._render_preview_specs(
+            self.vision_preview_frame,
+            vision_specs,
+            "RGB/depth previews will appear here.",
+        )
+        self._render_preview_specs(
+            self.barcode_preview_frame,
+            barcode_specs,
+            "Barcode image previews will appear here.",
+        )
+        self._render_preview_specs(
+            self.final_preview_frame,
+            final_specs,
+            "Selected image previews will appear here.",
+        )
+
+    def _render_preview_specs(
+        self,
+        parent: ttk.Frame,
+        preview_specs: list[tuple[str, str]],
+        empty_text: str,
+    ) -> None:
+        if not preview_specs:
+            ttk.Label(parent, text=empty_text, foreground="#555555").pack(anchor="w")
+            return
+
+        for title, path in preview_specs:
+            self._add_preview_image(parent, title, path)
+
+    def _add_preview_image(self, parent: ttk.Frame, title: str, path: str) -> None:
+        section = ttk.Frame(parent, padding=(0, 0, 10, 8))
+        section.pack(side=tk.LEFT, anchor="n")
+
+        ttk.Label(section, text=title, font=("Helvetica", 12, "bold")).pack(anchor="w")
+        ttk.Label(section, text=Path(path).name, foreground="#555555", wraplength=320).pack(
+            anchor="w",
+            pady=(2, 6),
+        )
+
+        try:
+            with Image.open(path) as image:
+                preview = image.convert("RGB")
+                preview.thumbnail((340, 230))
+                photo = ImageTk.PhotoImage(preview)
+        except Exception as exc:
+            ttk.Label(
+                section,
+                text=f"Preview unavailable: {exc}",
+                foreground="#9b1c1c",
+            ).pack(anchor="w")
+            return
+
+        self._preview_images.append(photo)
+        frame = ttk.Frame(section, relief=tk.SOLID, borderwidth=1, padding=6)
+        frame.pack(anchor="w")
+        ttk.Label(frame, image=photo).pack()
 
     def _run_pipeline_worker(
         self,
@@ -317,7 +518,7 @@ class MultiAgentGUI:
         image_path: str | None,
         depth_image_path: str | None,
         text_input: str | None,
-        barcode_image_path: str | None,
+        barcode_image_paths: list[str],
     ) -> None:
         try:
             result = asyncio.run(
@@ -325,7 +526,7 @@ class MultiAgentGUI:
                     image_path=image_path,
                     depth_image_path=depth_image_path,
                     text_input=text_input,
-                    barcode_image_path=barcode_image_path,
+                    barcode_image_paths=barcode_image_paths,
                 )
             )
         except Exception as exc:
@@ -350,6 +551,8 @@ class MultiAgentGUI:
 
         self._set_text(self.vision_output, self._render_agent_block("vision", outputs.get("vision")))
         text_blocks = [
+            self._render_input_text(payload),
+            "",
             self._render_agent_block("text", outputs.get("text")),
             "",
             self._render_agent_block("text_nutrition", outputs.get("text_nutrition")),
@@ -361,8 +564,202 @@ class MultiAgentGUI:
         )
 
         final_rendered = self._render_final_block(final_output)
+        self._last_final_rendered = final_rendered
+        self._last_final_output = final_output
         self._set_text(self.final_output, final_rendered)
         self.status_var.set("Done")
+
+    def _open_final_popup(self) -> None:
+        popup = tk.Toplevel(self.root)
+        popup.title("Full Final Output")
+        popup.geometry("1020x780")
+        popup.minsize(820, 620)
+
+        header = ttk.Frame(popup, padding=(10, 10, 10, 6))
+        header.pack(fill=tk.X)
+        ttk.Label(
+            header,
+            text="Full Final Output",
+            font=("Helvetica", 14, "bold"),
+        ).pack(side=tk.LEFT)
+        ttk.Button(header, text="Close", command=popup.destroy).pack(side=tk.RIGHT)
+
+        self._build_final_charts(popup, self._last_final_output)
+
+        box = ScrolledText(popup, wrap=tk.WORD, font=("Menlo", 12), padx=12, pady=12)
+        box.pack(fill=tk.BOTH, expand=True, padx=10, pady=(0, 10))
+        box.insert(tk.END, self._last_final_rendered)
+        box.config(state=tk.DISABLED)
+
+    def _build_final_charts(self, parent: tk.Toplevel, payload: dict[str, Any]) -> None:
+        data = payload.get("data") or {}
+        final_macros = data.get("final_macros") or {}
+        ingredients = data.get("calculation_ingredients") or data.get("items") or []
+
+        visual = ttk.Frame(parent, padding=(10, 0, 10, 10))
+        visual.pack(fill=tk.X)
+
+        cards = ttk.Frame(visual)
+        cards.pack(fill=tk.X, pady=(0, 10))
+        self._summary_card(
+            cards,
+            "Calories",
+            f"{self._fmt_number(final_macros.get('calories_kcal'))} kcal",
+            "#e85d04",
+        ).pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 8))
+        self._summary_card(
+            cards,
+            "Mass",
+            f"{self._fmt_number(final_macros.get('mass_g'))} g",
+            "#2a9d8f",
+        ).pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 8))
+        self._summary_card(
+            cards,
+            "Protein",
+            f"{self._fmt_number(final_macros.get('protein_g'))} g",
+            "#457b9d",
+        ).pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 8))
+        self._summary_card(
+            cards,
+            "Carbs / Fat",
+            (
+                f"{self._fmt_number(final_macros.get('carbs_g'))}g / "
+                f"{self._fmt_number(final_macros.get('fat_g'))}g"
+            ),
+            "#7b2cbf",
+        ).pack(side=tk.LEFT, fill=tk.X, expand=True)
+
+        chart_row = ttk.Frame(visual)
+        chart_row.pack(fill=tk.X)
+
+        macro_panel = ttk.Frame(chart_row)
+        macro_panel.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 8))
+        ttk.Label(
+            macro_panel,
+            text="Macronutrient Distribution",
+            font=("Helvetica", 12, "bold"),
+        ).pack(anchor="w")
+        macro_canvas = tk.Canvas(macro_panel, height=150, bg="#ffffff", highlightthickness=1, highlightbackground="#d0d7de")
+        macro_canvas.pack(fill=tk.X, pady=(6, 0))
+        self._draw_macro_chart(macro_canvas, final_macros)
+
+        ingredient_panel = ttk.Frame(chart_row)
+        ingredient_panel.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        ttk.Label(
+            ingredient_panel,
+            text="Ingredient Calories",
+            font=("Helvetica", 12, "bold"),
+        ).pack(anchor="w")
+        ingredient_canvas = tk.Canvas(ingredient_panel, height=150, bg="#ffffff", highlightthickness=1, highlightbackground="#d0d7de")
+        ingredient_canvas.pack(fill=tk.X, pady=(6, 0))
+        self._draw_ingredient_chart(ingredient_canvas, ingredients)
+
+        ttk.Separator(parent, orient=tk.HORIZONTAL).pack(fill=tk.X, padx=10, pady=(0, 8))
+
+    def _summary_card(
+        self,
+        parent: ttk.Frame,
+        label: str,
+        value: str,
+        color: str,
+    ) -> tk.Frame:
+        card = tk.Frame(parent, bg=color, padx=12, pady=10)
+        tk.Label(
+            card,
+            text=label,
+            bg=color,
+            fg="#ffffff",
+            font=("Helvetica", 10, "bold"),
+        ).pack(anchor="w")
+        tk.Label(
+            card,
+            text=value,
+            bg=color,
+            fg="#ffffff",
+            font=("Helvetica", 16, "bold"),
+        ).pack(anchor="w", pady=(4, 0))
+        return card
+
+    def _draw_macro_chart(self, canvas: tk.Canvas, macros: dict[str, Any]) -> None:
+        values = [
+            ("Protein", self._to_float(macros.get("protein_g")), "#457b9d"),
+            ("Carbs", self._to_float(macros.get("carbs_g")), "#f4a261"),
+            ("Fat", self._to_float(macros.get("fat_g")), "#7b2cbf"),
+        ]
+
+        def draw() -> None:
+            canvas.delete("all")
+            width = max(canvas.winfo_width(), 320)
+            max_value = max((value for _, value, _ in values), default=0.0)
+            if max_value <= 0:
+                canvas.create_text(16, 16, anchor="nw", text="No macro values available.", fill="#555555")
+                return
+
+            left = 92
+            right = width - 24
+            bar_width = max(right - left, 80)
+            y = 24
+            for label, value, color in values:
+                bar_len = (value / max_value) * bar_width if max_value else 0
+                canvas.create_text(14, y + 10, anchor="w", text=label, fill="#222222", font=("Helvetica", 10, "bold"))
+                canvas.create_rectangle(left, y, right, y + 20, fill="#eef1f4", outline="")
+                canvas.create_rectangle(left, y, left + bar_len, y + 20, fill=color, outline="")
+                canvas.create_text(
+                    right,
+                    y + 10,
+                    anchor="e",
+                    text=f"{self._fmt_number(value)} g",
+                    fill="#222222",
+                    font=("Helvetica", 10),
+                )
+                y += 38
+
+        canvas.after_idle(draw)
+        canvas.bind("<Configure>", lambda _event: draw())
+
+    def _draw_ingredient_chart(self, canvas: tk.Canvas, ingredients: list[dict[str, Any]]) -> None:
+        rows = []
+        for ingredient in ingredients[:5]:
+            nutrition = ingredient.get("nutrition") or {}
+            calories = self._to_float(nutrition.get("calories_kcal"))
+            rows.append((str(ingredient.get("name") or "unknown"), calories))
+
+        def draw() -> None:
+            canvas.delete("all")
+            width = max(canvas.winfo_width(), 320)
+            if not rows:
+                canvas.create_text(16, 16, anchor="nw", text="No ingredients available.", fill="#555555")
+                return
+
+            max_value = max((value for _, value in rows), default=0.0)
+            if max_value <= 0:
+                canvas.create_text(16, 16, anchor="nw", text="No ingredient calories available.", fill="#555555")
+                return
+
+            left = 132
+            right = width - 24
+            bar_width = max(right - left, 80)
+            y = 14
+            colors = ["#e85d04", "#2a9d8f", "#457b9d", "#7b2cbf", "#6c757d"]
+            for index, (name, value) in enumerate(rows):
+                display_name = name if len(name) <= 18 else name[:17] + "…"
+                bar_len = (value / max_value) * bar_width if max_value else 0
+                color = colors[index % len(colors)]
+                canvas.create_text(12, y + 10, anchor="w", text=display_name, fill="#222222", font=("Helvetica", 10, "bold"))
+                canvas.create_rectangle(left, y, right, y + 20, fill="#eef1f4", outline="")
+                canvas.create_rectangle(left, y, left + bar_len, y + 20, fill=color, outline="")
+                canvas.create_text(
+                    right,
+                    y + 10,
+                    anchor="e",
+                    text=f"{self._fmt_number(value)} kcal",
+                    fill="#222222",
+                    font=("Helvetica", 10),
+                )
+                y += 26
+
+        canvas.after_idle(draw)
+        canvas.bind("<Configure>", lambda _event: draw())
 
     def _render_agent_block(self, agent_name: str, payload: dict[str, Any] | None) -> str:
         if payload is None:
@@ -388,6 +785,7 @@ class MultiAgentGUI:
             product = data.get("product") or {}
             barcode_value = (data.get("barcode") or {}).get("value")
             macros = data.get("nutrition_per_100g") or {}
+            candidates = data.get("candidates") or []
 
             lines.extend(
                 [
@@ -403,6 +801,21 @@ class MultiAgentGUI:
                     f"- Fat (g): {self._fmt_number(macros.get('fat_g'))}",
                 ]
             )
+            if candidates:
+                lines.extend(["", "Barcode Candidates"])
+                for candidate in candidates:
+                    candidate_data = candidate.get("data") or {}
+                    candidate_product = candidate_data.get("product") or {}
+                    candidate_barcode = (candidate_data.get("barcode") or {}).get("value")
+                    candidate_nutrition = candidate_data.get("nutrition_per_100g") or {}
+                    lines.append(
+                        "- "
+                        + f"{candidate_data.get('input_filename') or '-'}"
+                        + f": barcode {candidate_barcode or '-'}, "
+                        + f"{candidate_product.get('name') or '-'}, "
+                        + f"{self._fmt_number(candidate_nutrition.get('calories_kcal'))} kcal/100g, "
+                        + f"error: {candidate.get('error') or '-'}"
+                    )
             return "\n".join(lines)
 
         if source == "vision":
@@ -484,6 +897,14 @@ class MultiAgentGUI:
         )
         return "\n".join(lines)
 
+    def _render_input_text(self, payload: dict[str, Any]) -> str:
+        inputs = payload.get("inputs") or {}
+        text = inputs.get("text")
+        return (
+            "Input Text\n"
+            f"- {text or '-'}"
+        )
+
     def _render_final_block(self, payload: dict[str, Any]) -> str:
         source = payload.get("source", "fusion")
         confidence = payload.get("confidence")
@@ -499,21 +920,29 @@ class MultiAgentGUI:
         reasoning = data.get("reasoning_summary") or "-"
 
         lines = [
-            f"Agent: {source}",
-            f"Confidence: {self._fmt_number(confidence)}",
+            "============================================================",
+            "FINAL MEAL ANALYSIS",
+            "============================================================",
+            f"Agent: {source}    Confidence: {self._fmt_number(confidence)}",
             f"Error: {error or '-'}",
             "",
-            "Final Macros",
-            f"- Calories (kcal): {self._fmt_number(final_macros.get('calories_kcal'))}",
-            f"- Mass (g): {self._fmt_number(final_macros.get('mass_g'))}",
-            f"- Protein (g): {self._fmt_number(final_macros.get('protein_g'))}",
-            f"- Carbs (g): {self._fmt_number(final_macros.get('carbs_g'))}",
-            f"- Fat (g): {self._fmt_number(final_macros.get('fat_g'))}",
+            "TOTALS",
+            "------",
+            f"Calories : {self._fmt_number(final_macros.get('calories_kcal'))} kcal",
+            f"Mass     : {self._fmt_number(final_macros.get('mass_g'))} g",
             "",
-            "Calculation Ingredients",
+            "MACRONUTRIENTS",
+            "--------------",
+            f"Protein  : {self._fmt_number(final_macros.get('protein_g'))} g",
+            f"Carbs    : {self._fmt_number(final_macros.get('carbs_g'))} g",
+            f"Fat      : {self._fmt_number(final_macros.get('fat_g'))} g",
+            "",
+            "CALCULATION INGREDIENTS",
+            "-----------------------",
             *self._render_calculation_ingredients(calculation_ingredients),
             "",
-            "Inputs Used",
+            "INPUTS USED",
+            "-----------",
             f"- Vision: {bool(inputs_used.get('vision'))}",
             f"- Depth: {bool(inputs_used.get('depth'))}",
             f"- Text: {bool(inputs_used.get('text'))}",
@@ -521,16 +950,20 @@ class MultiAgentGUI:
             f"- Ingredient resolution: {bool(inputs_used.get('ingredient_resolution'))}",
             f"- Barcode: {bool(inputs_used.get('barcode'))}",
             "",
-            "Ingredient Resolution",
+            "INGREDIENT RESOLUTION",
+            "---------------------",
             *self._render_resolution_summary(resolution),
             "",
-            "Fusion Decision",
+            "FUSION DECISION",
+            "---------------",
             f"- Primary source: {decision.get('primary_nutrition_source') or '-'}",
             f"- Mass source: {decision.get('mass_source') or '-'}",
             f"- Portion multiplier: {self._fmt_number(decision.get('portion_multiplier'))}",
             f"- Hidden ingredients: {', '.join(decision.get('hidden_ingredients') or []) or '-'}",
             "",
-            f"Reasoning: {reasoning}",
+            "REASONING",
+            "---------",
+            reasoning,
         ]
         return "\n".join(lines)
 
@@ -576,6 +1009,12 @@ class MultiAgentGUI:
         if isinstance(value, float):
             return f"{value:.2f}".rstrip("0").rstrip(".")
         return str(value)
+
+    def _to_float(self, value: Any) -> float:
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return 0.0
 
     def _set_text(self, widget: ScrolledText, text: str) -> None:
         widget.config(state=tk.NORMAL)

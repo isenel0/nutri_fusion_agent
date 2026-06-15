@@ -176,7 +176,10 @@ class TextNutritionAgent(BaseAgent):
 
     def _foods_from_text(self, text_data: dict[str, Any], raw_text: str) -> list[str]:
         parsed = text_data.get("parsed") or {}
-        candidates = list(parsed.get("foods") or [])
+        candidates = [
+            *self._repaired_food_spans(text_data, raw_text),
+            *list(parsed.get("foods") or []),
+        ]
 
         if not candidates and raw_text:
             candidates.extend(
@@ -195,7 +198,67 @@ class TextNutritionAgent(BaseAgent):
                 continue
             seen.add(normalized)
             foods.append(cleaned)
-        return foods
+        return self._suppress_grouping_foods(foods)
+
+    def _repaired_food_spans(self, text_data: dict[str, Any], raw_text: str) -> list[str]:
+        entities = [
+            entity
+            for entity in text_data.get("entities") or []
+            if entity.get("type") in {"food", "modifier", "method"}
+            and entity.get("start_char") is not None
+            and entity.get("end_char") is not None
+        ]
+        entities.sort(key=lambda item: int(item.get("start_char") or 0))
+        repaired: list[str] = []
+        for index, entity in enumerate(entities):
+            if entity.get("type") != "food":
+                continue
+            start = int(entity.get("start_char") or 0)
+            end = int(entity.get("end_char") or 0)
+            phrase_start = start
+            previous = entities[index - 1] if index > 0 else None
+            if previous and previous.get("type") in {"modifier", "method"}:
+                prev_end = int(previous.get("end_char") or 0)
+                gap = raw_text[prev_end:start]
+                if prev_end >= start or gap.strip() == "":
+                    phrase_start = int(previous.get("start_char") or start)
+            phrase = raw_text[phrase_start:end].strip(" .;:,")
+            phrase = self._strip_quantity_units(phrase)
+            if self._normalize(phrase):
+                repaired.append(phrase)
+        return repaired
+
+    def _suppress_grouping_foods(self, foods: list[str]) -> list[str]:
+        normalized_foods = [(food, self._normalize(food)) for food in foods]
+        result: list[str] = []
+        for food, normalized in normalized_foods:
+            others = [item for _, item in normalized_foods if item != normalized]
+            if self._is_grouping_phrase(normalized, others):
+                continue
+            if self._is_redundant_partial_span(normalized, others):
+                continue
+            result.append(food)
+        return result
+
+    def _is_grouping_phrase(self, normalized: str, other_foods: list[str]) -> bool:
+        if not re.search(r"\b(ve|ile|and|with)\b|,|\+", normalized):
+            return False
+        contained = [
+            other
+            for other in other_foods
+            if len(other) >= 3 and (other == normalized or re.search(rf"\b{re.escape(other)}\b", normalized))
+        ]
+        return len(set(contained)) >= 2
+
+    def _is_redundant_partial_span(self, normalized: str, other_foods: list[str]) -> bool:
+        if len(normalized) < 4:
+            return False
+        for other in other_foods:
+            if len(other) <= len(normalized) + 2:
+                continue
+            if re.search(rf"\b{re.escape(normalized)}\b", other) or other.endswith(normalized):
+                return True
+        return False
 
     def _strip_quantity_units(self, value: str) -> str:
         units = "kg|kilo|kilogram|g|gr|gram|gramlık|adet|tane|dilim|porsiyon|kaşık|kasik"
@@ -451,21 +514,28 @@ class TextNutritionAgent(BaseAgent):
             canonical_name = self._normalize(str(item.get("canonical_name") or ""))
             if not input_name or not canonical_name:
                 continue
-            if not raw_text and requested and input_name not in requested:
+            if self._is_grouping_phrase(input_name, list(requested)):
+                continue
+            requested_match = None
+            if requested:
                 requested_match = self._closest_requested_name(input_name, requested)
-                if requested_match is None:
+                if requested_match is not None:
+                    input_name = requested_match
+                elif not raw_text:
                     continue
-                input_name = requested_match
             if len(input_name) < 3:
                 continue
             try:
                 confidence = max(min(float(item.get("confidence", 0.75)), 1.0), 0.0)
             except (TypeError, ValueError):
                 confidence = 0.75
+            display_name = str(item.get("input_name") or input_name).strip()
+            if requested_match is not None:
+                display_name = requested_match
             canonicalized[input_name] = {
                 "canonical_name": canonical_name,
                 "confidence": confidence,
-                "display_name": str(item.get("input_name") or input_name).strip(),
+                "display_name": display_name,
                 "source": "llm",
                 "order": order,
             }

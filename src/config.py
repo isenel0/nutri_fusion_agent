@@ -17,6 +17,7 @@ class Settings:
     openfoodfacts_base_url: str = "https://world.openfoodfacts.org/api/v2"
     openfoodfacts_timeout_seconds: int = 15
     openfoodfacts_user_agent: str = "nutri-fusion-agent/0.1"
+    barcode_nutrition_cache_path: str = "../evaluation_dataset/barcode_nutrition_cache.json"
 
     include_raw_product_payload: bool = False
     barcode_confidence_with_macros: float = 0.95
@@ -39,6 +40,10 @@ class Settings:
             openfoodfacts_user_agent=os.getenv(
                 "OPENFOODFACTS_USER_AGENT",
                 "nutri-fusion-agent/0.1",
+            ),
+            barcode_nutrition_cache_path=os.getenv(
+                "BARCODE_NUTRITION_CACHE_PATH",
+                "../evaluation_dataset/barcode_nutrition_cache.json",
             ),
             include_raw_product_payload=_as_bool(
                 os.getenv("INCLUDE_RAW_PRODUCT_PAYLOAD"),

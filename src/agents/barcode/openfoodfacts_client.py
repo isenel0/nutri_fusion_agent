@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
 from typing import Any
 
 import requests
@@ -16,6 +18,10 @@ class OpenFoodFactsClient:
         self.settings = settings
 
     def get_product(self, barcode: str) -> dict[str, Any]:
+        cached = self.get_cached_product(barcode)
+        if cached is not None:
+            return cached
+
         url = f"{self.settings.openfoodfacts_base_url}/product/{barcode}.json"
         try:
             response = requests.get(
@@ -36,6 +42,64 @@ class OpenFoodFactsClient:
             )
 
         return payload
+
+    def get_cached_product(self, barcode: str) -> dict[str, Any] | None:
+        cache_path = self._cache_path()
+        if cache_path is None or not cache_path.exists():
+            return None
+        try:
+            cache = json.loads(cache_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            return None
+
+        products = cache.get("products") if isinstance(cache, dict) else None
+        record = products.get(barcode) if isinstance(products, dict) else None
+        if not isinstance(record, dict):
+            return None
+        return self._cached_record_to_payload(barcode, record)
+
+    def _cache_path(self) -> Path | None:
+        configured = getattr(self.settings, "barcode_nutrition_cache_path", None)
+        if not configured:
+            return None
+        path = Path(configured).expanduser()
+        if path.is_absolute() or path.exists():
+            return path
+
+        repo_root = Path(__file__).resolve().parents[3]
+        candidates = [
+            repo_root / path,
+            repo_root.parent / path,
+        ]
+        for candidate in candidates:
+            if candidate.exists():
+                return candidate
+        return path
+
+    def _cached_record_to_payload(self, barcode: str, record: dict[str, Any]) -> dict[str, Any]:
+        nutrition = record.get("nutrition_per_100g") or {}
+        nutriments = {
+            "energy-kcal_100g": nutrition.get("calories_kcal"),
+            "proteins_100g": nutrition.get("protein_g"),
+            "carbohydrates_100g": nutrition.get("carbs_g"),
+            "fat_100g": nutrition.get("fat_g"),
+            "fiber_100g": nutrition.get("fiber_g"),
+            "sugars_100g": nutrition.get("sugar_g"),
+            "sodium_100g": nutrition.get("sodium_g"),
+        }
+        return {
+            "status": 1,
+            "product": {
+                "code_type": record.get("code_type") or "local_cache",
+                "product_name": record.get("product_name"),
+                "brands": record.get("brand"),
+                "categories": record.get("categories"),
+                "quantity": record.get("quantity"),
+                "serving_size": record.get("serving_size"),
+                "nutriments": nutriments,
+                "_local_cache_record": record,
+            },
+        }
 
     def to_standard_payload(
         self,
@@ -71,7 +135,11 @@ class OpenFoodFactsClient:
                 "sodium_g": _as_float(nutriments.get("sodium_100g")),
             },
             "source": {
-                "provider": "openfoodfacts",
+                "provider": (
+                    "local_barcode_cache"
+                    if product.get("_local_cache_record")
+                    else "openfoodfacts"
+                ),
                 "fetched_barcode": barcode,
             },
         }

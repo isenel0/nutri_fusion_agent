@@ -148,6 +148,17 @@ class SegmentationModel:
         self.conf = conf
 
     def predict(self, image_path: Path) -> list[dict[str, float | str]]:
+        try:
+            with Image.open(image_path) as img:
+                if (img.format or "").upper() not in {"JPEG", "JPG", "PNG", "MPO"}:
+                    raise ValueError(f"unsupported image format {img.format!r}")
+                img.verify()
+        except Exception as exc:
+            raise ValueError(
+                f"Unable to read RGB image '{image_path}'. "
+                "Convert HEIC/HEIF files to real JPEG or PNG before running the vision agent."
+            ) from exc
+
         results = self.model.predict(str(image_path), conf=self.conf, verbose=False)
         result = results[0]
         if result.masks is None or result.masks.data is None:
