@@ -15,6 +15,94 @@ The system estimates meal calories and macronutrients from multiple evidence sou
 
 The central invariant is that every agent returns an `AgentResponse`. The final API response is also an `AgentResponse` whose `data` field contains a `MealAnalysisResult`.
 
+
+## Mermaid Sequence Diagram
+
+This Mermaid diagram can be copied into diagram tools:
+
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant API as FastAPI /analyze-meal
+    participant O as OrchestratorAgent
+    participant V as VisionAgent
+    participant T as TextAgent
+    participant B as BarcodeAgent
+    participant F as FusionAgent
+
+    C->>API: multipart image?, depth_image?, text?, barcode?, barcode_image?
+    API->>O: payload with bytes/text/barcode
+
+    par Available image
+        O->>V: analyze_vision(payload)
+        V-->>O: AgentResponse data=vision.v1
+    and Available text
+        O->>T: analyze_text(text)
+        T-->>O: AgentResponse data=text.v1
+    and Available barcode or barcode image
+        O->>B: analyze_barcode(payload)
+        B-->>O: AgentResponse data=barcode.v1
+    end
+
+    O-->>API: AgentResponse data=orchestrator.v1
+    API->>F: orchestrator_result.data
+    F-->>API: AgentResponse data=meal_analysis.v1
+    API-->>C: final fused meal analysis
+```
+
+## Mermaid Vision Detail Diagram
+
+```mermaid
+flowchart TD
+    A[RGB image] --> B[YOLO best.pt]
+    B --> C[Segmentation masks]
+    C --> D[FoodSeg103 class names]
+    D --> E[Pixel ratios]
+
+    A --> F[Swin RGB branch]
+    G[Depth image] --> H[Grayscale depth preprocessing]
+    H --> I[Swin depth branch]
+    F --> J[RGB-D Swin regression]
+    I --> J
+    J --> K[Total calories + total mass]
+
+    E --> L[Normalize ratios]
+    K --> M[Allocate total mass by normalized ratios]
+    L --> M
+    M --> N[NutritionLookup nutrition_db.json]
+    N --> O[Calculate protein carbs fat]
+    K --> P[Scale ingredient calories to Swin calorie anchor]
+    O --> Q[Vision totals and ingredients]
+    P --> Q
+```
+
+## Mermaid Fusion Detail Diagram
+
+```mermaid
+flowchart TD
+    A[orchestrator.v1 outputs] --> B[Extract vision text barcode]
+    B --> C[Read text portion multiplier]
+    B --> D[Resolve mass]
+    D --> D1{Vision mass exists?}
+    D1 -- yes --> D2[mass_source=vision]
+    D1 -- no --> D3{Text grams exist?}
+    D3 -- yes --> D4[mass_source=text]
+    D3 -- no --> D5[mass_source=unknown]
+
+    B --> E[Choose primary nutrition source]
+    E --> E1{Barcode macros?}
+    E1 -- yes --> E2[Use barcode per 100g]
+    E1 -- no --> E3{Vision totals?}
+    E3 -- yes --> E4[Use vision totals]
+    E3 -- no --> E5[Fallback empty estimate]
+
+    E2 --> F[Scale by mass and portion]
+    E4 --> F
+    E5 --> F
+    F --> G[Detect conflicts]
+    G --> H[Build MealAnalysisResult]
+```
+
 ## Top-Level Architecture
 
 ```text
@@ -914,93 +1002,6 @@ Expected flow:
 3. Output contains missing_requirements=["depth_image_for_late_fusion"].
 4. FusionAgent cannot compute numeric macros from segmentation-only vision.
 5. Final output is fallback unless another modality provides nutrition.
-```
-
-## Mermaid Sequence Diagram
-
-This Mermaid diagram can be copied into diagram tools:
-
-```mermaid
-sequenceDiagram
-    participant C as Client
-    participant API as FastAPI /analyze-meal
-    participant O as OrchestratorAgent
-    participant V as VisionAgent
-    participant T as TextAgent
-    participant B as BarcodeAgent
-    participant F as FusionAgent
-
-    C->>API: multipart image?, depth_image?, text?, barcode?, barcode_image?
-    API->>O: payload with bytes/text/barcode
-
-    par Available image
-        O->>V: analyze_vision(payload)
-        V-->>O: AgentResponse data=vision.v1
-    and Available text
-        O->>T: analyze_text(text)
-        T-->>O: AgentResponse data=text.v1
-    and Available barcode or barcode image
-        O->>B: analyze_barcode(payload)
-        B-->>O: AgentResponse data=barcode.v1
-    end
-
-    O-->>API: AgentResponse data=orchestrator.v1
-    API->>F: orchestrator_result.data
-    F-->>API: AgentResponse data=meal_analysis.v1
-    API-->>C: final fused meal analysis
-```
-
-## Mermaid Vision Detail Diagram
-
-```mermaid
-flowchart TD
-    A[RGB image] --> B[YOLO best.pt]
-    B --> C[Segmentation masks]
-    C --> D[FoodSeg103 class names]
-    D --> E[Pixel ratios]
-
-    A --> F[Swin RGB branch]
-    G[Depth image] --> H[Grayscale depth preprocessing]
-    H --> I[Swin depth branch]
-    F --> J[RGB-D Swin regression]
-    I --> J
-    J --> K[Total calories + total mass]
-
-    E --> L[Normalize ratios]
-    K --> M[Allocate total mass by normalized ratios]
-    L --> M
-    M --> N[NutritionLookup nutrition_db.json]
-    N --> O[Calculate protein carbs fat]
-    K --> P[Scale ingredient calories to Swin calorie anchor]
-    O --> Q[Vision totals and ingredients]
-    P --> Q
-```
-
-## Mermaid Fusion Detail Diagram
-
-```mermaid
-flowchart TD
-    A[orchestrator.v1 outputs] --> B[Extract vision text barcode]
-    B --> C[Read text portion multiplier]
-    B --> D[Resolve mass]
-    D --> D1{Vision mass exists?}
-    D1 -- yes --> D2[mass_source=vision]
-    D1 -- no --> D3{Text grams exist?}
-    D3 -- yes --> D4[mass_source=text]
-    D3 -- no --> D5[mass_source=unknown]
-
-    B --> E[Choose primary nutrition source]
-    E --> E1{Barcode macros?}
-    E1 -- yes --> E2[Use barcode per 100g]
-    E1 -- no --> E3{Vision totals?}
-    E3 -- yes --> E4[Use vision totals]
-    E3 -- no --> E5[Fallback empty estimate]
-
-    E2 --> F[Scale by mass and portion]
-    E4 --> F
-    E5 --> F
-    F --> G[Detect conflicts]
-    G --> H[Build MealAnalysisResult]
 ```
 
 ## Configuration
