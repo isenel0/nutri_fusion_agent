@@ -45,7 +45,7 @@ class VisionAgent(BaseAgent):
         self.regressor_checkpoint = (
             Path(regressor_checkpoint)
             if regressor_checkpoint
-            else vision_dir / "food101_pretrained_model_SwinV1-99acc-10epochfinetune.pth"
+            else vision_dir / "Swin.pth"
         )
         self.confidence = confidence
         self.image_size = image_size

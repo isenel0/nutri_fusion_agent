@@ -1,0 +1,5522 @@
+{
+  "agave nectar": {
+    "cal_per_100g": 310.0,
+    "cal_per_g": 3.1,
+    "carb_per_100g": 76.0,
+    "carb_per_g": 0.76,
+    "fat_per_100g": 0.5,
+    "fat_per_g": 0.005,
+    "protein_per_100g": 0.1,
+    "protein_per_g": 0.001
+  },
+  "alcohol": {
+    "cal_per_100g": 43.1,
+    "cal_per_g": 0.431,
+    "carb_per_100g": 3.5999999999999996,
+    "carb_per_g": 0.036,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.5,
+    "protein_per_g": 0.005
+  },
+  "alfalfa": {
+    "cal_per_100g": 28.999999999999996,
+    "cal_per_g": 0.29,
+    "carb_per_100g": 3.8,
+    "carb_per_g": 0.038,
+    "fat_per_100g": 0.7000000000000001,
+    "fat_per_g": 0.007,
+    "protein_per_100g": 4.0,
+    "protein_per_g": 0.04
+  },
+  "almond butter": {
+    "cal_per_100g": 608.6,
+    "cal_per_g": 6.086,
+    "carb_per_100g": 18.7,
+    "carb_per_g": 0.187,
+    "fat_per_100g": 55.50000000000001,
+    "fat_per_g": 0.555,
+    "protein_per_100g": 20.9,
+    "protein_per_g": 0.209
+  },
+  "almond milk": {
+    "cal_per_100g": 23.0,
+    "cal_per_g": 0.23,
+    "carb_per_100g": 3.2,
+    "carb_per_g": 0.032,
+    "fat_per_100g": 1.0,
+    "fat_per_g": 0.01,
+    "protein_per_100g": 0.4,
+    "protein_per_g": 0.004
+  },
+  "almonds": {
+    "cal_per_100g": 578.1,
+    "cal_per_g": 5.781,
+    "carb_per_100g": 22.7,
+    "carb_per_g": 0.227,
+    "fat_per_100g": 49.5,
+    "fat_per_g": 0.495,
+    "protein_per_100g": 22.400000000000002,
+    "protein_per_g": 0.224
+  },
+  "american cheese": {
+    "cal_per_100g": 312.0,
+    "cal_per_g": 3.12,
+    "carb_per_100g": 8.799999999999999,
+    "carb_per_g": 0.088,
+    "fat_per_100g": 23.0,
+    "fat_per_g": 0.23,
+    "protein_per_100g": 17.0,
+    "protein_per_g": 0.17
+  },
+  "anchovies": {
+    "cal_per_100g": 210.0,
+    "cal_per_g": 2.1,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 9.700000000000001,
+    "fat_per_g": 0.097,
+    "protein_per_100g": 28.999999999999996,
+    "protein_per_g": 0.29
+  },
+  "apple": {
+    "cal_per_100g": 52.0,
+    "cal_per_g": 0.52,
+    "carb_per_100g": 14.000000000000002,
+    "carb_per_g": 0.14,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 0.3,
+    "protein_per_g": 0.003
+  },
+  "apple cider": {
+    "cal_per_100g": 46.2,
+    "cal_per_g": 0.462,
+    "carb_per_100g": 11.3,
+    "carb_per_g": 0.113,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.1,
+    "protein_per_g": 0.001
+  },
+  "apple juice": {
+    "cal_per_100g": 46.0,
+    "cal_per_g": 0.46,
+    "carb_per_100g": 11.0,
+    "carb_per_g": 0.11,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.1,
+    "protein_per_g": 0.001
+  },
+  "apple pie": {
+    "cal_per_100g": 236.7,
+    "cal_per_g": 2.367,
+    "carb_per_100g": 34.5,
+    "carb_per_g": 0.345,
+    "fat_per_100g": 11.0,
+    "fat_per_g": 0.11,
+    "protein_per_100g": 1.7999999999999998,
+    "protein_per_g": 0.018
+  },
+  "applesauce": {
+    "cal_per_100g": 68.0,
+    "cal_per_g": 0.68,
+    "carb_per_100g": 17.0,
+    "carb_per_g": 0.17,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 0.2,
+    "protein_per_g": 0.002
+  },
+  "apricots": {
+    "cal_per_100g": 48.0,
+    "cal_per_g": 0.48,
+    "carb_per_100g": 11.0,
+    "carb_per_g": 0.11,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 1.4000000000000001,
+    "protein_per_g": 0.014
+  },
+  "artic char": {
+    "cal_per_100g": 154.0,
+    "cal_per_g": 1.54,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 8.1,
+    "fat_per_g": 0.081,
+    "protein_per_100g": 20.0,
+    "protein_per_g": 0.2
+  },
+  "artichokes": {
+    "cal_per_100g": 47.0,
+    "cal_per_g": 0.47,
+    "carb_per_100g": 11.0,
+    "carb_per_g": 0.11,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 3.3000000000000003,
+    "protein_per_g": 0.033
+  },
+  "arugula": {
+    "cal_per_100g": 25.0,
+    "cal_per_g": 0.25,
+    "carb_per_100g": 3.6999999999999997,
+    "carb_per_g": 0.037,
+    "fat_per_100g": 0.7000000000000001,
+    "fat_per_g": 0.007,
+    "protein_per_100g": 2.6,
+    "protein_per_g": 0.026
+  },
+  "asparagus": {
+    "cal_per_100g": 20.4,
+    "cal_per_g": 0.204,
+    "carb_per_100g": 3.9,
+    "carb_per_g": 0.039,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 2.1999999999999997,
+    "protein_per_g": 0.022
+  },
+  "avocado": {
+    "cal_per_100g": 160.0,
+    "cal_per_g": 1.6,
+    "carb_per_100g": 9.0,
+    "carb_per_g": 0.09,
+    "fat_per_100g": 15.0,
+    "fat_per_g": 0.15,
+    "protein_per_100g": 2.0,
+    "protein_per_g": 0.02
+  },
+  "baby carrots": {
+    "cal_per_100g": 41.0,
+    "cal_per_g": 0.41,
+    "carb_per_100g": 10.0,
+    "carb_per_g": 0.1,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 0.8999999999999999,
+    "protein_per_g": 0.009
+  },
+  "bacon": {
+    "cal_per_100g": 541.0,
+    "cal_per_g": 5.41,
+    "carb_per_100g": 1.4000000000000001,
+    "carb_per_g": 0.014,
+    "fat_per_100g": 42.0,
+    "fat_per_g": 0.42,
+    "protein_per_100g": 37.0,
+    "protein_per_g": 0.37
+  },
+  "bagels": {
+    "cal_per_100g": 250.0,
+    "cal_per_g": 2.5,
+    "carb_per_100g": 49.0,
+    "carb_per_g": 0.49,
+    "fat_per_100g": 1.5,
+    "fat_per_g": 0.015,
+    "protein_per_100g": 10.100000000000001,
+    "protein_per_g": 0.101
+  },
+  "baked beans": {
+    "cal_per_100g": 152.89999999999998,
+    "cal_per_g": 1.529,
+    "carb_per_100g": 21.6,
+    "carb_per_g": 0.216,
+    "fat_per_100g": 5.0,
+    "fat_per_g": 0.05,
+    "protein_per_100g": 5.7,
+    "protein_per_g": 0.057
+  },
+  "baked potatoes": {
+    "cal_per_100g": 93.0,
+    "cal_per_g": 0.93,
+    "carb_per_100g": 21.0,
+    "carb_per_g": 0.21,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 2.5,
+    "protein_per_g": 0.025
+  },
+  "balsamic vinegar": {
+    "cal_per_100g": 88.0,
+    "cal_per_g": 0.88,
+    "carb_per_100g": 17.0,
+    "carb_per_g": 0.17,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.5,
+    "protein_per_g": 0.005
+  },
+  "banana": {
+    "cal_per_100g": 89.0,
+    "cal_per_g": 0.89,
+    "carb_per_100g": 23.0,
+    "carb_per_g": 0.23,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 1.0999999999999999,
+    "protein_per_g": 0.011
+  },
+  "banana with peel": {
+    "cal_per_100g": 55.60000000000001,
+    "cal_per_g": 0.556,
+    "carb_per_100g": 14.399999999999999,
+    "carb_per_g": 0.144,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 0.7000000000000001,
+    "protein_per_g": 0.007
+  },
+  "barbecue sauce": {
+    "cal_per_100g": 172.0,
+    "cal_per_g": 1.72,
+    "carb_per_100g": 41.0,
+    "carb_per_g": 0.41,
+    "fat_per_100g": 0.6,
+    "fat_per_g": 0.006,
+    "protein_per_100g": 0.8,
+    "protein_per_g": 0.008
+  },
+  "barley": {
+    "cal_per_100g": 123.0,
+    "cal_per_g": 1.23,
+    "carb_per_100g": 28.000000000000004,
+    "carb_per_g": 0.28,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 2.3,
+    "protein_per_g": 0.023
+  },
+  "basil": {
+    "cal_per_100g": 24.0,
+    "cal_per_g": 0.24,
+    "carb_per_100g": 2.0,
+    "carb_per_g": 0.02,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 4.0,
+    "protein_per_g": 0.04
+  },
+  "bean sprouts": {
+    "cal_per_100g": 30.0,
+    "cal_per_g": 0.3,
+    "carb_per_100g": 5.8999999999999995,
+    "carb_per_g": 0.059,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 3.0,
+    "protein_per_g": 0.03
+  },
+  "bean(seed)": {
+    "cal_per_100g": 140.0,
+    "cal_per_g": 1.4,
+    "carb_per_100g": 24.0,
+    "carb_per_g": 0.24,
+    "fat_per_100g": 0.6,
+    "fat_per_g": 0.006,
+    "protein_per_100g": 9.0,
+    "protein_per_g": 0.09
+  },
+  "beef": {
+    "cal_per_100g": 250.0,
+    "cal_per_g": 2.5,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 15.0,
+    "fat_per_g": 0.15,
+    "protein_per_100g": 26.0,
+    "protein_per_g": 0.26
+  },
+  "beer": {
+    "cal_per_100g": 43.1,
+    "cal_per_g": 0.431,
+    "carb_per_100g": 3.5999999999999996,
+    "carb_per_g": 0.036,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.5,
+    "protein_per_g": 0.005
+  },
+  "beets": {
+    "cal_per_100g": 44.0,
+    "cal_per_g": 0.44,
+    "carb_per_100g": 10.0,
+    "carb_per_g": 0.1,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 1.7000000000000002,
+    "protein_per_g": 0.017
+  },
+  "bell peppers": {
+    "cal_per_100g": 40.0,
+    "cal_per_g": 0.4,
+    "carb_per_100g": 9.0,
+    "carb_per_g": 0.09,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 2.0,
+    "protein_per_g": 0.02
+  },
+  "berries": {
+    "cal_per_100g": 56.99999999999999,
+    "cal_per_g": 0.57,
+    "carb_per_100g": 14.000000000000002,
+    "carb_per_g": 0.14,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 0.7000000000000001,
+    "protein_per_g": 0.007
+  },
+  "biscuits": {
+    "cal_per_100g": 352.5,
+    "cal_per_g": 3.525,
+    "carb_per_100g": 44.7,
+    "carb_per_g": 0.447,
+    "fat_per_100g": 16.2,
+    "fat_per_g": 0.162,
+    "protein_per_100g": 7.000000000000001,
+    "protein_per_g": 0.07
+  },
+  "bison": {
+    "cal_per_100g": 179.0,
+    "cal_per_g": 1.79,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 8.0,
+    "fat_per_g": 0.08,
+    "protein_per_100g": 25.0,
+    "protein_per_g": 0.25
+  },
+  "black beans": {
+    "cal_per_100g": 132.0,
+    "cal_per_g": 1.32,
+    "carb_per_100g": 23.7,
+    "carb_per_g": 0.237,
+    "fat_per_100g": 0.5,
+    "fat_per_g": 0.005,
+    "protein_per_100g": 8.9,
+    "protein_per_g": 0.089
+  },
+  "blackberries": {
+    "cal_per_100g": 43.0,
+    "cal_per_g": 0.43,
+    "carb_per_100g": 9.2,
+    "carb_per_g": 0.092,
+    "fat_per_100g": 0.5,
+    "fat_per_g": 0.005,
+    "protein_per_100g": 1.4000000000000001,
+    "protein_per_g": 0.014
+  },
+  "blue cheese": {
+    "cal_per_100g": 353.0,
+    "cal_per_g": 3.53,
+    "carb_per_100g": 2.3,
+    "carb_per_g": 0.023,
+    "fat_per_100g": 28.999999999999996,
+    "fat_per_g": 0.29,
+    "protein_per_100g": 21.0,
+    "protein_per_g": 0.21
+  },
+  "blueberries": {
+    "cal_per_100g": 57.199999999999996,
+    "cal_per_g": 0.572,
+    "carb_per_100g": 14.399999999999999,
+    "carb_per_g": 0.144,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 0.7000000000000001,
+    "protein_per_g": 0.007
+  },
+  "blueberry pie": {
+    "cal_per_100g": 245.6,
+    "cal_per_g": 2.456,
+    "carb_per_100g": 33.0,
+    "carb_per_g": 0.33,
+    "fat_per_100g": 11.899999999999999,
+    "fat_per_g": 0.119,
+    "protein_per_100g": 2.7,
+    "protein_per_g": 0.027
+  },
+  "bok choy": {
+    "cal_per_100g": 13.0,
+    "cal_per_g": 0.13,
+    "carb_per_100g": 2.1999999999999997,
+    "carb_per_g": 0.022,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 1.5,
+    "protein_per_g": 0.015
+  },
+  "bologna": {
+    "cal_per_100g": 245.2,
+    "cal_per_g": 2.452,
+    "carb_per_100g": 0.7000000000000001,
+    "carb_per_g": 0.007,
+    "fat_per_100g": 20.599999999999998,
+    "fat_per_g": 0.206,
+    "protein_per_100g": 15.1,
+    "protein_per_g": 0.151
+  },
+  "brazil nuts": {
+    "cal_per_100g": 657.4,
+    "cal_per_g": 6.574,
+    "carb_per_100g": 12.1,
+    "carb_per_g": 0.121,
+    "fat_per_100g": 66.3,
+    "fat_per_g": 0.663,
+    "protein_per_100g": 14.2,
+    "protein_per_g": 0.142
+  },
+  "bread": {
+    "cal_per_100g": 265.4,
+    "cal_per_g": 2.654,
+    "carb_per_100g": 42.3,
+    "carb_per_g": 0.423,
+    "fat_per_100g": 4.2,
+    "fat_per_g": 0.042,
+    "protein_per_100g": 13.5,
+    "protein_per_g": 0.135
+  },
+  "bread crumbs": {
+    "cal_per_100g": 395.0,
+    "cal_per_g": 3.95,
+    "carb_per_100g": 71.3,
+    "carb_per_g": 0.713,
+    "fat_per_100g": 5.1,
+    "fat_per_g": 0.051,
+    "protein_per_100g": 13.200000000000001,
+    "protein_per_g": 0.132
+  },
+  "breadsticks": {
+    "cal_per_100g": 408.3,
+    "cal_per_g": 4.083,
+    "carb_per_100g": 69.1,
+    "carb_per_g": 0.691,
+    "fat_per_100g": 9.2,
+    "fat_per_g": 0.092,
+    "protein_per_100g": 12.3,
+    "protein_per_g": 0.123
+  },
+  "brie cheese": {
+    "cal_per_100g": 333.40000000000003,
+    "cal_per_g": 3.334,
+    "carb_per_100g": 0.5,
+    "carb_per_g": 0.005,
+    "fat_per_100g": 28.000000000000004,
+    "fat_per_g": 0.28,
+    "protein_per_100g": 21.0,
+    "protein_per_g": 0.21
+  },
+  "brisket": {
+    "cal_per_100g": 155.20000000000002,
+    "cal_per_g": 1.552,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 7.199999999999999,
+    "fat_per_g": 0.072,
+    "protein_per_100g": 21.0,
+    "protein_per_g": 0.21
+  },
+  "broccoli": {
+    "cal_per_100g": 35.0,
+    "cal_per_g": 0.35,
+    "carb_per_100g": 7.000000000000001,
+    "carb_per_g": 0.07,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 2.4,
+    "protein_per_g": 0.024
+  },
+  "broth": {
+    "cal_per_100g": 264.0,
+    "cal_per_g": 2.64,
+    "carb_per_100g": 18.5,
+    "carb_per_g": 0.185,
+    "fat_per_100g": 14.7,
+    "fat_per_g": 0.147,
+    "protein_per_100g": 16.5,
+    "protein_per_g": 0.165
+  },
+  "brown rice": {
+    "cal_per_100g": 111.00000000000001,
+    "cal_per_g": 1.11,
+    "carb_per_100g": 23.0,
+    "carb_per_g": 0.23,
+    "fat_per_100g": 0.8999999999999999,
+    "fat_per_g": 0.009,
+    "protein_per_100g": 2.6,
+    "protein_per_g": 0.026
+  },
+  "brown sugar": {
+    "cal_per_100g": 380.0,
+    "cal_per_g": 3.8,
+    "carb_per_100g": 98.0,
+    "carb_per_g": 0.98,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.1,
+    "protein_per_g": 0.001
+  },
+  "brownies": {
+    "cal_per_100g": 466.09999999999997,
+    "cal_per_g": 4.661,
+    "carb_per_100g": 49.8,
+    "carb_per_g": 0.498,
+    "fat_per_100g": 28.799999999999997,
+    "fat_per_g": 0.288,
+    "protein_per_100g": 6.2,
+    "protein_per_g": 0.062
+  },
+  "brussels sprouts": {
+    "cal_per_100g": 43.0,
+    "cal_per_g": 0.43,
+    "carb_per_100g": 9.0,
+    "carb_per_g": 0.09,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 3.4000000000000004,
+    "protein_per_g": 0.034
+  },
+  "bulgur": {
+    "cal_per_100g": 342.0,
+    "cal_per_g": 3.42,
+    "carb_per_100g": 76.0,
+    "carb_per_g": 0.76,
+    "fat_per_100g": 1.3,
+    "fat_per_g": 0.013,
+    "protein_per_100g": 12.0,
+    "protein_per_g": 0.12
+  },
+  "buns": {
+    "cal_per_100g": 279.0,
+    "cal_per_g": 2.79,
+    "carb_per_100g": 50.0,
+    "carb_per_g": 0.5,
+    "fat_per_100g": 3.9,
+    "fat_per_g": 0.039,
+    "protein_per_100g": 9.8,
+    "protein_per_g": 0.098
+  },
+  "burgers": {
+    "cal_per_100g": 295.0,
+    "cal_per_g": 2.95,
+    "carb_per_100g": 24.099999999999998,
+    "carb_per_g": 0.241,
+    "fat_per_100g": 14.099999999999998,
+    "fat_per_g": 0.141,
+    "protein_per_100g": 16.8,
+    "protein_per_g": 0.168
+  },
+  "burritos": {
+    "cal_per_100g": 180.0,
+    "cal_per_g": 1.8,
+    "carb_per_100g": 23.0,
+    "carb_per_g": 0.23,
+    "fat_per_100g": 6.800000000000001,
+    "fat_per_g": 0.068,
+    "protein_per_100g": 7.000000000000001,
+    "protein_per_g": 0.07
+  },
+  "butter": {
+    "cal_per_100g": 717.0,
+    "cal_per_g": 7.17,
+    "carb_per_100g": 0.1,
+    "carb_per_g": 0.001,
+    "fat_per_100g": 81.0,
+    "fat_per_g": 0.81,
+    "protein_per_100g": 0.8,
+    "protein_per_g": 0.008
+  },
+  "buttermilk": {
+    "cal_per_100g": 40.2,
+    "cal_per_g": 0.402,
+    "carb_per_100g": 4.8,
+    "carb_per_g": 0.048,
+    "fat_per_100g": 0.8999999999999999,
+    "fat_per_g": 0.009,
+    "protein_per_100g": 3.3000000000000003,
+    "protein_per_g": 0.033
+  },
+  "cabbage": {
+    "cal_per_100g": 21.0,
+    "cal_per_g": 0.21,
+    "carb_per_100g": 3.2,
+    "carb_per_g": 0.032,
+    "fat_per_100g": 0.5,
+    "fat_per_g": 0.005,
+    "protein_per_100g": 1.3,
+    "protein_per_g": 0.013
+  },
+  "caesar dressing": {
+    "cal_per_100g": 44.1,
+    "cal_per_g": 0.441,
+    "carb_per_100g": 4.3,
+    "carb_per_g": 0.043,
+    "fat_per_100g": 2.1,
+    "fat_per_g": 0.021,
+    "protein_per_100g": 3.2,
+    "protein_per_g": 0.032
+  },
+  "caesar salad": {
+    "cal_per_100g": 44.0,
+    "cal_per_g": 0.44,
+    "carb_per_100g": 4.3,
+    "carb_per_g": 0.043,
+    "fat_per_100g": 2.1,
+    "fat_per_g": 0.021,
+    "protein_per_100g": 3.2,
+    "protein_per_g": 0.032
+  },
+  "cakes": {
+    "cal_per_100g": 391.0,
+    "cal_per_g": 3.91,
+    "carb_per_100g": 56.00000000000001,
+    "carb_per_g": 0.56,
+    "fat_per_100g": 18.0,
+    "fat_per_g": 0.18,
+    "protein_per_100g": 3.0,
+    "protein_per_g": 0.03
+  },
+  "calamari": {
+    "cal_per_100g": 175.1,
+    "cal_per_g": 1.751,
+    "carb_per_100g": 8.1,
+    "carb_per_g": 0.081,
+    "fat_per_100g": 7.000000000000001,
+    "fat_per_g": 0.07,
+    "protein_per_100g": 17.8,
+    "protein_per_g": 0.178
+  },
+  "calzones": {
+    "cal_per_100g": 308.0,
+    "cal_per_g": 3.08,
+    "carb_per_100g": 13.0,
+    "carb_per_g": 0.13,
+    "fat_per_100g": 21.0,
+    "fat_per_g": 0.21,
+    "protein_per_100g": 16.0,
+    "protein_per_g": 0.16
+  },
+  "camembert cheese": {
+    "cal_per_100g": 300.0,
+    "cal_per_g": 3.0,
+    "carb_per_100g": 0.5,
+    "carb_per_g": 0.005,
+    "fat_per_100g": 24.0,
+    "fat_per_g": 0.24,
+    "protein_per_100g": 20.0,
+    "protein_per_g": 0.2
+  },
+  "candies": {
+    "cal_per_100g": 394.0,
+    "cal_per_g": 3.94,
+    "carb_per_100g": 98.0,
+    "carb_per_g": 0.98,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "cantaloupe": {
+    "cal_per_100g": 34.0,
+    "cal_per_g": 0.34,
+    "carb_per_100g": 8.0,
+    "carb_per_g": 0.08,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 0.8,
+    "protein_per_g": 0.008
+  },
+  "capers": {
+    "cal_per_100g": 23.0,
+    "cal_per_g": 0.23,
+    "carb_per_100g": 4.9,
+    "carb_per_g": 0.049,
+    "fat_per_100g": 0.8999999999999999,
+    "fat_per_g": 0.009,
+    "protein_per_100g": 2.4,
+    "protein_per_g": 0.024
+  },
+  "cappuccino": {
+    "cal_per_100g": 42.0,
+    "cal_per_g": 0.42,
+    "carb_per_100g": 4.2,
+    "carb_per_g": 0.042,
+    "fat_per_100g": 1.6,
+    "fat_per_g": 0.016,
+    "protein_per_100g": 2.6,
+    "protein_per_g": 0.026
+  },
+  "carp": {
+    "cal_per_100g": 128.0,
+    "cal_per_g": 1.28,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 2.7,
+    "fat_per_g": 0.027,
+    "protein_per_100g": 26.0,
+    "protein_per_g": 0.26
+  },
+  "carrot": {
+    "cal_per_100g": 41.0,
+    "cal_per_g": 0.41,
+    "carb_per_100g": 10.0,
+    "carb_per_g": 0.1,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 0.8999999999999999,
+    "protein_per_g": 0.009
+  },
+  "carrot cake": {
+    "cal_per_100g": 415.29999999999995,
+    "cal_per_g": 4.153,
+    "carb_per_100g": 78.60000000000001,
+    "carb_per_g": 0.786,
+    "fat_per_100g": 9.9,
+    "fat_per_g": 0.099,
+    "protein_per_100g": 5.0,
+    "protein_per_g": 0.05
+  },
+  "cashews": {
+    "cal_per_100g": 553.4,
+    "cal_per_g": 5.534,
+    "carb_per_100g": 30.9,
+    "carb_per_g": 0.309,
+    "fat_per_100g": 43.2,
+    "fat_per_g": 0.432,
+    "protein_per_100g": 17.8,
+    "protein_per_g": 0.178
+  },
+  "catfish": {
+    "cal_per_100g": 144.0,
+    "cal_per_g": 1.44,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 7.199999999999999,
+    "fat_per_g": 0.072,
+    "protein_per_100g": 18.0,
+    "protein_per_g": 0.18
+  },
+  "cauliflower": {
+    "cal_per_100g": 25.0,
+    "cal_per_g": 0.25,
+    "carb_per_100g": 5.0,
+    "carb_per_g": 0.05,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 1.7999999999999998,
+    "protein_per_g": 0.018
+  },
+  "celery": {
+    "cal_per_100g": 16.0,
+    "cal_per_g": 0.16,
+    "carb_per_100g": 3.4000000000000004,
+    "carb_per_g": 0.034,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 0.7000000000000001,
+    "protein_per_g": 0.007
+  },
+  "celery root": {
+    "cal_per_100g": 42.0,
+    "cal_per_g": 0.42,
+    "carb_per_100g": 9.2,
+    "carb_per_g": 0.092,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 1.5,
+    "protein_per_g": 0.015
+  },
+  "cereal": {
+    "cal_per_100g": 376.0,
+    "cal_per_g": 3.76,
+    "carb_per_100g": 73.0,
+    "carb_per_g": 0.73,
+    "fat_per_100g": 6.7,
+    "fat_per_g": 0.067,
+    "protein_per_100g": 12.0,
+    "protein_per_g": 0.12
+  },
+  "cereal bars": {
+    "cal_per_100g": 342.0,
+    "cal_per_g": 3.42,
+    "carb_per_100g": 78.0,
+    "carb_per_g": 0.78,
+    "fat_per_100g": 0.8999999999999999,
+    "fat_per_g": 0.009,
+    "protein_per_100g": 5.8999999999999995,
+    "protein_per_g": 0.059
+  },
+  "challah": {
+    "cal_per_100g": 287.0,
+    "cal_per_g": 2.87,
+    "carb_per_100g": 48.0,
+    "carb_per_g": 0.48,
+    "fat_per_100g": 6.0,
+    "fat_per_g": 0.06,
+    "protein_per_100g": 9.5,
+    "protein_per_g": 0.095
+  },
+  "champagne": {
+    "cal_per_100g": 82.0,
+    "cal_per_g": 0.82,
+    "carb_per_100g": 2.6,
+    "carb_per_g": 0.026,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.1,
+    "protein_per_g": 0.001
+  },
+  "chard": {
+    "cal_per_100g": 19.0,
+    "cal_per_g": 0.19,
+    "carb_per_100g": 3.6999999999999997,
+    "carb_per_g": 0.037,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 1.7999999999999998,
+    "protein_per_g": 0.018
+  },
+  "chayote squash": {
+    "cal_per_100g": 24.0,
+    "cal_per_g": 0.24,
+    "carb_per_100g": 5.1,
+    "carb_per_g": 0.051,
+    "fat_per_100g": 0.5,
+    "fat_per_g": 0.005,
+    "protein_per_100g": 0.6,
+    "protein_per_g": 0.006
+  },
+  "cheddar cheese": {
+    "cal_per_100g": 401.90000000000003,
+    "cal_per_g": 4.019,
+    "carb_per_100g": 1.3,
+    "carb_per_g": 0.013,
+    "fat_per_100g": 33.0,
+    "fat_per_g": 0.33,
+    "protein_per_100g": 24.8,
+    "protein_per_g": 0.248
+  },
+  "cheese": {
+    "cal_per_100g": 401.99999999999994,
+    "cal_per_g": 4.02,
+    "carb_per_100g": 1.3,
+    "carb_per_g": 0.013,
+    "fat_per_100g": 33.0,
+    "fat_per_g": 0.33,
+    "protein_per_100g": 25.0,
+    "protein_per_g": 0.25
+  },
+  "cheese pizza": {
+    "cal_per_100g": 265.9,
+    "cal_per_g": 2.659,
+    "carb_per_100g": 33.5,
+    "carb_per_g": 0.335,
+    "fat_per_100g": 9.4,
+    "fat_per_g": 0.094,
+    "protein_per_100g": 11.200000000000001,
+    "protein_per_g": 0.112
+  },
+  "cheeseburgers": {
+    "cal_per_100g": 269.0,
+    "cal_per_g": 2.69,
+    "carb_per_100g": 20.0,
+    "carb_per_g": 0.2,
+    "fat_per_100g": 14.000000000000002,
+    "fat_per_g": 0.14,
+    "protein_per_100g": 15.0,
+    "protein_per_g": 0.15
+  },
+  "cheesecake": {
+    "cal_per_100g": 321.0,
+    "cal_per_g": 3.21,
+    "carb_per_100g": 25.3,
+    "carb_per_g": 0.253,
+    "fat_per_100g": 22.3,
+    "fat_per_g": 0.223,
+    "protein_per_100g": 5.7,
+    "protein_per_g": 0.057
+  },
+  "cherries": {
+    "cal_per_100g": 63.0,
+    "cal_per_g": 0.63,
+    "carb_per_100g": 16.0,
+    "carb_per_g": 0.16,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 1.0999999999999999,
+    "protein_per_g": 0.011
+  },
+  "cherry pie": {
+    "cal_per_100g": 269.4,
+    "cal_per_g": 2.694,
+    "carb_per_100g": 38.7,
+    "carb_per_g": 0.387,
+    "fat_per_100g": 12.2,
+    "fat_per_g": 0.122,
+    "protein_per_100g": 2.8000000000000003,
+    "protein_per_g": 0.028
+  },
+  "cherry tomatoes": {
+    "cal_per_100g": 18.0,
+    "cal_per_g": 0.18,
+    "carb_per_100g": 3.9,
+    "carb_per_g": 0.039,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 0.8999999999999999,
+    "protein_per_g": 0.009
+  },
+  "chestnuts": {
+    "cal_per_100g": 130.8,
+    "cal_per_g": 1.308,
+    "carb_per_100g": 28.1,
+    "carb_per_g": 0.281,
+    "fat_per_100g": 1.4000000000000001,
+    "fat_per_g": 0.014,
+    "protein_per_100g": 2.1,
+    "protein_per_g": 0.021
+  },
+  "chia seeds": {
+    "cal_per_100g": 486.00000000000006,
+    "cal_per_g": 4.86,
+    "carb_per_100g": 42.0,
+    "carb_per_g": 0.42,
+    "fat_per_100g": 31.0,
+    "fat_per_g": 0.31,
+    "protein_per_100g": 17.0,
+    "protein_per_g": 0.17
+  },
+  "chicken": {
+    "cal_per_100g": 165.0,
+    "cal_per_g": 1.65,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 3.5999999999999996,
+    "fat_per_g": 0.036,
+    "protein_per_100g": 31.0,
+    "protein_per_g": 0.31
+  },
+  "chicken apple sausage": {
+    "cal_per_100g": 160.0,
+    "cal_per_g": 1.6,
+    "carb_per_100g": 3.0,
+    "carb_per_g": 0.03,
+    "fat_per_100g": 10.0,
+    "fat_per_g": 0.1,
+    "protein_per_100g": 14.000000000000002,
+    "protein_per_g": 0.14
+  },
+  "chicken breast": {
+    "cal_per_100g": 165.2,
+    "cal_per_g": 1.652,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 3.5999999999999996,
+    "fat_per_g": 0.036,
+    "protein_per_100g": 31.1,
+    "protein_per_g": 0.311
+  },
+  "chicken drumsticks": {
+    "cal_per_100g": 184.0,
+    "cal_per_g": 1.84,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 9.0,
+    "fat_per_g": 0.09,
+    "protein_per_100g": 24.0,
+    "protein_per_g": 0.24
+  },
+  "chicken nuggets": {
+    "cal_per_100g": 307.0,
+    "cal_per_g": 3.07,
+    "carb_per_100g": 15.0,
+    "carb_per_g": 0.15,
+    "fat_per_100g": 20.0,
+    "fat_per_g": 0.2,
+    "protein_per_100g": 16.0,
+    "protein_per_g": 0.16
+  },
+  "chicken salad": {
+    "cal_per_100g": 227.0,
+    "cal_per_g": 2.27,
+    "carb_per_100g": 2.9000000000000004,
+    "carb_per_g": 0.029,
+    "fat_per_100g": 16.0,
+    "fat_per_g": 0.16,
+    "protein_per_100g": 17.0,
+    "protein_per_g": 0.17
+  },
+  "chicken soup": {
+    "cal_per_100g": 35.5,
+    "cal_per_g": 0.355,
+    "carb_per_100g": 3.4000000000000004,
+    "carb_per_g": 0.034,
+    "fat_per_100g": 1.2,
+    "fat_per_g": 0.012,
+    "protein_per_100g": 2.5,
+    "protein_per_g": 0.025
+  },
+  "chicken thighs": {
+    "cal_per_100g": 177.2,
+    "cal_per_g": 1.772,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 8.3,
+    "fat_per_g": 0.083,
+    "protein_per_100g": 23.9,
+    "protein_per_g": 0.239
+  },
+  "chicken wings": {
+    "cal_per_100g": 328.0,
+    "cal_per_g": 3.28,
+    "carb_per_100g": 9.8,
+    "carb_per_g": 0.098,
+    "fat_per_100g": 24.0,
+    "fat_per_g": 0.24,
+    "protein_per_100g": 17.0,
+    "protein_per_g": 0.17
+  },
+  "chickpeas": {
+    "cal_per_100g": 164.0,
+    "cal_per_g": 1.64,
+    "carb_per_100g": 27.0,
+    "carb_per_g": 0.27,
+    "fat_per_100g": 2.6,
+    "fat_per_g": 0.026,
+    "protein_per_100g": 9.0,
+    "protein_per_g": 0.09
+  },
+  "chilaquiles": {
+    "cal_per_100g": 195.0,
+    "cal_per_g": 1.95,
+    "carb_per_100g": 12.0,
+    "carb_per_g": 0.12,
+    "fat_per_100g": 12.0,
+    "fat_per_g": 0.12,
+    "protein_per_100g": 8.9,
+    "protein_per_g": 0.089
+  },
+  "chili": {
+    "cal_per_100g": 40.0,
+    "cal_per_g": 0.4,
+    "carb_per_100g": 8.9,
+    "carb_per_g": 0.089,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 1.7999999999999998,
+    "protein_per_g": 0.018
+  },
+  "chimichangas": {
+    "cal_per_100g": 244.1,
+    "cal_per_g": 2.441,
+    "carb_per_100g": 24.9,
+    "carb_per_g": 0.249,
+    "fat_per_100g": 11.200000000000001,
+    "fat_per_g": 0.112,
+    "protein_per_100g": 11.200000000000001,
+    "protein_per_g": 0.112
+  },
+  "chips": {
+    "cal_per_100g": 536.3000000000001,
+    "cal_per_g": 5.363,
+    "carb_per_100g": 52.900000000000006,
+    "carb_per_g": 0.529,
+    "fat_per_100g": 35.0,
+    "fat_per_g": 0.35,
+    "protein_per_100g": 7.000000000000001,
+    "protein_per_g": 0.07
+  },
+  "chive": {
+    "cal_per_100g": 30.0,
+    "cal_per_g": 0.3,
+    "carb_per_100g": 4.3999999999999995,
+    "carb_per_g": 0.044,
+    "fat_per_100g": 0.7000000000000001,
+    "fat_per_g": 0.007,
+    "protein_per_100g": 3.3000000000000003,
+    "protein_per_g": 0.033
+  },
+  "chocolate": {
+    "cal_per_100g": 546.1,
+    "cal_per_g": 5.461,
+    "carb_per_100g": 60.699999999999996,
+    "carb_per_g": 0.607,
+    "fat_per_100g": 31.4,
+    "fat_per_g": 0.314,
+    "protein_per_100g": 4.9,
+    "protein_per_g": 0.049
+  },
+  "chocolate cake": {
+    "cal_per_100g": 370.7,
+    "cal_per_g": 3.707,
+    "carb_per_100g": 53.400000000000006,
+    "carb_per_g": 0.534,
+    "fat_per_100g": 15.0,
+    "fat_per_g": 0.15,
+    "protein_per_100g": 5.2,
+    "protein_per_g": 0.052
+  },
+  "chocolate chip cookies": {
+    "cal_per_100g": 487.4,
+    "cal_per_g": 4.874,
+    "carb_per_100g": 56.89999999999999,
+    "carb_per_g": 0.569,
+    "fat_per_100g": 28.1,
+    "fat_per_g": 0.281,
+    "protein_per_100g": 5.800000000000001,
+    "protein_per_g": 0.058
+  },
+  "chocolate milk": {
+    "cal_per_100g": 83.1,
+    "cal_per_g": 0.831,
+    "carb_per_100g": 10.2,
+    "carb_per_g": 0.102,
+    "fat_per_100g": 3.4000000000000004,
+    "fat_per_g": 0.034,
+    "protein_per_100g": 3.2,
+    "protein_per_g": 0.032
+  },
+  "chow mein": {
+    "cal_per_100g": 461.09999999999997,
+    "cal_per_g": 4.611,
+    "carb_per_100g": 67.60000000000001,
+    "carb_per_g": 0.676,
+    "fat_per_100g": 18.4,
+    "fat_per_g": 0.184,
+    "protein_per_100g": 10.8,
+    "protein_per_g": 0.108
+  },
+  "chowders": {
+    "cal_per_100g": 99.0,
+    "cal_per_g": 0.99,
+    "carb_per_100g": 7.6,
+    "carb_per_g": 0.076,
+    "fat_per_100g": 6.2,
+    "fat_per_g": 0.062,
+    "protein_per_100g": 3.1,
+    "protein_per_g": 0.031
+  },
+  "chutney": {
+    "cal_per_100g": 120.0,
+    "cal_per_g": 1.2,
+    "carb_per_100g": 10.0,
+    "carb_per_g": 0.1,
+    "fat_per_100g": 8.0,
+    "fat_per_g": 0.08,
+    "protein_per_100g": 5.0,
+    "protein_per_g": 0.05
+  },
+  "cilantro": {
+    "cal_per_100g": 22.8,
+    "cal_per_g": 0.228,
+    "carb_per_100g": 3.6999999999999997,
+    "carb_per_g": 0.037,
+    "fat_per_100g": 0.5,
+    "fat_per_g": 0.005,
+    "protein_per_100g": 2.1999999999999997,
+    "protein_per_g": 0.022
+  },
+  "clams": {
+    "cal_per_100g": 148.0,
+    "cal_per_g": 1.48,
+    "carb_per_100g": 5.1,
+    "carb_per_g": 0.051,
+    "fat_per_100g": 2.0,
+    "fat_per_g": 0.02,
+    "protein_per_100g": 25.5,
+    "protein_per_g": 0.255
+  },
+  "cobbler": {
+    "cal_per_100g": 199.0,
+    "cal_per_g": 1.99,
+    "carb_per_100g": 35.0,
+    "carb_per_g": 0.35,
+    "fat_per_100g": 6.3,
+    "fat_per_g": 0.063,
+    "protein_per_100g": 2.0,
+    "protein_per_g": 0.02
+  },
+  "cocoa": {
+    "cal_per_100g": 223.70000000000002,
+    "cal_per_g": 2.237,
+    "carb_per_100g": 57.3,
+    "carb_per_g": 0.573,
+    "fat_per_100g": 13.5,
+    "fat_per_g": 0.135,
+    "protein_per_100g": 19.8,
+    "protein_per_g": 0.198
+  },
+  "coconut milk": {
+    "cal_per_100g": 229.99999999999997,
+    "cal_per_g": 2.3,
+    "carb_per_100g": 6.0,
+    "carb_per_g": 0.06,
+    "fat_per_100g": 24.0,
+    "fat_per_g": 0.24,
+    "protein_per_100g": 2.3,
+    "protein_per_g": 0.023
+  },
+  "coconuts": {
+    "cal_per_100g": 353.7,
+    "cal_per_g": 3.537,
+    "carb_per_100g": 15.2,
+    "carb_per_g": 0.152,
+    "fat_per_100g": 33.300000000000004,
+    "fat_per_g": 0.333,
+    "protein_per_100g": 3.3000000000000003,
+    "protein_per_g": 0.033
+  },
+  "cod": {
+    "cal_per_100g": 84.7,
+    "cal_per_g": 0.847,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 0.5,
+    "fat_per_g": 0.005,
+    "protein_per_100g": 18.9,
+    "protein_per_g": 0.189
+  },
+  "coffee": {
+    "cal_per_100g": 0.0,
+    "cal_per_g": 0.0,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "coffee creamer": {
+    "cal_per_100g": 132.0,
+    "cal_per_g": 1.32,
+    "carb_per_100g": 11.200000000000001,
+    "carb_per_g": 0.112,
+    "fat_per_100g": 9.9,
+    "fat_per_g": 0.099,
+    "protein_per_100g": 1.0,
+    "protein_per_g": 0.01
+  },
+  "colby cheese": {
+    "cal_per_100g": 394.0,
+    "cal_per_g": 3.94,
+    "carb_per_100g": 2.5,
+    "carb_per_g": 0.025,
+    "fat_per_100g": 31.3,
+    "fat_per_g": 0.313,
+    "protein_per_100g": 24.3,
+    "protein_per_g": 0.243
+  },
+  "coleslaw": {
+    "cal_per_100g": 152.29999999999998,
+    "cal_per_g": 1.523,
+    "carb_per_100g": 14.799999999999999,
+    "carb_per_g": 0.148,
+    "fat_per_100g": 9.700000000000001,
+    "fat_per_g": 0.097,
+    "protein_per_100g": 1.0,
+    "protein_per_g": 0.01
+  },
+  "collards": {
+    "cal_per_100g": 31.3,
+    "cal_per_g": 0.313,
+    "carb_per_100g": 5.3,
+    "carb_per_g": 0.053,
+    "fat_per_100g": 0.6,
+    "fat_per_g": 0.006,
+    "protein_per_100g": 3.0,
+    "protein_per_g": 0.03
+  },
+  "cookies": {
+    "cal_per_100g": 492.0,
+    "cal_per_g": 4.92,
+    "carb_per_100g": 65.0,
+    "carb_per_g": 0.65,
+    "fat_per_100g": 25.0,
+    "fat_per_g": 0.25,
+    "protein_per_100g": 5.1,
+    "protein_per_g": 0.051
+  },
+  "corn": {
+    "cal_per_100g": 96.0,
+    "cal_per_g": 0.96,
+    "carb_per_100g": 21.0,
+    "carb_per_g": 0.21,
+    "fat_per_100g": 1.5,
+    "fat_per_g": 0.015,
+    "protein_per_100g": 3.4000000000000004,
+    "protein_per_g": 0.034
+  },
+  "corn chips": {
+    "cal_per_100g": 518.0,
+    "cal_per_g": 5.18,
+    "carb_per_100g": 63.2,
+    "carb_per_g": 0.632,
+    "fat_per_100g": 28.1,
+    "fat_per_g": 0.281,
+    "protein_per_100g": 6.0,
+    "protein_per_g": 0.06
+  },
+  "corn dogs": {
+    "cal_per_100g": 262.9,
+    "cal_per_g": 2.629,
+    "carb_per_100g": 32.0,
+    "carb_per_g": 0.32,
+    "fat_per_100g": 10.9,
+    "fat_per_g": 0.109,
+    "protein_per_100g": 9.9,
+    "protein_per_g": 0.099
+  },
+  "corn nuts": {
+    "cal_per_100g": 436.00000000000006,
+    "cal_per_g": 4.36,
+    "carb_per_100g": 72.0,
+    "carb_per_g": 0.72,
+    "fat_per_100g": 14.000000000000002,
+    "fat_per_g": 0.14,
+    "protein_per_100g": 9.0,
+    "protein_per_g": 0.09
+  },
+  "corn on the cob": {
+    "cal_per_100g": 106.1,
+    "cal_per_g": 1.061,
+    "carb_per_100g": 22.0,
+    "carb_per_g": 0.22,
+    "fat_per_100g": 2.4,
+    "fat_per_g": 0.024,
+    "protein_per_100g": 3.1,
+    "protein_per_g": 0.031
+  },
+  "corn starch": {
+    "cal_per_100g": 380.0,
+    "cal_per_g": 3.8,
+    "carb_per_100g": 91.4,
+    "carb_per_g": 0.914,
+    "fat_per_100g": 0.05,
+    "fat_per_g": 0.0005,
+    "protein_per_100g": 0.3,
+    "protein_per_g": 0.003
+  },
+  "cornbread": {
+    "cal_per_100g": 266.0,
+    "cal_per_g": 2.66,
+    "carb_per_100g": 44.0,
+    "carb_per_g": 0.44,
+    "fat_per_100g": 7.1,
+    "fat_per_g": 0.071,
+    "protein_per_100g": 6.7,
+    "protein_per_g": 0.067
+  },
+  "corned beef": {
+    "cal_per_100g": 250.8,
+    "cal_per_g": 2.508,
+    "carb_per_100g": 0.5,
+    "carb_per_g": 0.005,
+    "fat_per_100g": 19.0,
+    "fat_per_g": 0.19,
+    "protein_per_100g": 17.9,
+    "protein_per_g": 0.179
+  },
+  "cornmeal": {
+    "cal_per_100g": 370.0,
+    "cal_per_g": 3.7,
+    "carb_per_100g": 79.3,
+    "carb_per_g": 0.793,
+    "fat_per_100g": 1.7999999999999998,
+    "fat_per_g": 0.018,
+    "protein_per_100g": 7.000000000000001,
+    "protein_per_g": 0.07
+  },
+  "cottage cheese": {
+    "cal_per_100g": 98.0,
+    "cal_per_g": 0.98,
+    "carb_per_100g": 3.4000000000000004,
+    "carb_per_g": 0.034,
+    "fat_per_100g": 4.3,
+    "fat_per_g": 0.043,
+    "protein_per_100g": 11.0,
+    "protein_per_g": 0.11
+  },
+  "country rice": {
+    "cal_per_100g": 152.04,
+    "cal_per_g": 1.5204,
+    "carb_per_100g": 31.6,
+    "carb_per_g": 0.316,
+    "fat_per_100g": 6.800000000000001,
+    "fat_per_g": 0.068,
+    "protein_per_100g": 3.8600000000000003,
+    "protein_per_g": 0.0386
+  },
+  "couscous": {
+    "cal_per_100g": 112.00000000000001,
+    "cal_per_g": 1.12,
+    "carb_per_100g": 23.0,
+    "carb_per_g": 0.23,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 3.8,
+    "protein_per_g": 0.038
+  },
+  "crab": {
+    "cal_per_100g": 83.0,
+    "cal_per_g": 0.83,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 0.7000000000000001,
+    "fat_per_g": 0.007,
+    "protein_per_100g": 18.0,
+    "protein_per_g": 0.18
+  },
+  "crackers": {
+    "cal_per_100g": 509.99999999999994,
+    "cal_per_g": 5.1,
+    "carb_per_100g": 61.0,
+    "carb_per_g": 0.61,
+    "fat_per_100g": 26.0,
+    "fat_per_g": 0.26,
+    "protein_per_100g": 6.6000000000000005,
+    "protein_per_g": 0.066
+  },
+  "cranberries": {
+    "cal_per_100g": 46.0,
+    "cal_per_g": 0.46,
+    "carb_per_100g": 12.0,
+    "carb_per_g": 0.12,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.5,
+    "protein_per_g": 0.005
+  },
+  "cranberry juice": {
+    "cal_per_100g": 45.300000000000004,
+    "cal_per_g": 0.453,
+    "carb_per_100g": 11.1,
+    "carb_per_g": 0.111,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.3,
+    "protein_per_g": 0.003
+  },
+  "crawfish": {
+    "cal_per_100g": 77.0,
+    "cal_per_g": 0.77,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 1.0,
+    "fat_per_g": 0.01,
+    "protein_per_100g": 16.0,
+    "protein_per_g": 0.16
+  },
+  "cream": {
+    "cal_per_100g": 336.3,
+    "cal_per_g": 3.363,
+    "carb_per_100g": 2.7,
+    "carb_per_g": 0.027,
+    "fat_per_100g": 36.6,
+    "fat_per_g": 0.366,
+    "protein_per_100g": 2.8000000000000003,
+    "protein_per_g": 0.028
+  },
+  "cream cheese": {
+    "cal_per_100g": 350.0,
+    "cal_per_g": 3.5,
+    "carb_per_100g": 5.5,
+    "carb_per_g": 0.055,
+    "fat_per_100g": 34.0,
+    "fat_per_g": 0.34,
+    "protein_per_100g": 6.2,
+    "protein_per_g": 0.062
+  },
+  "crepes": {
+    "cal_per_100g": 165.0,
+    "cal_per_g": 1.65,
+    "carb_per_100g": 16.0,
+    "carb_per_g": 0.16,
+    "fat_per_100g": 8.3,
+    "fat_per_g": 0.083,
+    "protein_per_100g": 5.8999999999999995,
+    "protein_per_g": 0.059
+  },
+  "crispbread": {
+    "cal_per_100g": 366.0,
+    "cal_per_g": 3.66,
+    "carb_per_100g": 82.0,
+    "carb_per_g": 0.82,
+    "fat_per_100g": 1.3,
+    "fat_per_g": 0.013,
+    "protein_per_100g": 7.9,
+    "protein_per_g": 0.079
+  },
+  "croissants": {
+    "cal_per_100g": 406.20000000000005,
+    "cal_per_g": 4.062,
+    "carb_per_100g": 45.9,
+    "carb_per_g": 0.459,
+    "fat_per_100g": 21.2,
+    "fat_per_g": 0.212,
+    "protein_per_100g": 8.0,
+    "protein_per_g": 0.08
+  },
+  "croutons": {
+    "cal_per_100g": 408.1,
+    "cal_per_g": 4.081,
+    "carb_per_100g": 72.3,
+    "carb_per_g": 0.723,
+    "fat_per_100g": 6.7,
+    "fat_per_g": 0.067,
+    "protein_per_100g": 12.0,
+    "protein_per_g": 0.12
+  },
+  "cucumbers": {
+    "cal_per_100g": 10.0,
+    "cal_per_g": 0.1,
+    "carb_per_100g": 2.0,
+    "carb_per_g": 0.02,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 1.0,
+    "protein_per_g": 0.01
+  },
+  "cupcakes": {
+    "cal_per_100g": 305.5,
+    "cal_per_g": 3.055,
+    "carb_per_100g": 67.2,
+    "carb_per_g": 0.672,
+    "fat_per_100g": 3.5999999999999996,
+    "fat_per_g": 0.036,
+    "protein_per_100g": 4.2,
+    "protein_per_g": 0.042
+  },
+  "curries": {
+    "cal_per_100g": 104.0,
+    "cal_per_g": 1.04,
+    "carb_per_100g": 3.2,
+    "carb_per_g": 0.032,
+    "fat_per_100g": 4.6,
+    "fat_per_g": 0.046,
+    "protein_per_100g": 12.0,
+    "protein_per_g": 0.12
+  },
+  "custard": {
+    "cal_per_100g": 117.5,
+    "cal_per_g": 1.175,
+    "carb_per_100g": 17.2,
+    "carb_per_g": 0.172,
+    "fat_per_100g": 4.0,
+    "fat_per_g": 0.04,
+    "protein_per_100g": 4.0,
+    "protein_per_g": 0.04
+  },
+  "dark chocolate": {
+    "cal_per_100g": 575.0,
+    "cal_per_g": 5.75,
+    "carb_per_100g": 27.0,
+    "carb_per_g": 0.27,
+    "fat_per_100g": 46.0,
+    "fat_per_g": 0.46,
+    "protein_per_100g": 6.0,
+    "protein_per_g": 0.06
+  },
+  "dates": {
+    "cal_per_100g": 282.0,
+    "cal_per_g": 2.82,
+    "carb_per_100g": 75.0,
+    "carb_per_g": 0.75,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 2.5,
+    "protein_per_g": 0.025
+  },
+  "deprecated": {
+    "cal_per_100g": 93.0,
+    "cal_per_g": 0.93,
+    "carb_per_100g": 21.0,
+    "carb_per_g": 0.21,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 2.5,
+    "protein_per_g": 0.025
+  },
+  "donuts": {
+    "cal_per_100g": 421.0,
+    "cal_per_g": 4.21,
+    "carb_per_100g": 48.0,
+    "carb_per_g": 0.48,
+    "fat_per_100g": 23.0,
+    "fat_per_g": 0.23,
+    "protein_per_100g": 6.1,
+    "protein_per_g": 0.061
+  },
+  "duck": {
+    "cal_per_100g": 337.0,
+    "cal_per_g": 3.37,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 28.000000000000004,
+    "fat_per_g": 0.28,
+    "protein_per_100g": 19.0,
+    "protein_per_g": 0.19
+  },
+  "dumplings": {
+    "cal_per_100g": 229.99999999999997,
+    "cal_per_g": 2.3,
+    "carb_per_100g": 39.0,
+    "carb_per_g": 0.39,
+    "fat_per_100g": 5.4,
+    "fat_per_g": 0.054,
+    "protein_per_100g": 6.2,
+    "protein_per_g": 0.062
+  },
+  "edamame": {
+    "cal_per_100g": 122.0,
+    "cal_per_g": 1.22,
+    "carb_per_100g": 9.8,
+    "carb_per_g": 0.098,
+    "fat_per_100g": 5.1,
+    "fat_per_g": 0.051,
+    "protein_per_100g": 11.0,
+    "protein_per_g": 0.11
+  },
+  "eel": {
+    "cal_per_100g": 236.0,
+    "cal_per_g": 2.36,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 15.0,
+    "fat_per_g": 0.15,
+    "protein_per_100g": 24.0,
+    "protein_per_g": 0.24
+  },
+  "egg rolls": {
+    "cal_per_100g": 196.6,
+    "cal_per_g": 1.966,
+    "carb_per_100g": 28.7,
+    "carb_per_g": 0.287,
+    "fat_per_100g": 4.5,
+    "fat_per_g": 0.045,
+    "protein_per_100g": 10.2,
+    "protein_per_g": 0.102
+  },
+  "egg salad": {
+    "cal_per_100g": 212.0,
+    "cal_per_g": 2.12,
+    "carb_per_100g": 2.4,
+    "carb_per_g": 0.024,
+    "fat_per_100g": 18.4,
+    "fat_per_g": 0.184,
+    "protein_per_100g": 8.1,
+    "protein_per_g": 0.081
+  },
+  "egg whites": {
+    "cal_per_100g": 52.0,
+    "cal_per_g": 0.52,
+    "carb_per_100g": 0.7000000000000001,
+    "carb_per_g": 0.007,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 10.0,
+    "protein_per_g": 0.1
+  },
+  "egg yolks": {
+    "cal_per_100g": 322.8,
+    "cal_per_g": 3.228,
+    "carb_per_100g": 3.5999999999999996,
+    "carb_per_g": 0.036,
+    "fat_per_100g": 26.700000000000003,
+    "fat_per_g": 0.267,
+    "protein_per_100g": 15.9,
+    "protein_per_g": 0.159
+  },
+  "eggnog": {
+    "cal_per_100g": 87.8,
+    "cal_per_g": 0.878,
+    "carb_per_100g": 8.0,
+    "carb_per_g": 0.08,
+    "fat_per_100g": 4.2,
+    "fat_per_g": 0.042,
+    "protein_per_100g": 4.6,
+    "protein_per_g": 0.046
+  },
+  "eggplant": {
+    "cal_per_100g": 24.8,
+    "cal_per_g": 0.248,
+    "carb_per_100g": 5.8999999999999995,
+    "carb_per_g": 0.059,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 1.0,
+    "protein_per_g": 0.01
+  },
+  "eggs": {
+    "cal_per_100g": 155.5,
+    "cal_per_g": 1.555,
+    "carb_per_100g": 1.2,
+    "carb_per_g": 0.012,
+    "fat_per_100g": 10.5,
+    "fat_per_g": 0.105,
+    "protein_per_100g": 12.5,
+    "protein_per_g": 0.125
+  },
+  "empanadas": {
+    "cal_per_100g": 335.5,
+    "cal_per_g": 3.355,
+    "carb_per_100g": 31.2,
+    "carb_per_g": 0.312,
+    "fat_per_100g": 18.0,
+    "fat_per_g": 0.18,
+    "protein_per_100g": 11.1,
+    "protein_per_g": 0.111
+  },
+  "enchiladas": {
+    "cal_per_100g": 168.1,
+    "cal_per_g": 1.681,
+    "carb_per_100g": 15.8,
+    "carb_per_g": 0.158,
+    "fat_per_100g": 9.2,
+    "fat_per_g": 0.092,
+    "protein_per_100g": 6.1,
+    "protein_per_g": 0.061
+  },
+  "endive": {
+    "cal_per_100g": 17.0,
+    "cal_per_g": 0.17,
+    "carb_per_100g": 3.4000000000000004,
+    "carb_per_g": 0.034,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 1.3,
+    "protein_per_g": 0.013
+  },
+  "energy drinks": {
+    "cal_per_100g": 45.9,
+    "cal_per_g": 0.459,
+    "carb_per_100g": 12.0,
+    "carb_per_g": 0.12,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.3,
+    "protein_per_g": 0.003
+  },
+  "english muffins": {
+    "cal_per_100g": 235.5,
+    "cal_per_g": 2.355,
+    "carb_per_100g": 45.800000000000004,
+    "carb_per_g": 0.458,
+    "fat_per_100g": 1.7999999999999998,
+    "fat_per_g": 0.018,
+    "protein_per_100g": 7.8,
+    "protein_per_g": 0.078
+  },
+  "fajitas": {
+    "cal_per_100g": 200.0,
+    "cal_per_g": 2.0,
+    "carb_per_100g": 18.0,
+    "carb_per_g": 0.18,
+    "fat_per_100g": 7.9,
+    "fat_per_g": 0.079,
+    "protein_per_100g": 14.000000000000002,
+    "protein_per_g": 0.14
+  },
+  "falafel": {
+    "cal_per_100g": 334.1,
+    "cal_per_g": 3.341,
+    "carb_per_100g": 30.7,
+    "carb_per_g": 0.307,
+    "fat_per_100g": 17.8,
+    "fat_per_g": 0.178,
+    "protein_per_100g": 13.3,
+    "protein_per_g": 0.133
+  },
+  "fennel": {
+    "cal_per_100g": 31.0,
+    "cal_per_g": 0.31,
+    "carb_per_100g": 7.000000000000001,
+    "carb_per_g": 0.07,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 1.2,
+    "protein_per_g": 0.012
+  },
+  "feta cheese": {
+    "cal_per_100g": 264.1,
+    "cal_per_g": 2.641,
+    "carb_per_100g": 4.2,
+    "carb_per_g": 0.042,
+    "fat_per_100g": 21.099999999999998,
+    "fat_per_g": 0.211,
+    "protein_per_100g": 13.8,
+    "protein_per_g": 0.138
+  },
+  "figs": {
+    "cal_per_100g": 275.0,
+    "cal_per_g": 2.75,
+    "carb_per_100g": 65.0,
+    "carb_per_g": 0.65,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 2.5,
+    "protein_per_g": 0.025
+  },
+  "fish": {
+    "cal_per_100g": 90.0,
+    "cal_per_g": 0.9,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 13.0,
+    "fat_per_g": 0.13,
+    "protein_per_100g": 18.4,
+    "protein_per_g": 0.184
+  },
+  "fish oil": {
+    "cal_per_100g": 903.3,
+    "cal_per_g": 9.033,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 101.0,
+    "fat_per_g": 1.01,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "flatbread": {
+    "cal_per_100g": 275.0,
+    "cal_per_g": 2.75,
+    "carb_per_100g": 56.00000000000001,
+    "carb_per_g": 0.56,
+    "fat_per_100g": 1.2,
+    "fat_per_g": 0.012,
+    "protein_per_100g": 9.1,
+    "protein_per_g": 0.091
+  },
+  "flounder": {
+    "cal_per_100g": 70.3,
+    "cal_per_g": 0.703,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 1.9,
+    "fat_per_g": 0.019,
+    "protein_per_100g": 12.4,
+    "protein_per_g": 0.124
+  },
+  "flour": {
+    "cal_per_100g": 364.1,
+    "cal_per_g": 3.641,
+    "carb_per_100g": 76.0,
+    "carb_per_g": 0.76,
+    "fat_per_100g": 1.0,
+    "fat_per_g": 0.01,
+    "protein_per_100g": 10.2,
+    "protein_per_g": 0.102
+  },
+  "focaccia": {
+    "cal_per_100g": 249.6,
+    "cal_per_g": 2.496,
+    "carb_per_100g": 35.5,
+    "carb_per_g": 0.355,
+    "fat_per_100g": 7.9,
+    "fat_per_g": 0.079,
+    "protein_per_100g": 8.9,
+    "protein_per_g": 0.089
+  },
+  "french dressing": {
+    "cal_per_100g": 453.2,
+    "cal_per_g": 4.532,
+    "carb_per_100g": 15.6,
+    "carb_per_g": 0.156,
+    "fat_per_100g": 44.2,
+    "fat_per_g": 0.442,
+    "protein_per_100g": 0.7000000000000001,
+    "protein_per_g": 0.007
+  },
+  "french fries": {
+    "cal_per_100g": 312.0,
+    "cal_per_g": 3.12,
+    "carb_per_100g": 41.0,
+    "carb_per_g": 0.41,
+    "fat_per_100g": 15.0,
+    "fat_per_g": 0.15,
+    "protein_per_100g": 3.4000000000000004,
+    "protein_per_g": 0.034
+  },
+  "french toast": {
+    "cal_per_100g": 229.2,
+    "cal_per_g": 2.292,
+    "carb_per_100g": 24.8,
+    "carb_per_g": 0.248,
+    "fat_per_100g": 10.9,
+    "fat_per_g": 0.109,
+    "protein_per_100g": 7.8,
+    "protein_per_g": 0.078
+  },
+  "fried chicken": {
+    "cal_per_100g": 246.1,
+    "cal_per_g": 2.461,
+    "carb_per_100g": 1.9,
+    "carb_per_g": 0.019,
+    "fat_per_100g": 11.799999999999999,
+    "fat_per_g": 0.118,
+    "protein_per_100g": 30.4,
+    "protein_per_g": 0.304
+  },
+  "fried eggs": {
+    "cal_per_100g": 196.0,
+    "cal_per_g": 1.96,
+    "carb_per_100g": 0.8,
+    "carb_per_g": 0.008,
+    "fat_per_100g": 15.0,
+    "fat_per_g": 0.15,
+    "protein_per_100g": 14.000000000000002,
+    "protein_per_g": 0.14
+  },
+  "fried rice": {
+    "cal_per_100g": 157.7,
+    "cal_per_g": 1.577,
+    "carb_per_100g": 29.9,
+    "carb_per_g": 0.299,
+    "fat_per_100g": 2.1999999999999997,
+    "fat_per_g": 0.022,
+    "protein_per_100g": 4.7,
+    "protein_per_g": 0.047
+  },
+  "fritters": {
+    "cal_per_100g": 276.0,
+    "cal_per_g": 2.76,
+    "carb_per_100g": 20.0,
+    "carb_per_g": 0.2,
+    "fat_per_100g": 20.0,
+    "fat_per_g": 0.2,
+    "protein_per_100g": 4.6,
+    "protein_per_g": 0.046
+  },
+  "frostings": {
+    "cal_per_100g": 421.7,
+    "cal_per_g": 4.217,
+    "carb_per_100g": 68.60000000000001,
+    "carb_per_g": 0.686,
+    "fat_per_100g": 16.3,
+    "fat_per_g": 0.163,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "frozen yogurt": {
+    "cal_per_100g": 163.3,
+    "cal_per_g": 1.633,
+    "carb_per_100g": 24.5,
+    "carb_per_g": 0.245,
+    "fat_per_100g": 5.8999999999999995,
+    "fat_per_g": 0.059,
+    "protein_per_100g": 4.1000000000000005,
+    "protein_per_g": 0.041
+  },
+  "fruit cocktail": {
+    "cal_per_100g": 73.0,
+    "cal_per_g": 0.73,
+    "carb_per_100g": 19.0,
+    "carb_per_g": 0.19,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.4,
+    "protein_per_g": 0.004
+  },
+  "fruit punch": {
+    "cal_per_100g": 45.0,
+    "cal_per_g": 0.45,
+    "carb_per_100g": 12.5,
+    "carb_per_g": 0.125,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "fruit salad": {
+    "cal_per_100g": 59.0,
+    "cal_per_g": 0.59,
+    "carb_per_100g": 15.0,
+    "carb_per_g": 0.15,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 0.8,
+    "protein_per_g": 0.008
+  },
+  "fudge": {
+    "cal_per_100g": 411.4,
+    "cal_per_g": 4.114,
+    "carb_per_100g": 76.2,
+    "carb_per_g": 0.762,
+    "fat_per_100g": 10.299999999999999,
+    "fat_per_g": 0.103,
+    "protein_per_100g": 2.4,
+    "protein_per_g": 0.024
+  },
+  "garden salad": {
+    "cal_per_100g": 64.60000000000001,
+    "cal_per_g": 0.646,
+    "carb_per_100g": 3.2,
+    "carb_per_g": 0.032,
+    "fat_per_100g": 3.4000000000000004,
+    "fat_per_g": 0.034,
+    "protein_per_100g": 6.1,
+    "protein_per_g": 0.061
+  },
+  "garlic": {
+    "cal_per_100g": 149.0,
+    "cal_per_g": 1.49,
+    "carb_per_100g": 33.0,
+    "carb_per_g": 0.33,
+    "fat_per_100g": 0.5,
+    "fat_per_g": 0.005,
+    "protein_per_100g": 6.4,
+    "protein_per_g": 0.064
+  },
+  "garlic bread": {
+    "cal_per_100g": 350.09999999999997,
+    "cal_per_g": 3.501,
+    "carb_per_100g": 42.1,
+    "carb_per_g": 0.421,
+    "fat_per_100g": 16.7,
+    "fat_per_g": 0.167,
+    "protein_per_100g": 8.200000000000001,
+    "protein_per_g": 0.082
+  },
+  "gelatin": {
+    "cal_per_100g": 61.8,
+    "cal_per_g": 0.618,
+    "carb_per_100g": 14.099999999999998,
+    "carb_per_g": 0.141,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 1.2,
+    "protein_per_g": 0.012
+  },
+  "ginger": {
+    "cal_per_100g": 80.0,
+    "cal_per_g": 0.8,
+    "carb_per_100g": 18.0,
+    "carb_per_g": 0.18,
+    "fat_per_100g": 0.8,
+    "fat_per_g": 0.008,
+    "protein_per_100g": 1.7999999999999998,
+    "protein_per_g": 0.018
+  },
+  "gnocchi": {
+    "cal_per_100g": 200.99999999999997,
+    "cal_per_g": 2.01,
+    "carb_per_100g": 41.0,
+    "carb_per_g": 0.41,
+    "fat_per_100g": 1.2,
+    "fat_per_g": 0.012,
+    "protein_per_100g": 6.0,
+    "protein_per_g": 0.06
+  },
+  "goat cheese": {
+    "cal_per_100g": 264.0,
+    "cal_per_g": 2.64,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 21.0,
+    "fat_per_g": 0.21,
+    "protein_per_100g": 19.0,
+    "protein_per_g": 0.19
+  },
+  "gorgonzola cheese": {
+    "cal_per_100g": 353.0,
+    "cal_per_g": 3.53,
+    "carb_per_100g": 2.3,
+    "carb_per_g": 0.023,
+    "fat_per_100g": 28.999999999999996,
+    "fat_per_g": 0.29,
+    "protein_per_100g": 21.0,
+    "protein_per_g": 0.21
+  },
+  "gouda cheese": {
+    "cal_per_100g": 356.0,
+    "cal_per_g": 3.56,
+    "carb_per_100g": 2.1999999999999997,
+    "carb_per_g": 0.022,
+    "fat_per_100g": 27.0,
+    "fat_per_g": 0.27,
+    "protein_per_100g": 25.0,
+    "protein_per_g": 0.25
+  },
+  "goulash": {
+    "cal_per_100g": 107.0,
+    "cal_per_g": 1.07,
+    "carb_per_100g": 10.0,
+    "carb_per_g": 0.1,
+    "fat_per_100g": 3.9,
+    "fat_per_g": 0.039,
+    "protein_per_100g": 7.6,
+    "protein_per_g": 0.076
+  },
+  "granola": {
+    "cal_per_100g": 469.29999999999995,
+    "cal_per_g": 4.693,
+    "carb_per_100g": 64.7,
+    "carb_per_g": 0.647,
+    "fat_per_100g": 20.4,
+    "fat_per_g": 0.204,
+    "protein_per_100g": 10.0,
+    "protein_per_g": 0.1
+  },
+  "granola bars": {
+    "cal_per_100g": 471.2,
+    "cal_per_g": 4.712,
+    "carb_per_100g": 65.3,
+    "carb_per_g": 0.653,
+    "fat_per_100g": 20.0,
+    "fat_per_g": 0.2,
+    "protein_per_100g": 10.0,
+    "protein_per_g": 0.1
+  },
+  "grape juice": {
+    "cal_per_100g": 67.0,
+    "cal_per_g": 0.67,
+    "carb_per_100g": 17.0,
+    "carb_per_g": 0.17,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 0.6,
+    "protein_per_g": 0.006
+  },
+  "grapefruit juice": {
+    "cal_per_100g": 38.9,
+    "cal_per_g": 0.389,
+    "carb_per_100g": 9.1,
+    "carb_per_g": 0.091,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.5,
+    "protein_per_g": 0.005
+  },
+  "grapefruits": {
+    "cal_per_100g": 42.0,
+    "cal_per_g": 0.42,
+    "carb_per_100g": 11.0,
+    "carb_per_g": 0.11,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.8,
+    "protein_per_g": 0.008
+  },
+  "grapes": {
+    "cal_per_100g": 69.0,
+    "cal_per_g": 0.69,
+    "carb_per_100g": 18.0,
+    "carb_per_g": 0.18,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 0.7000000000000001,
+    "protein_per_g": 0.007
+  },
+  "gravy": {
+    "cal_per_100g": 79.10000000000001,
+    "cal_per_g": 0.791,
+    "carb_per_100g": 5.2,
+    "carb_per_g": 0.052,
+    "fat_per_100g": 5.8999999999999995,
+    "fat_per_g": 0.059,
+    "protein_per_100g": 2.0,
+    "protein_per_g": 0.02
+  },
+  "greek salad": {
+    "cal_per_100g": 112.99999999999999,
+    "cal_per_g": 1.13,
+    "carb_per_100g": 4.7,
+    "carb_per_g": 0.047,
+    "fat_per_100g": 9.4,
+    "fat_per_g": 0.094,
+    "protein_per_100g": 3.2,
+    "protein_per_g": 0.032
+  },
+  "greek yogurt": {
+    "cal_per_100g": 59.0,
+    "cal_per_g": 0.59,
+    "carb_per_100g": 3.5999999999999996,
+    "carb_per_g": 0.036,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 10.0,
+    "protein_per_g": 0.1
+  },
+  "green beans": {
+    "cal_per_100g": 31.0,
+    "cal_per_g": 0.31,
+    "carb_per_100g": 7.000000000000001,
+    "carb_per_g": 0.07,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 1.7999999999999998,
+    "protein_per_g": 0.018
+  },
+  "green onions": {
+    "cal_per_100g": 32.0,
+    "cal_per_g": 0.32,
+    "carb_per_100g": 7.000000000000001,
+    "carb_per_g": 0.07,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 1.7999999999999998,
+    "protein_per_g": 0.018
+  },
+  "green peas": {
+    "cal_per_100g": 77.4,
+    "cal_per_g": 0.774,
+    "carb_per_100g": 13.600000000000001,
+    "carb_per_g": 0.136,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 5.0,
+    "protein_per_g": 0.05
+  },
+  "grilled chicken": {
+    "cal_per_100g": 226.2,
+    "cal_per_g": 2.262,
+    "carb_per_100g": 0.1,
+    "carb_per_g": 0.001,
+    "fat_per_100g": 14.899999999999999,
+    "fat_per_g": 0.149,
+    "protein_per_100g": 22.6,
+    "protein_per_g": 0.226
+  },
+  "grits": {
+    "cal_per_100g": 59.0,
+    "cal_per_g": 0.59,
+    "carb_per_100g": 13.0,
+    "carb_per_g": 0.13,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 1.4000000000000001,
+    "protein_per_g": 0.014
+  },
+  "ground beef": {
+    "cal_per_100g": 332.1,
+    "cal_per_g": 3.321,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 29.5,
+    "fat_per_g": 0.295,
+    "protein_per_100g": 14.2,
+    "protein_per_g": 0.142
+  },
+  "ground chicken": {
+    "cal_per_100g": 189.0,
+    "cal_per_g": 1.89,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 11.0,
+    "fat_per_g": 0.11,
+    "protein_per_100g": 23.0,
+    "protein_per_g": 0.23
+  },
+  "ground pork": {
+    "cal_per_100g": 393.0,
+    "cal_per_g": 3.93,
+    "carb_per_100g": 1.4000000000000001,
+    "carb_per_g": 0.014,
+    "fat_per_100g": 33.0,
+    "fat_per_g": 0.33,
+    "protein_per_100g": 23.0,
+    "protein_per_g": 0.23
+  },
+  "ground turkey": {
+    "cal_per_100g": 258.0,
+    "cal_per_g": 2.58,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 17.0,
+    "fat_per_g": 0.17,
+    "protein_per_100g": 25.0,
+    "protein_per_g": 0.25
+  },
+  "guacamole": {
+    "cal_per_100g": 200.0,
+    "cal_per_g": 2.0,
+    "carb_per_100g": 8.6,
+    "carb_per_g": 0.086,
+    "fat_per_100g": 17.1,
+    "fat_per_g": 0.171,
+    "protein_per_100g": 2.9000000000000004,
+    "protein_per_g": 0.029
+  },
+  "gumbo": {
+    "cal_per_100g": 86.7,
+    "cal_per_g": 0.867,
+    "carb_per_100g": 9.8,
+    "carb_per_g": 0.098,
+    "fat_per_100g": 3.3000000000000003,
+    "fat_per_g": 0.033,
+    "protein_per_100g": 4.1000000000000005,
+    "protein_per_g": 0.041
+  },
+  "gyros": {
+    "cal_per_100g": 185.0,
+    "cal_per_g": 1.85,
+    "carb_per_100g": 11.0,
+    "carb_per_g": 0.11,
+    "fat_per_100g": 10.0,
+    "fat_per_g": 0.1,
+    "protein_per_100g": 12.0,
+    "protein_per_g": 0.12
+  },
+  "haddock": {
+    "cal_per_100g": 90.4,
+    "cal_per_g": 0.904,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 0.6,
+    "fat_per_g": 0.006,
+    "protein_per_100g": 20.0,
+    "protein_per_g": 0.2
+  },
+  "half and half": {
+    "cal_per_100g": 130.0,
+    "cal_per_g": 1.3,
+    "carb_per_100g": 4.3,
+    "carb_per_g": 0.043,
+    "fat_per_100g": 12.0,
+    "fat_per_g": 0.12,
+    "protein_per_100g": 3.0,
+    "protein_per_g": 0.03
+  },
+  "halibut": {
+    "cal_per_100g": 111.00000000000001,
+    "cal_per_g": 1.11,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 1.6,
+    "fat_per_g": 0.016,
+    "protein_per_100g": 23.0,
+    "protein_per_g": 0.23
+  },
+  "ham": {
+    "cal_per_100g": 145.0,
+    "cal_per_g": 1.45,
+    "carb_per_100g": 1.5,
+    "carb_per_g": 0.015,
+    "fat_per_100g": 6.0,
+    "fat_per_g": 0.06,
+    "protein_per_100g": 21.0,
+    "protein_per_g": 0.21
+  },
+  "hamburgers": {
+    "cal_per_100g": 295.0,
+    "cal_per_g": 2.95,
+    "carb_per_100g": 24.099999999999998,
+    "carb_per_g": 0.241,
+    "fat_per_100g": 14.099999999999998,
+    "fat_per_g": 0.141,
+    "protein_per_100g": 16.8,
+    "protein_per_g": 0.168
+  },
+  "hard boiled eggs": {
+    "cal_per_100g": 155.5,
+    "cal_per_g": 1.555,
+    "carb_per_100g": 1.2,
+    "carb_per_g": 0.012,
+    "fat_per_100g": 10.5,
+    "fat_per_g": 0.105,
+    "protein_per_100g": 12.5,
+    "protein_per_g": 0.125
+  },
+  "hard cider": {
+    "cal_per_100g": 56.00000000000001,
+    "cal_per_g": 0.56,
+    "carb_per_100g": 5.8999999999999995,
+    "carb_per_g": 0.059,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "hash browns": {
+    "cal_per_100g": 326.0,
+    "cal_per_g": 3.26,
+    "carb_per_100g": 32.0,
+    "carb_per_g": 0.32,
+    "fat_per_100g": 22.0,
+    "fat_per_g": 0.22,
+    "protein_per_100g": 2.6,
+    "protein_per_g": 0.026
+  },
+  "havarti cheese": {
+    "cal_per_100g": 371.0,
+    "cal_per_g": 3.71,
+    "carb_per_100g": 2.8000000000000003,
+    "carb_per_g": 0.028,
+    "fat_per_100g": 30.0,
+    "fat_per_g": 0.3,
+    "protein_per_100g": 23.0,
+    "protein_per_g": 0.23
+  },
+  "herring": {
+    "cal_per_100g": 85.9,
+    "cal_per_g": 0.859,
+    "carb_per_100g": 3.2,
+    "carb_per_g": 0.032,
+    "fat_per_100g": 5.8999999999999995,
+    "fat_per_g": 0.059,
+    "protein_per_100g": 4.7,
+    "protein_per_g": 0.047
+  },
+  "hominy": {
+    "cal_per_100g": 72.1,
+    "cal_per_g": 0.721,
+    "carb_per_100g": 14.299999999999999,
+    "carb_per_g": 0.143,
+    "fat_per_100g": 0.8999999999999999,
+    "fat_per_g": 0.009,
+    "protein_per_100g": 1.5,
+    "protein_per_g": 0.015
+  },
+  "honey": {
+    "cal_per_100g": 304.0,
+    "cal_per_g": 3.04,
+    "carb_per_100g": 82.0,
+    "carb_per_g": 0.82,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.3,
+    "protein_per_g": 0.003
+  },
+  "honeydew melons": {
+    "cal_per_100g": 36.0,
+    "cal_per_g": 0.36,
+    "carb_per_100g": 9.0,
+    "carb_per_g": 0.09,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.5,
+    "protein_per_g": 0.005
+  },
+  "horseradish": {
+    "cal_per_100g": 48.0,
+    "cal_per_g": 0.48,
+    "carb_per_100g": 11.0,
+    "carb_per_g": 0.11,
+    "fat_per_100g": 0.7000000000000001,
+    "fat_per_g": 0.007,
+    "protein_per_100g": 1.2,
+    "protein_per_g": 0.012
+  },
+  "hot chocolate": {
+    "cal_per_100g": 77.0,
+    "cal_per_g": 0.77,
+    "carb_per_100g": 10.9,
+    "carb_per_g": 0.109,
+    "fat_per_100g": 2.3,
+    "fat_per_g": 0.023,
+    "protein_per_100g": 3.5000000000000004,
+    "protein_per_g": 0.035
+  },
+  "hot dogs": {
+    "cal_per_100g": 290.2,
+    "cal_per_g": 2.902,
+    "carb_per_100g": 4.2,
+    "carb_per_g": 0.042,
+    "fat_per_100g": 25.5,
+    "fat_per_g": 0.255,
+    "protein_per_100g": 9.8,
+    "protein_per_g": 0.098
+  },
+  "hummus": {
+    "cal_per_100g": 166.0,
+    "cal_per_g": 1.66,
+    "carb_per_100g": 14.000000000000002,
+    "carb_per_g": 0.14,
+    "fat_per_100g": 9.6,
+    "fat_per_g": 0.096,
+    "protein_per_100g": 7.9,
+    "protein_per_g": 0.079
+  },
+  "ice cream cones": {
+    "cal_per_100g": 418.9,
+    "cal_per_g": 4.189,
+    "carb_per_100g": 79.0,
+    "carb_per_g": 0.79,
+    "fat_per_100g": 7.1,
+    "fat_per_g": 0.071,
+    "protein_per_100g": 7.9,
+    "protein_per_g": 0.079
+  },
+  "ice cream soda": {
+    "cal_per_100g": 51.0,
+    "cal_per_g": 0.51,
+    "carb_per_100g": 13.0,
+    "carb_per_g": 0.13,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "ice creams": {
+    "cal_per_100g": 206.99999999999997,
+    "cal_per_g": 2.07,
+    "carb_per_100g": 24.0,
+    "carb_per_g": 0.24,
+    "fat_per_100g": 11.0,
+    "fat_per_g": 0.11,
+    "protein_per_100g": 3.5000000000000004,
+    "protein_per_g": 0.035
+  },
+  "ice pop": {
+    "cal_per_100g": 79.0,
+    "cal_per_g": 0.79,
+    "carb_per_100g": 19.0,
+    "carb_per_g": 0.19,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "iced tea": {
+    "cal_per_100g": 37.3,
+    "cal_per_g": 0.373,
+    "carb_per_100g": 9.3,
+    "carb_per_g": 0.093,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "india pale ale beer": {
+    "cal_per_100g": 55.60000000000001,
+    "cal_per_g": 0.556,
+    "carb_per_100g": 1.7000000000000002,
+    "carb_per_g": 0.017,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.3,
+    "protein_per_g": 0.003
+  },
+  "italian dressing": {
+    "cal_per_100g": 231.0,
+    "cal_per_g": 2.31,
+    "carb_per_100g": 11.899999999999999,
+    "carb_per_g": 0.119,
+    "fat_per_100g": 20.5,
+    "fat_per_g": 0.205,
+    "protein_per_100g": 0.4,
+    "protein_per_g": 0.004
+  },
+  "jalapenos": {
+    "cal_per_100g": 28.999999999999996,
+    "cal_per_g": 0.29,
+    "carb_per_100g": 6.5,
+    "carb_per_g": 0.065,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 0.8999999999999999,
+    "protein_per_g": 0.009
+  },
+  "jambalaya": {
+    "cal_per_100g": 156.0,
+    "cal_per_g": 1.56,
+    "carb_per_100g": 15.0,
+    "carb_per_g": 0.15,
+    "fat_per_100g": 7.3999999999999995,
+    "fat_per_g": 0.074,
+    "protein_per_100g": 7.1,
+    "protein_per_g": 0.071
+  },
+  "jams": {
+    "cal_per_100g": 278.0,
+    "cal_per_g": 2.78,
+    "carb_per_100g": 69.0,
+    "carb_per_g": 0.69,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.4,
+    "protein_per_g": 0.004
+  },
+  "jerky": {
+    "cal_per_100g": 409.99999999999994,
+    "cal_per_g": 4.1,
+    "carb_per_100g": 11.0,
+    "carb_per_g": 0.11,
+    "fat_per_100g": 26.0,
+    "fat_per_g": 0.26,
+    "protein_per_100g": 33.0,
+    "protein_per_g": 0.33
+  },
+  "jicama": {
+    "cal_per_100g": 38.0,
+    "cal_per_g": 0.38,
+    "carb_per_100g": 9.0,
+    "carb_per_g": 0.09,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.7000000000000001,
+    "protein_per_g": 0.007
+  },
+  "kale": {
+    "cal_per_100g": 49.0,
+    "cal_per_g": 0.49,
+    "carb_per_100g": 9.0,
+    "carb_per_g": 0.09,
+    "fat_per_100g": 0.7000000000000001,
+    "fat_per_g": 0.007,
+    "protein_per_100g": 3.3000000000000003,
+    "protein_per_g": 0.033
+  },
+  "ketchup": {
+    "cal_per_100g": 112.00000000000001,
+    "cal_per_g": 1.12,
+    "carb_per_100g": 26.0,
+    "carb_per_g": 0.26,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 1.3,
+    "protein_per_g": 0.013
+  },
+  "kidney beans": {
+    "cal_per_100g": 333.0,
+    "cal_per_g": 3.33,
+    "carb_per_100g": 60.0,
+    "carb_per_g": 0.6,
+    "fat_per_100g": 0.8,
+    "fat_per_g": 0.008,
+    "protein_per_100g": 24.0,
+    "protein_per_g": 0.24
+  },
+  "kimchi": {
+    "cal_per_100g": 30.0,
+    "cal_per_g": 0.3,
+    "carb_per_100g": 5.7,
+    "carb_per_g": 0.057,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 1.6,
+    "protein_per_g": 0.016
+  },
+  "kiwi": {
+    "cal_per_100g": 61.0,
+    "cal_per_g": 0.61,
+    "carb_per_100g": 15.0,
+    "carb_per_g": 0.15,
+    "fat_per_100g": 0.5,
+    "fat_per_g": 0.005,
+    "protein_per_100g": 1.0999999999999999,
+    "protein_per_g": 0.011
+  },
+  "lager": {
+    "cal_per_100g": 43.0,
+    "cal_per_g": 0.43,
+    "carb_per_100g": 3.5999999999999996,
+    "carb_per_g": 0.036,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.5,
+    "protein_per_g": 0.005
+  },
+  "lamb": {
+    "cal_per_100g": 294.09999999999997,
+    "cal_per_g": 2.941,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 21.099999999999998,
+    "fat_per_g": 0.211,
+    "protein_per_100g": 24.7,
+    "protein_per_g": 0.247
+  },
+  "lamb chops": {
+    "cal_per_100g": 294.09999999999997,
+    "cal_per_g": 2.941,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 21.099999999999998,
+    "fat_per_g": 0.211,
+    "protein_per_100g": 24.7,
+    "protein_per_g": 0.247
+  },
+  "lasagna": {
+    "cal_per_100g": 135.0,
+    "cal_per_g": 1.35,
+    "carb_per_100g": 15.4,
+    "carb_per_g": 0.154,
+    "fat_per_100g": 5.0,
+    "fat_per_g": 0.05,
+    "protein_per_100g": 7.199999999999999,
+    "protein_per_g": 0.072
+  },
+  "latte": {
+    "cal_per_100g": 44.0,
+    "cal_per_g": 0.44,
+    "carb_per_100g": 4.3999999999999995,
+    "carb_per_g": 0.044,
+    "fat_per_100g": 1.7000000000000002,
+    "fat_per_g": 0.017,
+    "protein_per_100g": 2.9000000000000004,
+    "protein_per_g": 0.029
+  },
+  "leeks": {
+    "cal_per_100g": 61.0,
+    "cal_per_g": 0.61,
+    "carb_per_100g": 14.000000000000002,
+    "carb_per_g": 0.14,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 1.5,
+    "protein_per_g": 0.015
+  },
+  "lemon": {
+    "cal_per_100g": 28.999999999999996,
+    "cal_per_g": 0.29,
+    "carb_per_100g": 9.0,
+    "carb_per_g": 0.09,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 1.0999999999999999,
+    "protein_per_g": 0.011
+  },
+  "lemon juice": {
+    "cal_per_100g": 17.0,
+    "cal_per_g": 0.17,
+    "carb_per_100g": 5.6000000000000005,
+    "carb_per_g": 0.056,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.4,
+    "protein_per_g": 0.004
+  },
+  "lemonade": {
+    "cal_per_100g": 40.0,
+    "cal_per_g": 0.4,
+    "carb_per_100g": 10.0,
+    "carb_per_g": 0.1,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.1,
+    "protein_per_g": 0.001
+  },
+  "lentils": {
+    "cal_per_100g": 113.99999999999999,
+    "cal_per_g": 1.14,
+    "carb_per_100g": 20.0,
+    "carb_per_g": 0.2,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 9.0,
+    "protein_per_g": 0.09
+  },
+  "lettuce": {
+    "cal_per_100g": 15.0,
+    "cal_per_g": 0.15,
+    "carb_per_100g": 2.9000000000000004,
+    "carb_per_g": 0.029,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 1.4000000000000001,
+    "protein_per_g": 0.014
+  },
+  "licorice": {
+    "cal_per_100g": 350.0,
+    "cal_per_g": 3.5,
+    "carb_per_100g": 80.0,
+    "carb_per_g": 0.8,
+    "fat_per_100g": 2.3,
+    "fat_per_g": 0.023,
+    "protein_per_100g": 2.6,
+    "protein_per_g": 0.026
+  },
+  "light beer": {
+    "cal_per_100g": 28.999999999999996,
+    "cal_per_g": 0.29,
+    "carb_per_100g": 1.6,
+    "carb_per_g": 0.016,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.2,
+    "protein_per_g": 0.002
+  },
+  "lima beans": {
+    "cal_per_100g": 114.99999999999999,
+    "cal_per_g": 1.15,
+    "carb_per_100g": 21.0,
+    "carb_per_g": 0.21,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 7.8,
+    "protein_per_g": 0.078
+  },
+  "lime": {
+    "cal_per_100g": 30.0,
+    "cal_per_g": 0.3,
+    "carb_per_100g": 10.5,
+    "carb_per_g": 0.105,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 0.7000000000000001,
+    "protein_per_g": 0.007
+  },
+  "lo mein": {
+    "cal_per_100g": 122.0,
+    "cal_per_g": 1.22,
+    "carb_per_100g": 20.0,
+    "carb_per_g": 0.2,
+    "fat_per_100g": 2.4,
+    "fat_per_g": 0.024,
+    "protein_per_100g": 4.8,
+    "protein_per_g": 0.048
+  },
+  "lobster": {
+    "cal_per_100g": 143.0,
+    "cal_per_g": 1.43,
+    "carb_per_100g": 3.1,
+    "carb_per_g": 0.031,
+    "fat_per_100g": 1.9,
+    "fat_per_g": 0.019,
+    "protein_per_100g": 26.0,
+    "protein_per_g": 0.26
+  },
+  "macadamia nuts": {
+    "cal_per_100g": 718.8,
+    "cal_per_g": 7.188,
+    "carb_per_100g": 13.900000000000002,
+    "carb_per_g": 0.139,
+    "fat_per_100g": 75.0,
+    "fat_per_g": 0.75,
+    "protein_per_100g": 7.9,
+    "protein_per_g": 0.079
+  },
+  "macaroni": {
+    "cal_per_100g": 372.5,
+    "cal_per_g": 3.725,
+    "carb_per_100g": 75.4,
+    "carb_per_g": 0.754,
+    "fat_per_100g": 1.5,
+    "fat_per_g": 0.015,
+    "protein_per_100g": 12.7,
+    "protein_per_g": 0.127
+  },
+  "macaroni and cheese": {
+    "cal_per_100g": 164.0,
+    "cal_per_g": 1.64,
+    "carb_per_100g": 23.0,
+    "carb_per_g": 0.23,
+    "fat_per_100g": 5.0,
+    "fat_per_g": 0.05,
+    "protein_per_100g": 7.000000000000001,
+    "protein_per_g": 0.07
+  },
+  "mackerel": {
+    "cal_per_100g": 262.0,
+    "cal_per_g": 2.62,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 18.0,
+    "fat_per_g": 0.18,
+    "protein_per_100g": 24.0,
+    "protein_per_g": 0.24
+  },
+  "mahi mahi": {
+    "cal_per_100g": 109.00000000000001,
+    "cal_per_g": 1.09,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 0.8999999999999999,
+    "fat_per_g": 0.009,
+    "protein_per_100g": 24.0,
+    "protein_per_g": 0.24
+  },
+  "mandarin oranges": {
+    "cal_per_100g": 53.0,
+    "cal_per_g": 0.53,
+    "carb_per_100g": 13.0,
+    "carb_per_g": 0.13,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 0.8,
+    "protein_per_g": 0.008
+  },
+  "mangos": {
+    "cal_per_100g": 60.6,
+    "cal_per_g": 0.606,
+    "carb_per_100g": 15.0,
+    "carb_per_g": 0.15,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 0.8,
+    "protein_per_g": 0.008
+  },
+  "maple syrup": {
+    "cal_per_100g": 260.0,
+    "cal_per_g": 2.6,
+    "carb_per_100g": 65.0,
+    "carb_per_g": 0.65,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.1,
+    "protein_per_g": 0.001
+  },
+  "margarine": {
+    "cal_per_100g": 717.0,
+    "cal_per_g": 7.17,
+    "carb_per_100g": 0.7000000000000001,
+    "carb_per_g": 0.007,
+    "fat_per_100g": 81.0,
+    "fat_per_g": 0.81,
+    "protein_per_100g": 0.2,
+    "protein_per_g": 0.002
+  },
+  "margarita": {
+    "cal_per_100g": 100.0,
+    "cal_per_g": 1.0,
+    "carb_per_100g": 9.9,
+    "carb_per_g": 0.099,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.1,
+    "protein_per_g": 0.001
+  },
+  "marshmallows": {
+    "cal_per_100g": 318.0,
+    "cal_per_g": 3.18,
+    "carb_per_100g": 81.0,
+    "carb_per_g": 0.81,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 1.7999999999999998,
+    "protein_per_g": 0.018
+  },
+  "mashed potatoes": {
+    "cal_per_100g": 90.7,
+    "cal_per_g": 0.907,
+    "carb_per_100g": 15.1,
+    "carb_per_g": 0.151,
+    "fat_per_100g": 2.9000000000000004,
+    "fat_per_g": 0.029,
+    "protein_per_100g": 1.7000000000000002,
+    "protein_per_g": 0.017
+  },
+  "mayonnaise": {
+    "cal_per_100g": 680.0,
+    "cal_per_g": 6.8,
+    "carb_per_100g": 0.6,
+    "carb_per_g": 0.006,
+    "fat_per_100g": 75.0,
+    "fat_per_g": 0.75,
+    "protein_per_100g": 1.0,
+    "protein_per_g": 0.01
+  },
+  "meatballs": {
+    "cal_per_100g": 286.0,
+    "cal_per_g": 2.86,
+    "carb_per_100g": 8.1,
+    "carb_per_g": 0.081,
+    "fat_per_100g": 22.0,
+    "fat_per_g": 0.22,
+    "protein_per_100g": 14.000000000000002,
+    "protein_per_g": 0.14
+  },
+  "meatloaf": {
+    "cal_per_100g": 181.0,
+    "cal_per_g": 1.81,
+    "carb_per_100g": 7.7,
+    "carb_per_g": 0.077,
+    "fat_per_100g": 9.9,
+    "fat_per_g": 0.099,
+    "protein_per_100g": 15.0,
+    "protein_per_g": 0.15
+  },
+  "mexican cheese": {
+    "cal_per_100g": 358.0,
+    "cal_per_g": 3.58,
+    "carb_per_100g": 1.7999999999999998,
+    "carb_per_g": 0.018,
+    "fat_per_100g": 28.999999999999996,
+    "fat_per_g": 0.29,
+    "protein_per_100g": 24.0,
+    "protein_per_g": 0.24
+  },
+  "milk": {
+    "cal_per_100g": 51.0,
+    "cal_per_g": 0.51,
+    "carb_per_100g": 5.0,
+    "carb_per_g": 0.05,
+    "fat_per_100g": 1.9,
+    "fat_per_g": 0.019,
+    "protein_per_100g": 3.5000000000000004,
+    "protein_per_g": 0.035
+  },
+  "milk shakes": {
+    "cal_per_100g": 112.1,
+    "cal_per_g": 1.121,
+    "carb_per_100g": 18.0,
+    "carb_per_g": 0.18,
+    "fat_per_100g": 2.9000000000000004,
+    "fat_per_g": 0.029,
+    "protein_per_100g": 3.9,
+    "protein_per_g": 0.039
+  },
+  "millet": {
+    "cal_per_100g": 119.0,
+    "cal_per_g": 1.19,
+    "carb_per_100g": 23.7,
+    "carb_per_g": 0.237,
+    "fat_per_100g": 1.0,
+    "fat_per_g": 0.01,
+    "protein_per_100g": 3.5000000000000004,
+    "protein_per_g": 0.035
+  },
+  "miso soup": {
+    "cal_per_100g": 24.5,
+    "cal_per_g": 0.245,
+    "carb_per_100g": 1.5,
+    "carb_per_g": 0.015,
+    "fat_per_100g": 1.2,
+    "fat_per_g": 0.012,
+    "protein_per_100g": 2.4,
+    "protein_per_g": 0.024
+  },
+  "mixed greens": {
+    "cal_per_100g": 28.000000000000004,
+    "cal_per_g": 0.28,
+    "carb_per_100g": 5.3,
+    "carb_per_g": 0.053,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 2.1999999999999997,
+    "protein_per_g": 0.022
+  },
+  "mixed nuts": {
+    "cal_per_100g": 606.9,
+    "cal_per_g": 6.069,
+    "carb_per_100g": 21.099999999999998,
+    "carb_per_g": 0.211,
+    "fat_per_100g": 53.5,
+    "fat_per_g": 0.535,
+    "protein_per_100g": 20.599999999999998,
+    "protein_per_g": 0.206
+  },
+  "mixed vegetables": {
+    "cal_per_100g": 32.0,
+    "cal_per_g": 0.32,
+    "carb_per_100g": 6.9,
+    "carb_per_g": 0.069,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 1.7000000000000002,
+    "protein_per_g": 0.017
+  },
+  "mousse": {
+    "cal_per_100g": 224.9,
+    "cal_per_g": 2.249,
+    "carb_per_100g": 16.0,
+    "carb_per_g": 0.16,
+    "fat_per_100g": 16.0,
+    "fat_per_g": 0.16,
+    "protein_per_100g": 4.1000000000000005,
+    "protein_per_g": 0.041
+  },
+  "mozzarella cheese": {
+    "cal_per_100g": 277.59999999999997,
+    "cal_per_g": 2.776,
+    "carb_per_100g": 3.2,
+    "carb_per_g": 0.032,
+    "fat_per_100g": 17.1,
+    "fat_per_g": 0.171,
+    "protein_per_100g": 28.000000000000004,
+    "protein_per_g": 0.28
+  },
+  "muenster cheese": {
+    "cal_per_100g": 367.5,
+    "cal_per_g": 3.675,
+    "carb_per_100g": 1.0999999999999999,
+    "carb_per_g": 0.011,
+    "fat_per_100g": 29.599999999999998,
+    "fat_per_g": 0.296,
+    "protein_per_100g": 23.9,
+    "protein_per_g": 0.239
+  },
+  "muesli": {
+    "cal_per_100g": 352.0,
+    "cal_per_g": 3.52,
+    "carb_per_100g": 76.0,
+    "carb_per_g": 0.76,
+    "fat_per_100g": 3.3000000000000003,
+    "fat_per_g": 0.033,
+    "protein_per_100g": 11.0,
+    "protein_per_g": 0.11
+  },
+  "muffins": {
+    "cal_per_100g": 377.0,
+    "cal_per_g": 3.77,
+    "carb_per_100g": 53.300000000000004,
+    "carb_per_g": 0.533,
+    "fat_per_100g": 15.9,
+    "fat_per_g": 0.159,
+    "protein_per_100g": 4.6,
+    "protein_per_g": 0.046
+  },
+  "multigrain bread": {
+    "cal_per_100g": 285.70000000000005,
+    "cal_per_g": 2.857,
+    "carb_per_100g": 49.0,
+    "carb_per_g": 0.49,
+    "fat_per_100g": 9.2,
+    "fat_per_g": 0.092,
+    "protein_per_100g": 4.1000000000000005,
+    "protein_per_g": 0.041
+  },
+  "mushroom": {
+    "cal_per_100g": 22.0,
+    "cal_per_g": 0.22,
+    "carb_per_100g": 3.3000000000000003,
+    "carb_per_g": 0.033,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 3.1,
+    "protein_per_g": 0.031
+  },
+  "mussels": {
+    "cal_per_100g": 171.8,
+    "cal_per_g": 1.718,
+    "carb_per_100g": 7.000000000000001,
+    "carb_per_g": 0.07,
+    "fat_per_100g": 4.5,
+    "fat_per_g": 0.045,
+    "protein_per_100g": 23.799999999999997,
+    "protein_per_g": 0.238
+  },
+  "mustard": {
+    "cal_per_100g": 61.3,
+    "cal_per_g": 0.613,
+    "carb_per_100g": 6.0,
+    "carb_per_g": 0.06,
+    "fat_per_100g": 3.3000000000000003,
+    "fat_per_g": 0.033,
+    "protein_per_100g": 3.6999999999999997,
+    "protein_per_g": 0.037
+  },
+  "mustard greens": {
+    "cal_per_100g": 27.0,
+    "cal_per_g": 0.27,
+    "carb_per_100g": 4.7,
+    "carb_per_g": 0.047,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 2.9000000000000004,
+    "protein_per_g": 0.029
+  },
+  "naan": {
+    "cal_per_100g": 291.0,
+    "cal_per_g": 2.91,
+    "carb_per_100g": 50.0,
+    "carb_per_g": 0.5,
+    "fat_per_100g": 5.7,
+    "fat_per_g": 0.057,
+    "protein_per_100g": 9.6,
+    "protein_per_g": 0.096
+  },
+  "nachos": {
+    "cal_per_100g": 224.00000000000003,
+    "cal_per_g": 2.24,
+    "carb_per_100g": 4.8,
+    "carb_per_g": 0.048,
+    "fat_per_100g": 17.0,
+    "fat_per_g": 0.17,
+    "protein_per_100g": 12.0,
+    "protein_per_g": 0.12
+  },
+  "nectar": {
+    "cal_per_100g": 31.6,
+    "cal_per_g": 0.316,
+    "carb_per_100g": 8.200000000000001,
+    "carb_per_g": 0.082,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 6.6000000000000005,
+    "protein_per_g": 0.066
+  },
+  "nectarines": {
+    "cal_per_100g": 44.2,
+    "cal_per_g": 0.442,
+    "carb_per_100g": 10.7,
+    "carb_per_g": 0.107,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 1.0999999999999999,
+    "protein_per_g": 0.011
+  },
+  "noodles": {
+    "cal_per_100g": 138.0,
+    "cal_per_g": 1.38,
+    "carb_per_100g": 25.0,
+    "carb_per_g": 0.25,
+    "fat_per_100g": 2.1,
+    "fat_per_g": 0.021,
+    "protein_per_100g": 4.5,
+    "protein_per_g": 0.045
+  },
+  "nopales": {
+    "cal_per_100g": 16.0,
+    "cal_per_g": 0.16,
+    "carb_per_100g": 3.3000000000000003,
+    "carb_per_g": 0.033,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 1.4000000000000001,
+    "protein_per_g": 0.014
+  },
+  "nougat": {
+    "cal_per_100g": 399.0,
+    "cal_per_g": 3.99,
+    "carb_per_100g": 92.4,
+    "carb_per_g": 0.924,
+    "fat_per_100g": 1.6,
+    "fat_per_g": 0.016,
+    "protein_per_100g": 3.4000000000000004,
+    "protein_per_g": 0.034
+  },
+  "nut cheese": {
+    "cal_per_100g": 210.0,
+    "cal_per_g": 2.1,
+    "carb_per_100g": 4.0,
+    "carb_per_g": 0.04,
+    "fat_per_100g": 10.100000000000001,
+    "fat_per_g": 0.101,
+    "protein_per_100g": 25.6,
+    "protein_per_g": 0.256
+  },
+  "nutrition bars": {
+    "cal_per_100g": 400.0,
+    "cal_per_g": 4.0,
+    "carb_per_100g": 40.0,
+    "carb_per_g": 0.4,
+    "fat_per_100g": 9.8,
+    "fat_per_g": 0.098,
+    "protein_per_100g": 38.0,
+    "protein_per_g": 0.38
+  },
+  "nuts": {
+    "cal_per_100g": 607.0,
+    "cal_per_g": 6.07,
+    "carb_per_100g": 21.0,
+    "carb_per_g": 0.21,
+    "fat_per_100g": 54.0,
+    "fat_per_g": 0.54,
+    "protein_per_100g": 20.0,
+    "protein_per_g": 0.2
+  },
+  "oatmeal": {
+    "cal_per_100g": 68.0,
+    "cal_per_g": 0.68,
+    "carb_per_100g": 12.0,
+    "carb_per_g": 0.12,
+    "fat_per_100g": 1.4000000000000001,
+    "fat_per_g": 0.014,
+    "protein_per_100g": 2.4,
+    "protein_per_g": 0.024
+  },
+  "oats": {
+    "cal_per_100g": 389.0,
+    "cal_per_g": 3.89,
+    "carb_per_100g": 66.3,
+    "carb_per_g": 0.663,
+    "fat_per_100g": 6.9,
+    "fat_per_g": 0.069,
+    "protein_per_100g": 16.900000000000002,
+    "protein_per_g": 0.169
+  },
+  "octopus": {
+    "cal_per_100g": 163.7,
+    "cal_per_g": 1.637,
+    "carb_per_100g": 4.3999999999999995,
+    "carb_per_g": 0.044,
+    "fat_per_100g": 2.1,
+    "fat_per_g": 0.021,
+    "protein_per_100g": 29.7,
+    "protein_per_g": 0.297
+  },
+  "oil": {
+    "cal_per_100g": 886.4000000000001,
+    "cal_per_g": 8.864,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 100.0,
+    "fat_per_g": 1.0,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "okra": {
+    "cal_per_100g": 32.800000000000004,
+    "cal_per_g": 0.328,
+    "carb_per_100g": 7.199999999999999,
+    "carb_per_g": 0.072,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 1.9,
+    "protein_per_g": 0.019
+  },
+  "olive oil": {
+    "cal_per_100g": 884.0,
+    "cal_per_g": 8.84,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 100.0,
+    "fat_per_g": 1.0,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "olives": {
+    "cal_per_100g": 114.99999999999999,
+    "cal_per_g": 1.15,
+    "carb_per_100g": 6.3,
+    "carb_per_g": 0.063,
+    "fat_per_100g": 10.7,
+    "fat_per_g": 0.107,
+    "protein_per_100g": 0.8,
+    "protein_per_g": 0.008
+  },
+  "omelets": {
+    "cal_per_100g": 154.0,
+    "cal_per_g": 1.54,
+    "carb_per_100g": 0.6,
+    "carb_per_g": 0.006,
+    "fat_per_100g": 11.700000000000001,
+    "fat_per_g": 0.117,
+    "protein_per_100g": 10.4,
+    "protein_per_g": 0.104
+  },
+  "onion rings": {
+    "cal_per_100g": 410.59999999999997,
+    "cal_per_g": 4.106,
+    "carb_per_100g": 43.8,
+    "carb_per_g": 0.438,
+    "fat_per_100g": 25.3,
+    "fat_per_g": 0.253,
+    "protein_per_100g": 3.9,
+    "protein_per_g": 0.039
+  },
+  "onions": {
+    "cal_per_100g": 40.0,
+    "cal_per_g": 0.4,
+    "carb_per_100g": 9.0,
+    "carb_per_g": 0.09,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 1.0999999999999999,
+    "protein_per_g": 0.011
+  },
+  "orange": {
+    "cal_per_100g": 47.0,
+    "cal_per_g": 0.47,
+    "carb_per_100g": 12.0,
+    "carb_per_g": 0.12,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.8999999999999999,
+    "protein_per_g": 0.009
+  },
+  "orange juice": {
+    "cal_per_100g": 47.0,
+    "cal_per_g": 0.47,
+    "carb_per_100g": 11.0,
+    "carb_per_g": 0.11,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.7000000000000001,
+    "protein_per_g": 0.007
+  },
+  "orange with peel": {
+    "cal_per_100g": 29.4,
+    "cal_per_g": 0.294,
+    "carb_per_100g": 7.5,
+    "carb_per_g": 0.075,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.6,
+    "protein_per_g": 0.006
+  },
+  "oregano": {
+    "cal_per_100g": 270.0,
+    "cal_per_g": 2.7,
+    "carb_per_100g": 69.0,
+    "carb_per_g": 0.69,
+    "fat_per_100g": 4.0,
+    "fat_per_g": 0.04,
+    "protein_per_100g": 9.0,
+    "protein_per_g": 0.09
+  },
+  "orzo": {
+    "cal_per_100g": 225.0,
+    "cal_per_g": 2.25,
+    "carb_per_100g": 45.800000000000004,
+    "carb_per_g": 0.458,
+    "fat_per_100g": 0.8999999999999999,
+    "fat_per_g": 0.009,
+    "protein_per_100g": 7.9,
+    "protein_per_g": 0.079
+  },
+  "oysters": {
+    "cal_per_100g": 198.9,
+    "cal_per_g": 1.989,
+    "carb_per_100g": 11.700000000000001,
+    "carb_per_g": 0.117,
+    "fat_per_100g": 12.8,
+    "fat_per_g": 0.128,
+    "protein_per_100g": 8.799999999999999,
+    "protein_per_g": 0.088
+  },
+  "paella": {
+    "cal_per_100g": 183.4,
+    "cal_per_g": 1.834,
+    "carb_per_100g": 14.099999999999998,
+    "carb_per_g": 0.141,
+    "fat_per_100g": 9.1,
+    "fat_per_g": 0.091,
+    "protein_per_100g": 10.4,
+    "protein_per_g": 0.104
+  },
+  "pancakes": {
+    "cal_per_100g": 226.6,
+    "cal_per_g": 2.266,
+    "carb_per_100g": 28.4,
+    "carb_per_g": 0.284,
+    "fat_per_100g": 9.6,
+    "fat_per_g": 0.096,
+    "protein_per_100g": 6.3,
+    "protein_per_g": 0.063
+  },
+  "papayas": {
+    "cal_per_100g": 43.0,
+    "cal_per_g": 0.43,
+    "carb_per_100g": 11.0,
+    "carb_per_g": 0.11,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 0.5,
+    "protein_per_g": 0.005
+  },
+  "parmesan cheese": {
+    "cal_per_100g": 430.70000000000005,
+    "cal_per_g": 4.307,
+    "carb_per_100g": 4.2,
+    "carb_per_g": 0.042,
+    "fat_per_100g": 28.599999999999998,
+    "fat_per_g": 0.286,
+    "protein_per_100g": 38.4,
+    "protein_per_g": 0.384
+  },
+  "parsley": {
+    "cal_per_100g": 37.1,
+    "cal_per_g": 0.371,
+    "carb_per_100g": 6.4,
+    "carb_per_g": 0.064,
+    "fat_per_100g": 0.8,
+    "fat_per_g": 0.008,
+    "protein_per_100g": 2.9000000000000004,
+    "protein_per_g": 0.029
+  },
+  "parsnips": {
+    "cal_per_100g": 75.0,
+    "cal_per_g": 0.75,
+    "carb_per_100g": 18.0,
+    "carb_per_g": 0.18,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 1.2,
+    "protein_per_g": 0.012
+  },
+  "pasta": {
+    "cal_per_100g": 131.6,
+    "cal_per_g": 1.316,
+    "carb_per_100g": 24.8,
+    "carb_per_g": 0.248,
+    "fat_per_100g": 1.0999999999999999,
+    "fat_per_g": 0.011,
+    "protein_per_100g": 5.1,
+    "protein_per_g": 0.051
+  },
+  "pasta salad": {
+    "cal_per_100g": 201.5,
+    "cal_per_g": 2.015,
+    "carb_per_100g": 17.299999999999997,
+    "carb_per_g": 0.173,
+    "fat_per_100g": 11.899999999999999,
+    "fat_per_g": 0.119,
+    "protein_per_100g": 5.8999999999999995,
+    "protein_per_g": 0.059
+  },
+  "pasta sauce": {
+    "cal_per_100g": 29.2,
+    "cal_per_g": 0.292,
+    "carb_per_100g": 6.9,
+    "carb_per_g": 0.069,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 1.3,
+    "protein_per_g": 0.013
+  },
+  "pastrami": {
+    "cal_per_100g": 145.79999999999998,
+    "cal_per_g": 1.458,
+    "carb_per_100g": 0.4,
+    "carb_per_g": 0.004,
+    "fat_per_100g": 5.800000000000001,
+    "fat_per_g": 0.058,
+    "protein_per_100g": 21.6,
+    "protein_per_g": 0.216
+  },
+  "pastries": {
+    "cal_per_100g": 550.8,
+    "cal_per_g": 5.508,
+    "carb_per_100g": 45.2,
+    "carb_per_g": 0.452,
+    "fat_per_100g": 38.4,
+    "fat_per_g": 0.384,
+    "protein_per_100g": 7.199999999999999,
+    "protein_per_g": 0.072
+  },
+  "pate nutrition": {
+    "cal_per_100g": 318.2,
+    "cal_per_g": 3.182,
+    "carb_per_100g": 1.5,
+    "carb_per_g": 0.015,
+    "fat_per_100g": 28.1,
+    "fat_per_g": 0.281,
+    "protein_per_100g": 14.099999999999998,
+    "protein_per_g": 0.141
+  },
+  "peach": {
+    "cal_per_100g": 38.800000000000004,
+    "cal_per_g": 0.388,
+    "carb_per_100g": 9.5,
+    "carb_per_g": 0.095,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 0.8999999999999999,
+    "protein_per_g": 0.009
+  },
+  "peaches": {
+    "cal_per_100g": 39.300000000000004,
+    "cal_per_g": 0.393,
+    "carb_per_100g": 9.5,
+    "carb_per_g": 0.095,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 0.8999999999999999,
+    "protein_per_g": 0.009
+  },
+  "peanut butter": {
+    "cal_per_100g": 589.5,
+    "cal_per_g": 5.895,
+    "carb_per_100g": 19.400000000000002,
+    "carb_per_g": 0.194,
+    "fat_per_100g": 50.3,
+    "fat_per_g": 0.503,
+    "protein_per_100g": 25.1,
+    "protein_per_g": 0.251
+  },
+  "peanuts": {
+    "cal_per_100g": 567.5,
+    "cal_per_g": 5.675,
+    "carb_per_100g": 16.1,
+    "carb_per_g": 0.161,
+    "fat_per_100g": 49.2,
+    "fat_per_g": 0.492,
+    "protein_per_100g": 25.3,
+    "protein_per_g": 0.253
+  },
+  "pears": {
+    "cal_per_100g": 57.199999999999996,
+    "cal_per_g": 0.572,
+    "carb_per_100g": 15.2,
+    "carb_per_g": 0.152,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.4,
+    "protein_per_g": 0.004
+  },
+  "peas": {
+    "cal_per_100g": 84.0,
+    "cal_per_g": 0.84,
+    "carb_per_100g": 16.0,
+    "carb_per_g": 0.16,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 5.4,
+    "protein_per_g": 0.054
+  },
+  "pecan pie": {
+    "cal_per_100g": 412.3,
+    "cal_per_g": 4.123,
+    "carb_per_100g": 52.5,
+    "carb_per_g": 0.525,
+    "fat_per_100g": 21.8,
+    "fat_per_g": 0.218,
+    "protein_per_100g": 4.9,
+    "protein_per_g": 0.049
+  },
+  "pecans": {
+    "cal_per_100g": 690.0,
+    "cal_per_g": 6.9,
+    "carb_per_100g": 14.000000000000002,
+    "carb_per_g": 0.14,
+    "fat_per_100g": 72.0,
+    "fat_per_g": 0.72,
+    "protein_per_100g": 9.0,
+    "protein_per_g": 0.09
+  },
+  "pepper": {
+    "cal_per_100g": 40.0,
+    "cal_per_g": 0.4,
+    "carb_per_100g": 9.3,
+    "carb_per_g": 0.093,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 2.0,
+    "protein_per_g": 0.02
+  },
+  "pepperoni": {
+    "cal_per_100g": 493.6,
+    "cal_per_g": 4.936,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 43.8,
+    "fat_per_g": 0.438,
+    "protein_per_100g": 23.1,
+    "protein_per_g": 0.231
+  },
+  "pepperoni pizza": {
+    "cal_per_100g": 282.0,
+    "cal_per_g": 2.82,
+    "carb_per_100g": 32.0,
+    "carb_per_g": 0.32,
+    "fat_per_100g": 12.0,
+    "fat_per_g": 0.12,
+    "protein_per_100g": 12.0,
+    "protein_per_g": 0.12
+  },
+  "pesto": {
+    "cal_per_100g": 562.0,
+    "cal_per_g": 5.62,
+    "carb_per_100g": 8.0,
+    "carb_per_g": 0.08,
+    "fat_per_100g": 54.900000000000006,
+    "fat_per_g": 0.549,
+    "protein_per_100g": 12.1,
+    "protein_per_g": 0.121
+  },
+  "pickles": {
+    "cal_per_100g": 11.0,
+    "cal_per_g": 0.11,
+    "carb_per_100g": 2.3,
+    "carb_per_g": 0.023,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 0.3,
+    "protein_per_g": 0.003
+  },
+  "pie crust": {
+    "cal_per_100g": 236.7,
+    "cal_per_g": 2.367,
+    "carb_per_100g": 34.5,
+    "carb_per_g": 0.345,
+    "fat_per_100g": 11.0,
+    "fat_per_g": 0.11,
+    "protein_per_100g": 1.7999999999999998,
+    "protein_per_g": 0.018
+  },
+  "pies": {
+    "cal_per_100g": 236.7,
+    "cal_per_g": 2.367,
+    "carb_per_100g": 34.5,
+    "carb_per_g": 0.345,
+    "fat_per_100g": 11.1,
+    "fat_per_g": 0.111,
+    "protein_per_100g": 1.9,
+    "protein_per_g": 0.019
+  },
+  "pilaf": {
+    "cal_per_100g": 159.20000000000002,
+    "cal_per_g": 1.592,
+    "carb_per_100g": 25.6,
+    "carb_per_g": 0.256,
+    "fat_per_100g": 4.9,
+    "fat_per_g": 0.049,
+    "protein_per_100g": 2.5,
+    "protein_per_g": 0.025
+  },
+  "pine nuts": {
+    "cal_per_100g": 664.6,
+    "cal_per_g": 6.646,
+    "carb_per_100g": 12.6,
+    "carb_per_g": 0.126,
+    "fat_per_100g": 68.5,
+    "fat_per_g": 0.685,
+    "protein_per_100g": 13.200000000000001,
+    "protein_per_g": 0.132
+  },
+  "pineapple": {
+    "cal_per_100g": 50.0,
+    "cal_per_g": 0.5,
+    "carb_per_100g": 13.0,
+    "carb_per_g": 0.13,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.5,
+    "protein_per_g": 0.005
+  },
+  "pinto beans": {
+    "cal_per_100g": 143.0,
+    "cal_per_g": 1.43,
+    "carb_per_100g": 26.0,
+    "carb_per_g": 0.26,
+    "fat_per_100g": 0.7000000000000001,
+    "fat_per_g": 0.007,
+    "protein_per_100g": 9.0,
+    "protein_per_g": 0.09
+  },
+  "pistachios": {
+    "cal_per_100g": 569.0,
+    "cal_per_g": 5.69,
+    "carb_per_100g": 28.000000000000004,
+    "carb_per_g": 0.28,
+    "fat_per_100g": 46.0,
+    "fat_per_g": 0.46,
+    "protein_per_100g": 21.0,
+    "protein_per_g": 0.21
+  },
+  "pita bread": {
+    "cal_per_100g": 275.0,
+    "cal_per_g": 2.75,
+    "carb_per_100g": 55.800000000000004,
+    "carb_per_g": 0.558,
+    "fat_per_100g": 1.0999999999999999,
+    "fat_per_g": 0.011,
+    "protein_per_100g": 8.799999999999999,
+    "protein_per_g": 0.088
+  },
+  "pizza": {
+    "cal_per_100g": 266.0,
+    "cal_per_g": 2.66,
+    "carb_per_100g": 33.0,
+    "carb_per_g": 0.33,
+    "fat_per_100g": 9.700000000000001,
+    "fat_per_g": 0.097,
+    "protein_per_100g": 11.0,
+    "protein_per_g": 0.11
+  },
+  "pizza dough": {
+    "cal_per_100g": 235.5,
+    "cal_per_g": 2.355,
+    "carb_per_100g": 41.699999999999996,
+    "carb_per_g": 0.417,
+    "fat_per_100g": 4.7,
+    "fat_per_g": 0.047,
+    "protein_per_100g": 5.4,
+    "protein_per_g": 0.054
+  },
+  "pizza sauce": {
+    "cal_per_100g": 28.999999999999996,
+    "cal_per_g": 0.29,
+    "carb_per_100g": 7.000000000000001,
+    "carb_per_g": 0.07,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 1.3,
+    "protein_per_g": 0.013
+  },
+  "plate only": {
+    "cal_per_100g": 0.0,
+    "cal_per_g": 0.0,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "plums": {
+    "cal_per_100g": 45.7,
+    "cal_per_g": 0.457,
+    "carb_per_100g": 11.5,
+    "carb_per_g": 0.115,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 0.7000000000000001,
+    "protein_per_g": 0.007
+  },
+  "poached eggs": {
+    "cal_per_100g": 142.5,
+    "cal_per_g": 1.425,
+    "carb_per_100g": 0.8,
+    "carb_per_g": 0.008,
+    "fat_per_100g": 9.2,
+    "fat_per_g": 0.092,
+    "protein_per_100g": 12.5,
+    "protein_per_g": 0.125
+  },
+  "polenta": {
+    "cal_per_100g": 370.0,
+    "cal_per_g": 3.7,
+    "carb_per_100g": 79.0,
+    "carb_per_g": 0.79,
+    "fat_per_100g": 1.7999999999999998,
+    "fat_per_g": 0.018,
+    "protein_per_100g": 7.000000000000001,
+    "protein_per_g": 0.07
+  },
+  "pomegranate": {
+    "cal_per_100g": 83.0,
+    "cal_per_g": 0.83,
+    "carb_per_100g": 19.0,
+    "carb_per_g": 0.19,
+    "fat_per_100g": 1.2,
+    "fat_per_g": 0.012,
+    "protein_per_100g": 1.7000000000000002,
+    "protein_per_g": 0.017
+  },
+  "popcorn": {
+    "cal_per_100g": 374.5,
+    "cal_per_g": 3.745,
+    "carb_per_100g": 74.0,
+    "carb_per_g": 0.74,
+    "fat_per_100g": 4.3,
+    "fat_per_g": 0.043,
+    "protein_per_100g": 11.0,
+    "protein_per_g": 0.11
+  },
+  "pork": {
+    "cal_per_100g": 238.0,
+    "cal_per_g": 2.38,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 14.000000000000002,
+    "fat_per_g": 0.14,
+    "protein_per_100g": 26.0,
+    "protein_per_g": 0.26
+  },
+  "pork chops": {
+    "cal_per_100g": 230.79999999999998,
+    "cal_per_g": 2.308,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 14.099999999999998,
+    "fat_per_g": 0.141,
+    "protein_per_100g": 23.9,
+    "protein_per_g": 0.239
+  },
+  "pot pies": {
+    "cal_per_100g": 198.2,
+    "cal_per_g": 1.982,
+    "carb_per_100g": 18.9,
+    "carb_per_g": 0.189,
+    "fat_per_100g": 11.3,
+    "fat_per_g": 0.113,
+    "protein_per_100g": 4.9,
+    "protein_per_g": 0.049
+  },
+  "potato bread": {
+    "cal_per_100g": 265.8,
+    "cal_per_g": 2.658,
+    "carb_per_100g": 46.9,
+    "carb_per_g": 0.469,
+    "fat_per_100g": 3.1,
+    "fat_per_g": 0.031,
+    "protein_per_100g": 12.8,
+    "protein_per_g": 0.128
+  },
+  "potato chips": {
+    "cal_per_100g": 536.0,
+    "cal_per_g": 5.36,
+    "carb_per_100g": 53.0,
+    "carb_per_g": 0.53,
+    "fat_per_100g": 35.0,
+    "fat_per_g": 0.35,
+    "protein_per_100g": 7.000000000000001,
+    "protein_per_g": 0.07
+  },
+  "potato salad": {
+    "cal_per_100g": 142.9,
+    "cal_per_g": 1.429,
+    "carb_per_100g": 11.1,
+    "carb_per_g": 0.111,
+    "fat_per_100g": 8.0,
+    "fat_per_g": 0.08,
+    "protein_per_100g": 2.8000000000000003,
+    "protein_per_g": 0.028
+  },
+  "potato skins": {
+    "cal_per_100g": 340.0,
+    "cal_per_g": 3.4,
+    "carb_per_100g": 15.0,
+    "carb_per_g": 0.15,
+    "fat_per_100g": 26.0,
+    "fat_per_g": 0.26,
+    "protein_per_100g": 13.0,
+    "protein_per_g": 0.13
+  },
+  "potatoes": {
+    "cal_per_100g": 77.0,
+    "cal_per_g": 0.77,
+    "carb_per_100g": 17.0,
+    "carb_per_g": 0.17,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 2.0,
+    "protein_per_g": 0.02
+  },
+  "pretzels": {
+    "cal_per_100g": 380.3,
+    "cal_per_g": 3.803,
+    "carb_per_100g": 80.4,
+    "carb_per_g": 0.804,
+    "fat_per_100g": 2.6,
+    "fat_per_g": 0.026,
+    "protein_per_100g": 10.100000000000001,
+    "protein_per_g": 0.101
+  },
+  "protein powder": {
+    "cal_per_100g": 400.0,
+    "cal_per_g": 4.0,
+    "carb_per_100g": 10.0,
+    "carb_per_g": 0.1,
+    "fat_per_100g": 3.3000000000000003,
+    "fat_per_g": 0.033,
+    "protein_per_100g": 80.0,
+    "protein_per_g": 0.8
+  },
+  "provolone cheese": {
+    "cal_per_100g": 351.90000000000003,
+    "cal_per_g": 3.519,
+    "carb_per_100g": 2.1999999999999997,
+    "carb_per_g": 0.022,
+    "fat_per_100g": 26.6,
+    "fat_per_g": 0.266,
+    "protein_per_100g": 25.3,
+    "protein_per_g": 0.253
+  },
+  "prunes": {
+    "cal_per_100g": 240.0,
+    "cal_per_g": 2.4,
+    "carb_per_100g": 64.0,
+    "carb_per_g": 0.64,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 2.1999999999999997,
+    "protein_per_g": 0.022
+  },
+  "puddings": {
+    "cal_per_100g": 119.7,
+    "cal_per_g": 1.197,
+    "carb_per_100g": 19.8,
+    "carb_per_g": 0.198,
+    "fat_per_100g": 3.2,
+    "fat_per_g": 0.032,
+    "protein_per_100g": 3.2,
+    "protein_per_g": 0.032
+  },
+  "pumpkin seeds": {
+    "cal_per_100g": 446.0,
+    "cal_per_g": 4.46,
+    "carb_per_100g": 54.0,
+    "carb_per_g": 0.54,
+    "fat_per_100g": 19.0,
+    "fat_per_g": 0.19,
+    "protein_per_100g": 19.0,
+    "protein_per_g": 0.19
+  },
+  "pumpkins": {
+    "cal_per_100g": 25.900000000000002,
+    "cal_per_g": 0.259,
+    "carb_per_100g": 6.5,
+    "carb_per_g": 0.065,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 1.0,
+    "protein_per_g": 0.01
+  },
+  "quesadillas": {
+    "cal_per_100g": 368.0,
+    "cal_per_g": 3.68,
+    "carb_per_100g": 24.0,
+    "carb_per_g": 0.24,
+    "fat_per_100g": 23.0,
+    "fat_per_g": 0.23,
+    "protein_per_100g": 16.0,
+    "protein_per_g": 0.16
+  },
+  "quiche": {
+    "cal_per_100g": 371.0,
+    "cal_per_g": 3.71,
+    "carb_per_100g": 9.9,
+    "carb_per_g": 0.099,
+    "fat_per_100g": 31.0,
+    "fat_per_g": 0.31,
+    "protein_per_100g": 13.0,
+    "protein_per_g": 0.13
+  },
+  "quinoa": {
+    "cal_per_100g": 120.0,
+    "cal_per_g": 1.2,
+    "carb_per_100g": 21.0,
+    "carb_per_g": 0.21,
+    "fat_per_100g": 1.9,
+    "fat_per_g": 0.019,
+    "protein_per_100g": 4.3999999999999995,
+    "protein_per_g": 0.044
+  },
+  "radishes": {
+    "cal_per_100g": 16.0,
+    "cal_per_g": 0.16,
+    "carb_per_100g": 3.4000000000000004,
+    "carb_per_g": 0.034,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.7000000000000001,
+    "protein_per_g": 0.007
+  },
+  "raisin bran": {
+    "cal_per_100g": 314.0,
+    "cal_per_g": 3.14,
+    "carb_per_100g": 77.0,
+    "carb_per_g": 0.77,
+    "fat_per_100g": 2.7,
+    "fat_per_g": 0.027,
+    "protein_per_100g": 8.0,
+    "protein_per_g": 0.08
+  },
+  "raisin bread": {
+    "cal_per_100g": 274.0,
+    "cal_per_g": 2.74,
+    "carb_per_100g": 52.0,
+    "carb_per_g": 0.52,
+    "fat_per_100g": 4.3999999999999995,
+    "fat_per_g": 0.044,
+    "protein_per_100g": 7.9,
+    "protein_per_g": 0.079
+  },
+  "raisins": {
+    "cal_per_100g": 299.0,
+    "cal_per_g": 2.99,
+    "carb_per_100g": 79.0,
+    "carb_per_g": 0.79,
+    "fat_per_100g": 0.5,
+    "fat_per_g": 0.005,
+    "protein_per_100g": 3.1,
+    "protein_per_g": 0.031
+  },
+  "ranch dressing": {
+    "cal_per_100g": 483.7,
+    "cal_per_g": 4.837,
+    "carb_per_100g": 6.800000000000001,
+    "carb_per_g": 0.068,
+    "fat_per_100g": 50.5,
+    "fat_per_g": 0.505,
+    "protein_per_100g": 1.0,
+    "protein_per_g": 0.01
+  },
+  "raspberries": {
+    "cal_per_100g": 53.0,
+    "cal_per_g": 0.53,
+    "carb_per_100g": 12.0,
+    "carb_per_g": 0.12,
+    "fat_per_100g": 0.7000000000000001,
+    "fat_per_g": 0.007,
+    "protein_per_100g": 1.2,
+    "protein_per_g": 0.012
+  },
+  "ravioli": {
+    "cal_per_100g": 77.10000000000001,
+    "cal_per_g": 0.771,
+    "carb_per_100g": 13.8,
+    "carb_per_g": 0.138,
+    "fat_per_100g": 1.5,
+    "fat_per_g": 0.015,
+    "protein_per_100g": 2.5,
+    "protein_per_g": 0.025
+  },
+  "red potatoes": {
+    "cal_per_100g": 89.0,
+    "cal_per_g": 0.89,
+    "carb_per_100g": 20.0,
+    "carb_per_g": 0.2,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 2.3,
+    "protein_per_g": 0.023
+  },
+  "refried beans": {
+    "cal_per_100g": 91.8,
+    "cal_per_g": 0.918,
+    "carb_per_100g": 15.2,
+    "carb_per_g": 0.152,
+    "fat_per_100g": 1.2,
+    "fat_per_g": 0.012,
+    "protein_per_100g": 5.2,
+    "protein_per_g": 0.052
+  },
+  "relish": {
+    "cal_per_100g": 130.0,
+    "cal_per_g": 1.3,
+    "carb_per_100g": 35.0,
+    "carb_per_g": 0.35,
+    "fat_per_100g": 0.5,
+    "fat_per_g": 0.005,
+    "protein_per_100g": 0.4,
+    "protein_per_g": 0.004
+  },
+  "ribs": {
+    "cal_per_100g": 351.3,
+    "cal_per_g": 3.513,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 28.1,
+    "fat_per_g": 0.281,
+    "protein_per_100g": 22.7,
+    "protein_per_g": 0.227
+  },
+  "rice": {
+    "cal_per_100g": 130.0,
+    "cal_per_g": 1.3,
+    "carb_per_100g": 28.000000000000004,
+    "carb_per_g": 0.28,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 2.7,
+    "protein_per_g": 0.027
+  },
+  "rice cakes": {
+    "cal_per_100g": 388.5,
+    "cal_per_g": 3.885,
+    "carb_per_100g": 81.0,
+    "carb_per_g": 0.81,
+    "fat_per_100g": 2.8000000000000003,
+    "fat_per_g": 0.028,
+    "protein_per_100g": 8.200000000000001,
+    "protein_per_g": 0.082
+  },
+  "rice noodles": {
+    "cal_per_100g": 109.00000000000001,
+    "cal_per_g": 1.09,
+    "carb_per_100g": 25.0,
+    "carb_per_g": 0.25,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 0.8999999999999999,
+    "protein_per_g": 0.009
+  },
+  "risotto": {
+    "cal_per_100g": 122.0,
+    "cal_per_g": 1.22,
+    "carb_per_100g": 16.0,
+    "carb_per_g": 0.16,
+    "fat_per_100g": 3.9,
+    "fat_per_g": 0.039,
+    "protein_per_100g": 4.3,
+    "protein_per_g": 0.043
+  },
+  "roast beef": {
+    "cal_per_100g": 169.79999999999998,
+    "cal_per_g": 1.698,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 5.8999999999999995,
+    "fat_per_g": 0.059,
+    "protein_per_100g": 29.099999999999998,
+    "protein_per_g": 0.291
+  },
+  "roast chicken": {
+    "cal_per_100g": 223.70000000000002,
+    "cal_per_g": 2.237,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 13.0,
+    "fat_per_g": 0.13,
+    "protein_per_100g": 23.5,
+    "protein_per_g": 0.235
+  },
+  "roast pork": {
+    "cal_per_100g": 291.8,
+    "cal_per_g": 2.918,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 21.2,
+    "fat_per_g": 0.212,
+    "protein_per_100g": 23.5,
+    "protein_per_g": 0.235
+  },
+  "roast turkey": {
+    "cal_per_100g": 189.0,
+    "cal_per_g": 1.89,
+    "carb_per_100g": 0.1,
+    "carb_per_g": 0.001,
+    "fat_per_100g": 7.3999999999999995,
+    "fat_per_g": 0.074,
+    "protein_per_100g": 28.999999999999996,
+    "protein_per_g": 0.29
+  },
+  "roasted potatoes": {
+    "cal_per_100g": 141.0,
+    "cal_per_g": 1.41,
+    "carb_per_100g": 18.0,
+    "carb_per_g": 0.18,
+    "fat_per_100g": 6.800000000000001,
+    "fat_per_g": 0.068,
+    "protein_per_100g": 2.1,
+    "protein_per_g": 0.021
+  },
+  "rolls": {
+    "cal_per_100g": 308.9,
+    "cal_per_g": 3.089,
+    "carb_per_100g": 52.1,
+    "carb_per_g": 0.521,
+    "fat_per_100g": 6.5,
+    "fat_per_g": 0.065,
+    "protein_per_100g": 10.7,
+    "protein_per_g": 0.107
+  },
+  "romano cheese": {
+    "cal_per_100g": 387.40000000000003,
+    "cal_per_g": 3.874,
+    "carb_per_100g": 3.5999999999999996,
+    "carb_per_g": 0.036,
+    "fat_per_100g": 27.3,
+    "fat_per_g": 0.273,
+    "protein_per_100g": 31.8,
+    "protein_per_g": 0.318
+  },
+  "root beer": {
+    "cal_per_100g": 41.5,
+    "cal_per_g": 0.415,
+    "carb_per_100g": 10.8,
+    "carb_per_g": 0.108,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "rosemary": {
+    "cal_per_100g": 131.0,
+    "cal_per_g": 1.31,
+    "carb_per_100g": 20.0,
+    "carb_per_g": 0.2,
+    "fat_per_100g": 5.7,
+    "fat_per_g": 0.057,
+    "protein_per_100g": 2.9000000000000004,
+    "protein_per_g": 0.029
+  },
+  "rum": {
+    "cal_per_100g": 231.3,
+    "cal_per_g": 2.313,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "rye bread": {
+    "cal_per_100g": 258.59999999999997,
+    "cal_per_g": 2.586,
+    "carb_per_100g": 48.199999999999996,
+    "carb_per_g": 0.482,
+    "fat_per_100g": 3.2,
+    "fat_per_g": 0.032,
+    "protein_per_100g": 8.6,
+    "protein_per_g": 0.086
+  },
+  "salad dressing": {
+    "cal_per_100g": 479.90000000000003,
+    "cal_per_g": 4.799,
+    "carb_per_100g": 16.5,
+    "carb_per_g": 0.165,
+    "fat_per_100g": 46.7,
+    "fat_per_g": 0.467,
+    "protein_per_100g": 0.8,
+    "protein_per_g": 0.008
+  },
+  "salads": {
+    "cal_per_100g": 152.29999999999998,
+    "cal_per_g": 1.523,
+    "carb_per_100g": 14.799999999999999,
+    "carb_per_g": 0.148,
+    "fat_per_100g": 9.700000000000001,
+    "fat_per_g": 0.097,
+    "protein_per_100g": 1.0,
+    "protein_per_g": 0.01
+  },
+  "salami": {
+    "cal_per_100g": 334.7,
+    "cal_per_g": 3.347,
+    "carb_per_100g": 2.4,
+    "carb_per_g": 0.024,
+    "fat_per_100g": 26.0,
+    "fat_per_g": 0.26,
+    "protein_per_100g": 22.0,
+    "protein_per_g": 0.22
+  },
+  "salmon": {
+    "cal_per_100g": 178.0,
+    "cal_per_g": 1.78,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 8.0,
+    "fat_per_g": 0.08,
+    "protein_per_100g": 24.0,
+    "protein_per_g": 0.24
+  },
+  "salsa": {
+    "cal_per_100g": 28.999999999999996,
+    "cal_per_g": 0.29,
+    "carb_per_100g": 6.6000000000000005,
+    "carb_per_g": 0.066,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 1.5,
+    "protein_per_g": 0.015
+  },
+  "salt": {
+    "cal_per_100g": 0.0,
+    "cal_per_g": 0.0,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "samosas": {
+    "cal_per_100g": 262.0,
+    "cal_per_g": 2.62,
+    "carb_per_100g": 24.0,
+    "carb_per_g": 0.24,
+    "fat_per_100g": 17.0,
+    "fat_per_g": 0.17,
+    "protein_per_100g": 3.5000000000000004,
+    "protein_per_g": 0.035
+  },
+  "sandwich cookies": {
+    "cal_per_100g": 469.7,
+    "cal_per_g": 4.697,
+    "carb_per_100g": 70.39999999999999,
+    "carb_per_g": 0.704,
+    "fat_per_100g": 20.200000000000003,
+    "fat_per_g": 0.202,
+    "protein_per_100g": 5.6000000000000005,
+    "protein_per_g": 0.056
+  },
+  "sandwiches": {
+    "cal_per_100g": 232.9,
+    "cal_per_g": 2.329,
+    "carb_per_100g": 17.9,
+    "carb_per_g": 0.179,
+    "fat_per_100g": 13.0,
+    "fat_per_g": 0.13,
+    "protein_per_100g": 11.0,
+    "protein_per_g": 0.11
+  },
+  "sardines": {
+    "cal_per_100g": 203.10000000000002,
+    "cal_per_g": 2.031,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 11.1,
+    "fat_per_g": 0.111,
+    "protein_per_100g": 24.3,
+    "protein_per_g": 0.243
+  },
+  "sauerkraut": {
+    "cal_per_100g": 19.0,
+    "cal_per_g": 0.19,
+    "carb_per_100g": 4.3,
+    "carb_per_g": 0.043,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.8999999999999999,
+    "protein_per_g": 0.009
+  },
+  "sausage": {
+    "cal_per_100g": 344.6,
+    "cal_per_g": 3.446,
+    "carb_per_100g": 4.2,
+    "carb_per_g": 0.042,
+    "fat_per_100g": 27.3,
+    "fat_per_g": 0.273,
+    "protein_per_100g": 19.3,
+    "protein_per_g": 0.193
+  },
+  "scallops": {
+    "cal_per_100g": 105.89999999999999,
+    "cal_per_g": 1.059,
+    "carb_per_100g": 5.8999999999999995,
+    "carb_per_g": 0.059,
+    "fat_per_100g": 0.6,
+    "fat_per_g": 0.006,
+    "protein_per_100g": 20.0,
+    "protein_per_g": 0.2
+  },
+  "scones": {
+    "cal_per_100g": 352.5,
+    "cal_per_g": 3.525,
+    "carb_per_100g": 44.7,
+    "carb_per_g": 0.447,
+    "fat_per_100g": 16.2,
+    "fat_per_g": 0.162,
+    "protein_per_100g": 7.000000000000001,
+    "protein_per_g": 0.07
+  },
+  "scrambled eggs": {
+    "cal_per_100g": 148.0,
+    "cal_per_g": 1.48,
+    "carb_per_100g": 1.6,
+    "carb_per_g": 0.016,
+    "fat_per_100g": 11.0,
+    "fat_per_g": 0.11,
+    "protein_per_100g": 10.0,
+    "protein_per_g": 0.1
+  },
+  "seafood": {
+    "cal_per_100g": 204.4,
+    "cal_per_g": 2.044,
+    "carb_per_100g": 1.7999999999999998,
+    "carb_per_g": 0.018,
+    "fat_per_100g": 8.1,
+    "fat_per_g": 0.081,
+    "protein_per_100g": 28.499999999999996,
+    "protein_per_g": 0.285
+  },
+  "seaweed": {
+    "cal_per_100g": 38.0,
+    "cal_per_g": 0.38,
+    "carb_per_100g": 8.4,
+    "carb_per_g": 0.084,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 2.4,
+    "protein_per_g": 0.024
+  },
+  "seeds": {
+    "cal_per_100g": 558.1999999999999,
+    "cal_per_g": 5.582,
+    "carb_per_100g": 10.8,
+    "carb_per_g": 0.108,
+    "fat_per_100g": 49.2,
+    "fat_per_g": 0.492,
+    "protein_per_100g": 30.9,
+    "protein_per_g": 0.309
+  },
+  "shallots": {
+    "cal_per_100g": 20.0,
+    "cal_per_g": 0.2,
+    "carb_per_100g": 3.3000000000000003,
+    "carb_per_g": 0.033,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 1.5,
+    "protein_per_g": 0.015
+  },
+  "sherbet": {
+    "cal_per_100g": 144.0,
+    "cal_per_g": 1.44,
+    "carb_per_100g": 30.0,
+    "carb_per_g": 0.3,
+    "fat_per_100g": 2.0,
+    "fat_per_g": 0.02,
+    "protein_per_100g": 1.0999999999999999,
+    "protein_per_g": 0.011
+  },
+  "shrimp": {
+    "cal_per_100g": 99.0,
+    "cal_per_g": 0.99,
+    "carb_per_100g": 0.2,
+    "carb_per_g": 0.002,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 24.0,
+    "protein_per_g": 0.24
+  },
+  "skim milk": {
+    "cal_per_100g": 34.0,
+    "cal_per_g": 0.34,
+    "carb_per_100g": 4.9,
+    "carb_per_g": 0.049,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 3.4000000000000004,
+    "protein_per_g": 0.034
+  },
+  "smoked salmon": {
+    "cal_per_100g": 117.30000000000001,
+    "cal_per_g": 1.173,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 4.3,
+    "fat_per_g": 0.043,
+    "protein_per_100g": 18.4,
+    "protein_per_g": 0.184
+  },
+  "smoothies": {
+    "cal_per_100g": 38.3,
+    "cal_per_g": 0.383,
+    "carb_per_100g": 8.4,
+    "carb_per_g": 0.084,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 1.3,
+    "protein_per_g": 0.013
+  },
+  "snapper": {
+    "cal_per_100g": 128.0,
+    "cal_per_g": 1.28,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 1.7000000000000002,
+    "fat_per_g": 0.017,
+    "protein_per_100g": 26.0,
+    "protein_per_g": 0.26
+  },
+  "snow peas": {
+    "cal_per_100g": 81.0,
+    "cal_per_g": 0.81,
+    "carb_per_100g": 14.000000000000002,
+    "carb_per_g": 0.14,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 5.0,
+    "protein_per_g": 0.05
+  },
+  "soft serve ice creams": {
+    "cal_per_100g": 223.4,
+    "cal_per_g": 2.234,
+    "carb_per_100g": 22.2,
+    "carb_per_g": 0.222,
+    "fat_per_100g": 13.0,
+    "fat_per_g": 0.13,
+    "protein_per_100g": 4.1000000000000005,
+    "protein_per_g": 0.041
+  },
+  "sorbet": {
+    "cal_per_100g": 124.0,
+    "cal_per_g": 1.24,
+    "carb_per_100g": 26.700000000000003,
+    "carb_per_g": 0.267,
+    "fat_per_100g": 0.5,
+    "fat_per_g": 0.005,
+    "protein_per_100g": 1.9,
+    "protein_per_g": 0.019
+  },
+  "souffle": {
+    "cal_per_100g": 169.1,
+    "cal_per_g": 1.691,
+    "carb_per_100g": 6.0,
+    "carb_per_g": 0.06,
+    "fat_per_100g": 13.0,
+    "fat_per_g": 0.13,
+    "protein_per_100g": 7.9,
+    "protein_per_g": 0.079
+  },
+  "sour cream": {
+    "cal_per_100g": 198.0,
+    "cal_per_g": 1.98,
+    "carb_per_100g": 4.6,
+    "carb_per_g": 0.046,
+    "fat_per_100g": 19.0,
+    "fat_per_g": 0.19,
+    "protein_per_100g": 2.4,
+    "protein_per_g": 0.024
+  },
+  "sourdough bread": {
+    "cal_per_100g": 288.9,
+    "cal_per_g": 2.889,
+    "carb_per_100g": 56.2,
+    "carb_per_g": 0.562,
+    "fat_per_100g": 1.7999999999999998,
+    "fat_per_g": 0.018,
+    "protein_per_100g": 11.899999999999999,
+    "protein_per_g": 0.119
+  },
+  "soy milk": {
+    "cal_per_100g": 53.400000000000006,
+    "cal_per_g": 0.534,
+    "carb_per_100g": 6.1,
+    "carb_per_g": 0.061,
+    "fat_per_100g": 1.7000000000000002,
+    "fat_per_g": 0.017,
+    "protein_per_100g": 3.3000000000000003,
+    "protein_per_g": 0.033
+  },
+  "soy nuts": {
+    "cal_per_100g": 449.0,
+    "cal_per_g": 4.49,
+    "carb_per_100g": 28.999999999999996,
+    "carb_per_g": 0.29,
+    "fat_per_100g": 22.0,
+    "fat_per_g": 0.22,
+    "protein_per_100g": 43.0,
+    "protein_per_g": 0.43
+  },
+  "soy sauce": {
+    "cal_per_100g": 53.0,
+    "cal_per_g": 0.53,
+    "carb_per_100g": 4.9,
+    "carb_per_g": 0.049,
+    "fat_per_100g": 0.6,
+    "fat_per_g": 0.006,
+    "protein_per_100g": 8.1,
+    "protein_per_g": 0.081
+  },
+  "soy sausage": {
+    "cal_per_100g": 202.0,
+    "cal_per_g": 2.02,
+    "carb_per_100g": 6.3,
+    "carb_per_g": 0.063,
+    "fat_per_100g": 14.399999999999999,
+    "fat_per_g": 0.144,
+    "protein_per_100g": 16.0,
+    "protein_per_g": 0.16
+  },
+  "soy yogurt": {
+    "cal_per_100g": 101.4,
+    "cal_per_g": 1.014,
+    "carb_per_100g": 17.299999999999997,
+    "carb_per_g": 0.173,
+    "fat_per_100g": 1.9,
+    "fat_per_g": 0.019,
+    "protein_per_100g": 3.6999999999999997,
+    "protein_per_g": 0.037
+  },
+  "spaghetti": {
+    "cal_per_100g": 158.0,
+    "cal_per_g": 1.58,
+    "carb_per_100g": 31.0,
+    "carb_per_g": 0.31,
+    "fat_per_100g": 0.8999999999999999,
+    "fat_per_g": 0.009,
+    "protein_per_100g": 6.0,
+    "protein_per_g": 0.06
+  },
+  "spinach (cooked)": {
+    "cal_per_100g": 23.0,
+    "cal_per_g": 0.23,
+    "carb_per_100g": 4.0,
+    "carb_per_g": 0.04,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 3.0,
+    "protein_per_g": 0.03
+  },
+  "spinach (raw)": {
+    "cal_per_100g": 23.0,
+    "cal_per_g": 0.23,
+    "carb_per_100g": 3.5999999999999996,
+    "carb_per_g": 0.036,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 2.9000000000000004,
+    "protein_per_g": 0.029
+  },
+  "spreads": {
+    "cal_per_100g": 235.70000000000002,
+    "cal_per_g": 2.357,
+    "carb_per_100g": 12.0,
+    "carb_per_g": 0.12,
+    "fat_per_100g": 17.1,
+    "fat_per_g": 0.171,
+    "protein_per_100g": 7.9,
+    "protein_per_g": 0.079
+  },
+  "spring rolls": {
+    "cal_per_100g": 154.29999999999998,
+    "cal_per_g": 1.543,
+    "carb_per_100g": 4.3,
+    "carb_per_g": 0.043,
+    "fat_per_100g": 8.0,
+    "fat_per_g": 0.08,
+    "protein_per_100g": 16.2,
+    "protein_per_g": 0.162
+  },
+  "squash": {
+    "cal_per_100g": 20.5,
+    "cal_per_g": 0.205,
+    "carb_per_100g": 3.4000000000000004,
+    "carb_per_g": 0.034,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 0.8999999999999999,
+    "protein_per_g": 0.009
+  },
+  "squid": {
+    "cal_per_100g": 175.1,
+    "cal_per_g": 1.751,
+    "carb_per_100g": 8.1,
+    "carb_per_g": 0.081,
+    "fat_per_100g": 7.000000000000001,
+    "fat_per_g": 0.07,
+    "protein_per_100g": 17.8,
+    "protein_per_g": 0.178
+  },
+  "steak": {
+    "cal_per_100g": 271.0,
+    "cal_per_g": 2.71,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 19.0,
+    "fat_per_g": 0.19,
+    "protein_per_100g": 25.0,
+    "protein_per_g": 0.25
+  },
+  "stews": {
+    "cal_per_100g": 106.0,
+    "cal_per_g": 1.06,
+    "carb_per_100g": 8.200000000000001,
+    "carb_per_g": 0.082,
+    "fat_per_100g": 3.2,
+    "fat_per_g": 0.032,
+    "protein_per_100g": 11.0,
+    "protein_per_g": 0.11
+  },
+  "stout beer": {
+    "cal_per_100g": 45.0,
+    "cal_per_g": 0.45,
+    "carb_per_100g": 1.5,
+    "carb_per_g": 0.015,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.2,
+    "protein_per_g": 0.002
+  },
+  "strawberries": {
+    "cal_per_100g": 33.0,
+    "cal_per_g": 0.33,
+    "carb_per_100g": 8.0,
+    "carb_per_g": 0.08,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 0.7000000000000001,
+    "protein_per_g": 0.007
+  },
+  "string cheese": {
+    "cal_per_100g": 300.0,
+    "cal_per_g": 3.0,
+    "carb_per_100g": 2.1999999999999997,
+    "carb_per_g": 0.022,
+    "fat_per_100g": 22.0,
+    "fat_per_g": 0.22,
+    "protein_per_100g": 22.0,
+    "protein_per_g": 0.22
+  },
+  "strudels": {
+    "cal_per_100g": 318.2,
+    "cal_per_g": 3.182,
+    "carb_per_100g": 50.0,
+    "carb_per_g": 0.5,
+    "fat_per_100g": 10.8,
+    "fat_per_g": 0.108,
+    "protein_per_100g": 5.0,
+    "protein_per_g": 0.05
+  },
+  "stuffing": {
+    "cal_per_100g": 385.40000000000003,
+    "cal_per_g": 3.854,
+    "carb_per_100g": 76.7,
+    "carb_per_g": 0.767,
+    "fat_per_100g": 3.5000000000000004,
+    "fat_per_g": 0.035,
+    "protein_per_100g": 11.0,
+    "protein_per_g": 0.11
+  },
+  "succotash": {
+    "cal_per_100g": 99.0,
+    "cal_per_g": 0.99,
+    "carb_per_100g": 20.0,
+    "carb_per_g": 0.2,
+    "fat_per_100g": 1.0,
+    "fat_per_g": 0.01,
+    "protein_per_100g": 5.0,
+    "protein_per_g": 0.05
+  },
+  "sugar": {
+    "cal_per_100g": 388.0,
+    "cal_per_g": 3.88,
+    "carb_per_100g": 100.0,
+    "carb_per_g": 1.0,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "sun dried tomatoes": {
+    "cal_per_100g": 258.0,
+    "cal_per_g": 2.58,
+    "carb_per_100g": 56.00000000000001,
+    "carb_per_g": 0.56,
+    "fat_per_100g": 3.0,
+    "fat_per_g": 0.03,
+    "protein_per_100g": 14.000000000000002,
+    "protein_per_g": 0.14
+  },
+  "sundaes": {
+    "cal_per_100g": 179.9,
+    "cal_per_g": 1.799,
+    "carb_per_100g": 30.2,
+    "carb_per_g": 0.302,
+    "fat_per_100g": 5.3,
+    "fat_per_g": 0.053,
+    "protein_per_100g": 3.6999999999999997,
+    "protein_per_g": 0.037
+  },
+  "sunflower seeds": {
+    "cal_per_100g": 546.0,
+    "cal_per_g": 5.46,
+    "carb_per_100g": 15.0,
+    "carb_per_g": 0.15,
+    "fat_per_100g": 50.0,
+    "fat_per_g": 0.5,
+    "protein_per_100g": 19.0,
+    "protein_per_g": 0.19
+  },
+  "sushi": {
+    "cal_per_100g": 143.0,
+    "cal_per_g": 1.43,
+    "carb_per_100g": 29.9,
+    "carb_per_g": 0.299,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 4.3,
+    "protein_per_g": 0.043
+  },
+  "sweet potato": {
+    "cal_per_100g": 76.0,
+    "cal_per_g": 0.76,
+    "carb_per_100g": 18.0,
+    "carb_per_g": 0.18,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 1.0,
+    "protein_per_g": 0.01
+  },
+  "sweet rolls": {
+    "cal_per_100g": 273.0,
+    "cal_per_g": 2.73,
+    "carb_per_100g": 46.0,
+    "carb_per_g": 0.46,
+    "fat_per_100g": 6.3,
+    "fat_per_g": 0.063,
+    "protein_per_100g": 8.6,
+    "protein_per_g": 0.086
+  },
+  "swiss cheese": {
+    "cal_per_100g": 379.9,
+    "cal_per_g": 3.799,
+    "carb_per_100g": 5.2,
+    "carb_per_g": 0.052,
+    "fat_per_100g": 28.199999999999996,
+    "fat_per_g": 0.282,
+    "protein_per_100g": 27.6,
+    "protein_per_g": 0.276
+  },
+  "swordfish": {
+    "cal_per_100g": 171.8,
+    "cal_per_g": 1.718,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 7.9,
+    "fat_per_g": 0.079,
+    "protein_per_100g": 23.400000000000002,
+    "protein_per_g": 0.234
+  },
+  "syrup": {
+    "cal_per_100g": 260.0,
+    "cal_per_g": 2.6,
+    "carb_per_100g": 67.0,
+    "carb_per_g": 0.67,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "tabouli": {
+    "cal_per_100g": 85.0,
+    "cal_per_g": 0.85,
+    "carb_per_100g": 10.7,
+    "carb_per_g": 0.107,
+    "fat_per_100g": 4.5,
+    "fat_per_g": 0.045,
+    "protein_per_100g": 2.1,
+    "protein_per_g": 0.021
+  },
+  "taco salad": {
+    "cal_per_100g": 157.0,
+    "cal_per_g": 1.57,
+    "carb_per_100g": 14.000000000000002,
+    "carb_per_g": 0.14,
+    "fat_per_100g": 8.5,
+    "fat_per_g": 0.085,
+    "protein_per_100g": 7.000000000000001,
+    "protein_per_g": 0.07
+  },
+  "taco shells": {
+    "cal_per_100g": 476.0,
+    "cal_per_g": 4.76,
+    "carb_per_100g": 63.0,
+    "carb_per_g": 0.63,
+    "fat_per_100g": 22.0,
+    "fat_per_g": 0.22,
+    "protein_per_100g": 6.4,
+    "protein_per_g": 0.064
+  },
+  "tacos": {
+    "cal_per_100g": 225.99999999999997,
+    "cal_per_g": 2.26,
+    "carb_per_100g": 20.1,
+    "carb_per_g": 0.201,
+    "fat_per_100g": 13.0,
+    "fat_per_g": 0.13,
+    "protein_per_100g": 8.799999999999999,
+    "protein_per_g": 0.088
+  },
+  "tahini": {
+    "cal_per_100g": 595.6,
+    "cal_per_g": 5.956,
+    "carb_per_100g": 21.099999999999998,
+    "carb_per_g": 0.211,
+    "fat_per_100g": 53.5,
+    "fat_per_g": 0.535,
+    "protein_per_100g": 17.0,
+    "protein_per_g": 0.17
+  },
+  "tamales": {
+    "cal_per_100g": 152.8,
+    "cal_per_g": 1.528,
+    "carb_per_100g": 18.099999999999998,
+    "carb_per_g": 0.181,
+    "fat_per_100g": 6.0,
+    "fat_per_g": 0.06,
+    "protein_per_100g": 6.2,
+    "protein_per_g": 0.062
+  },
+  "taquitos": {
+    "cal_per_100g": 286.0,
+    "cal_per_g": 2.86,
+    "carb_per_100g": 34.0,
+    "carb_per_g": 0.34,
+    "fat_per_100g": 13.0,
+    "fat_per_g": 0.13,
+    "protein_per_100g": 9.3,
+    "protein_per_g": 0.093
+  },
+  "tatsoi": {
+    "cal_per_100g": 22.0,
+    "cal_per_g": 0.22,
+    "carb_per_100g": 3.9,
+    "carb_per_g": 0.039,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 2.1999999999999997,
+    "protein_per_g": 0.022
+  },
+  "tea": {
+    "cal_per_100g": 1.0,
+    "cal_per_g": 0.01,
+    "carb_per_100g": 0.3,
+    "carb_per_g": 0.003,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "tempeh": {
+    "cal_per_100g": 192.9,
+    "cal_per_g": 1.929,
+    "carb_per_100g": 9.3,
+    "carb_per_g": 0.093,
+    "fat_per_100g": 10.9,
+    "fat_per_g": 0.109,
+    "protein_per_100g": 18.8,
+    "protein_per_g": 0.188
+  },
+  "tempura": {
+    "cal_per_100g": 105.0,
+    "cal_per_g": 1.05,
+    "carb_per_100g": 11.0,
+    "carb_per_g": 0.11,
+    "fat_per_100g": 3.9,
+    "fat_per_g": 0.039,
+    "protein_per_100g": 6.5,
+    "protein_per_g": 0.065
+  },
+  "teriyaki sauce": {
+    "cal_per_100g": 89.0,
+    "cal_per_g": 0.89,
+    "carb_per_100g": 16.0,
+    "carb_per_g": 0.16,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 5.8999999999999995,
+    "protein_per_g": 0.059
+  },
+  "thyme": {
+    "cal_per_100g": 101.0,
+    "cal_per_g": 1.01,
+    "carb_per_100g": 24.0,
+    "carb_per_g": 0.24,
+    "fat_per_100g": 1.7000000000000002,
+    "fat_per_g": 0.017,
+    "protein_per_100g": 6.0,
+    "protein_per_g": 0.06
+  },
+  "tilapia": {
+    "cal_per_100g": 128.8,
+    "cal_per_g": 1.288,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 2.7,
+    "fat_per_g": 0.027,
+    "protein_per_100g": 26.1,
+    "protein_per_g": 0.261
+  },
+  "toast": {
+    "cal_per_100g": 313.09999999999997,
+    "cal_per_g": 3.131,
+    "carb_per_100g": 55.50000000000001,
+    "carb_per_g": 0.555,
+    "fat_per_100g": 4.2,
+    "fat_per_g": 0.042,
+    "protein_per_100g": 13.0,
+    "protein_per_g": 0.13
+  },
+  "tofu": {
+    "cal_per_100g": 73.0,
+    "cal_per_g": 0.73,
+    "carb_per_100g": 1.9,
+    "carb_per_g": 0.019,
+    "fat_per_100g": 4.8,
+    "fat_per_g": 0.048,
+    "protein_per_100g": 8.0,
+    "protein_per_g": 0.08
+  },
+  "tomatillo": {
+    "cal_per_100g": 32.0,
+    "cal_per_g": 0.32,
+    "carb_per_100g": 6.0,
+    "carb_per_g": 0.06,
+    "fat_per_100g": 1.0,
+    "fat_per_g": 0.01,
+    "protein_per_100g": 1.0,
+    "protein_per_g": 0.01
+  },
+  "tomato soup": {
+    "cal_per_100g": 35.0,
+    "cal_per_g": 0.35,
+    "carb_per_100g": 7.3999999999999995,
+    "carb_per_g": 0.074,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 0.7000000000000001,
+    "protein_per_g": 0.007
+  },
+  "tomatoes": {
+    "cal_per_100g": 34.0,
+    "cal_per_g": 0.34,
+    "carb_per_100g": 6.800000000000001,
+    "carb_per_g": 0.068,
+    "fat_per_100g": 0.7000000000000001,
+    "fat_per_g": 0.007,
+    "protein_per_100g": 0.7000000000000001,
+    "protein_per_g": 0.007
+  },
+  "tortellini": {
+    "cal_per_100g": 307.2,
+    "cal_per_g": 3.072,
+    "carb_per_100g": 47.0,
+    "carb_per_g": 0.47,
+    "fat_per_100g": 7.199999999999999,
+    "fat_per_g": 0.072,
+    "protein_per_100g": 13.8,
+    "protein_per_g": 0.138
+  },
+  "tortilla": {
+    "cal_per_100g": 218.00000000000003,
+    "cal_per_g": 2.18,
+    "carb_per_100g": 45.0,
+    "carb_per_g": 0.45,
+    "fat_per_100g": 2.9000000000000004,
+    "fat_per_g": 0.029,
+    "protein_per_100g": 6.0,
+    "protein_per_g": 0.06
+  },
+  "tortilla chips": {
+    "cal_per_100g": 464.20000000000005,
+    "cal_per_g": 4.642,
+    "carb_per_100g": 73.7,
+    "carb_per_g": 0.737,
+    "fat_per_100g": 15.299999999999999,
+    "fat_per_g": 0.153,
+    "protein_per_100g": 8.6,
+    "protein_per_g": 0.086
+  },
+  "tostadas": {
+    "cal_per_100g": 148.0,
+    "cal_per_g": 1.48,
+    "carb_per_100g": 13.200000000000001,
+    "carb_per_g": 0.132,
+    "fat_per_100g": 7.8,
+    "fat_per_g": 0.078,
+    "protein_per_100g": 7.1,
+    "protein_per_g": 0.071
+  },
+  "trail mix": {
+    "cal_per_100g": 462.0,
+    "cal_per_g": 4.62,
+    "carb_per_100g": 45.4,
+    "carb_per_g": 0.454,
+    "fat_per_100g": 28.599999999999998,
+    "fat_per_g": 0.286,
+    "protein_per_100g": 13.900000000000002,
+    "protein_per_g": 0.139
+  },
+  "trout": {
+    "cal_per_100g": 140.9,
+    "cal_per_g": 1.409,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 6.0,
+    "fat_per_g": 0.06,
+    "protein_per_100g": 20.1,
+    "protein_per_g": 0.201
+  },
+  "tuna": {
+    "cal_per_100g": 130.0,
+    "cal_per_g": 1.3,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 0.6,
+    "fat_per_g": 0.006,
+    "protein_per_100g": 28.999999999999996,
+    "protein_per_g": 0.29
+  },
+  "tuna salad": {
+    "cal_per_100g": 187.0,
+    "cal_per_g": 1.87,
+    "carb_per_100g": 9.2,
+    "carb_per_g": 0.092,
+    "fat_per_100g": 9.2,
+    "fat_per_g": 0.092,
+    "protein_per_100g": 16.2,
+    "protein_per_g": 0.162
+  },
+  "turkey": {
+    "cal_per_100g": 189.0,
+    "cal_per_g": 1.89,
+    "carb_per_100g": 0.1,
+    "carb_per_g": 0.001,
+    "fat_per_100g": 7.000000000000001,
+    "fat_per_g": 0.07,
+    "protein_per_100g": 28.999999999999996,
+    "protein_per_g": 0.29
+  },
+  "turkey bacon": {
+    "cal_per_100g": 379.7,
+    "cal_per_g": 3.797,
+    "carb_per_100g": 3.1,
+    "carb_per_g": 0.031,
+    "fat_per_100g": 28.1,
+    "fat_per_g": 0.281,
+    "protein_per_100g": 29.099999999999998,
+    "protein_per_g": 0.291
+  },
+  "turkey breast": {
+    "cal_per_100g": 189.1,
+    "cal_per_g": 1.891,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 7.1,
+    "fat_per_g": 0.071,
+    "protein_per_100g": 28.799999999999997,
+    "protein_per_g": 0.288
+  },
+  "turnips": {
+    "cal_per_100g": 21.7,
+    "cal_per_g": 0.217,
+    "carb_per_100g": 5.1,
+    "carb_per_g": 0.051,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.7000000000000001,
+    "protein_per_g": 0.007
+  },
+  "turnover": {
+    "cal_per_100g": 178.1,
+    "cal_per_g": 1.781,
+    "carb_per_100g": 25.6,
+    "carb_per_g": 0.256,
+    "fat_per_100g": 8.1,
+    "fat_per_g": 0.081,
+    "protein_per_100g": 1.5,
+    "protein_per_g": 0.015
+  },
+  "veal": {
+    "cal_per_100g": 172.0,
+    "cal_per_g": 1.72,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 7.6,
+    "fat_per_g": 0.076,
+    "protein_per_100g": 24.4,
+    "protein_per_g": 0.244
+  },
+  "vegetable juice": {
+    "cal_per_100g": 22.0,
+    "cal_per_g": 0.22,
+    "carb_per_100g": 3.9,
+    "carb_per_g": 0.039,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 0.8999999999999999,
+    "protein_per_g": 0.009
+  },
+  "vegetable oil": {
+    "cal_per_100g": 886.4000000000001,
+    "cal_per_g": 8.864,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 100.0,
+    "fat_per_g": 1.0,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "veggie burgers": {
+    "cal_per_100g": 177.1,
+    "cal_per_g": 1.771,
+    "carb_per_100g": 14.099999999999998,
+    "carb_per_g": 0.141,
+    "fat_per_100g": 6.1,
+    "fat_per_g": 0.061,
+    "protein_per_100g": 15.9,
+    "protein_per_g": 0.159
+  },
+  "vinaigrette": {
+    "cal_per_100g": 465.5,
+    "cal_per_g": 4.655,
+    "carb_per_100g": 2.6,
+    "carb_per_g": 0.026,
+    "fat_per_100g": 51.800000000000004,
+    "fat_per_g": 0.518,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "vinegar": {
+    "cal_per_100g": 0.0,
+    "cal_per_g": 0.0,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "vodka": {
+    "cal_per_100g": 230.6,
+    "cal_per_g": 2.306,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "wafers": {
+    "cal_per_100g": 433.4,
+    "cal_per_g": 4.334,
+    "carb_per_100g": 72.6,
+    "carb_per_g": 0.726,
+    "fat_per_100g": 14.399999999999999,
+    "fat_per_g": 0.144,
+    "protein_per_100g": 6.800000000000001,
+    "protein_per_g": 0.068
+  },
+  "waffles": {
+    "cal_per_100g": 290.3,
+    "cal_per_g": 2.903,
+    "carb_per_100g": 32.7,
+    "carb_per_g": 0.327,
+    "fat_per_100g": 14.299999999999999,
+    "fat_per_g": 0.143,
+    "protein_per_100g": 7.9,
+    "protein_per_g": 0.079
+  },
+  "walnuts": {
+    "cal_per_100g": 653.3000000000001,
+    "cal_per_g": 6.533,
+    "carb_per_100g": 13.900000000000002,
+    "carb_per_g": 0.139,
+    "fat_per_100g": 64.2,
+    "fat_per_g": 0.642,
+    "protein_per_100g": 15.1,
+    "protein_per_g": 0.151
+  },
+  "water": {
+    "cal_per_100g": 0.0,
+    "cal_per_g": 0.0,
+    "carb_per_100g": 0.0,
+    "carb_per_g": 0.0,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.0,
+    "protein_per_g": 0.0
+  },
+  "water chestnuts": {
+    "cal_per_100g": 30.0,
+    "cal_per_g": 0.3,
+    "carb_per_100g": 6.800000000000001,
+    "carb_per_g": 0.068,
+    "fat_per_100g": 0.1,
+    "fat_per_g": 0.001,
+    "protein_per_100g": 0.8999999999999999,
+    "protein_per_g": 0.009
+  },
+  "watermelon": {
+    "cal_per_100g": 30.0,
+    "cal_per_g": 0.3,
+    "carb_per_100g": 7.6,
+    "carb_per_g": 0.076,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 0.6,
+    "protein_per_g": 0.006
+  },
+  "wheat beer": {
+    "cal_per_100g": 43.0,
+    "cal_per_g": 0.43,
+    "carb_per_100g": 3.5999999999999996,
+    "carb_per_g": 0.036,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.5,
+    "protein_per_g": 0.005
+  },
+  "wheat berry": {
+    "cal_per_100g": 91.0,
+    "cal_per_g": 0.91,
+    "carb_per_100g": 19.1,
+    "carb_per_g": 0.191,
+    "fat_per_100g": 0.5,
+    "fat_per_g": 0.005,
+    "protein_per_100g": 4.2,
+    "protein_per_g": 0.042
+  },
+  "wheat bread": {
+    "cal_per_100g": 246.8,
+    "cal_per_g": 2.468,
+    "carb_per_100g": 42.1,
+    "carb_per_g": 0.421,
+    "fat_per_100g": 3.3000000000000003,
+    "fat_per_g": 0.033,
+    "protein_per_100g": 13.0,
+    "protein_per_g": 0.13
+  },
+  "white beans": {
+    "cal_per_100g": 139.0,
+    "cal_per_g": 1.39,
+    "carb_per_100g": 25.1,
+    "carb_per_g": 0.251,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 9.700000000000001,
+    "protein_per_g": 0.097
+  },
+  "white bread": {
+    "cal_per_100g": 264.9,
+    "cal_per_g": 2.649,
+    "carb_per_100g": 48.9,
+    "carb_per_g": 0.489,
+    "fat_per_100g": 3.2,
+    "fat_per_g": 0.032,
+    "protein_per_100g": 9.1,
+    "protein_per_g": 0.091
+  },
+  "white rice": {
+    "cal_per_100g": 130.0,
+    "cal_per_g": 1.3,
+    "carb_per_100g": 28.000000000000004,
+    "carb_per_g": 0.28,
+    "fat_per_100g": 0.3,
+    "fat_per_g": 0.003,
+    "protein_per_100g": 2.7,
+    "protein_per_g": 0.027
+  },
+  "white wine": {
+    "cal_per_100g": 82.0,
+    "cal_per_g": 0.82,
+    "carb_per_100g": 2.6,
+    "carb_per_g": 0.026,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.1,
+    "protein_per_g": 0.001
+  },
+  "whole wheat bread": {
+    "cal_per_100g": 246.8,
+    "cal_per_g": 2.468,
+    "carb_per_100g": 42.1,
+    "carb_per_g": 0.421,
+    "fat_per_100g": 3.3000000000000003,
+    "fat_per_g": 0.033,
+    "protein_per_100g": 13.0,
+    "protein_per_g": 0.13
+  },
+  "wild rice": {
+    "cal_per_100g": 119.0,
+    "cal_per_g": 1.19,
+    "carb_per_100g": 25.0,
+    "carb_per_g": 0.25,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 5.0,
+    "protein_per_g": 0.05
+  },
+  "wine": {
+    "cal_per_100g": 85.0,
+    "cal_per_g": 0.85,
+    "carb_per_100g": 2.6,
+    "carb_per_g": 0.026,
+    "fat_per_100g": 0.0,
+    "fat_per_g": 0.0,
+    "protein_per_100g": 0.1,
+    "protein_per_g": 0.001
+  },
+  "wraps": {
+    "cal_per_100g": 325.0,
+    "cal_per_g": 3.25,
+    "carb_per_100g": 56.00000000000001,
+    "carb_per_g": 0.56,
+    "fat_per_100g": 7.1,
+    "fat_per_g": 0.071,
+    "protein_per_100g": 8.7,
+    "protein_per_g": 0.087
+  },
+  "yam": {
+    "cal_per_100g": 124.10000000000001,
+    "cal_per_g": 1.241,
+    "carb_per_100g": 29.4,
+    "carb_per_g": 0.294,
+    "fat_per_100g": 0.2,
+    "fat_per_g": 0.002,
+    "protein_per_100g": 1.6,
+    "protein_per_g": 0.016
+  },
+  "yogurt": {
+    "cal_per_100g": 58.9,
+    "cal_per_g": 0.589,
+    "carb_per_100g": 3.5999999999999996,
+    "carb_per_g": 0.036,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 10.0,
+    "protein_per_g": 0.1
+  },
+  "zucchini": {
+    "cal_per_100g": 15.0,
+    "cal_per_g": 0.15,
+    "carb_per_100g": 2.7,
+    "carb_per_g": 0.027,
+    "fat_per_100g": 0.4,
+    "fat_per_g": 0.004,
+    "protein_per_100g": 1.0999999999999999,
+    "protein_per_g": 0.011
+  }
+}

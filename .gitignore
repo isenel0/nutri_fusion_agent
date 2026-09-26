@@ -34,7 +34,10 @@ htmlcov/
 .DS_Store
 
 # Large local datasets and generated outputs
-nutrition5k/
+nutrition5k/*
+!nutrition5k/metadata/
+nutrition5k/metadata/*
+!nutrition5k/metadata/nutrition_db.json
 artifacts/
 data/
 outputs/
@@ -63,3 +66,6 @@ mlruns/
 *_overlay.png
 test_*.jpg
 test_*.png
+
+# Hugging Face download metadata (download_models.py)
+.cache/
