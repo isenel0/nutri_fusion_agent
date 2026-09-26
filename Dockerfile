@@ -1,9 +1,8 @@
 # Nutri Fusion Agent - FastAPI backend (CPU image)
+# Prebuilt (linux/arm64): docker pull irfansenel/nutri-fusion-agent:latest
 #
 # Build:  docker build -t nutri-fusion-agent .
-# Run:    docker run --rm -p 8000:8000 \
-#           -v "$(pwd)/../evaluation_dataset/barcode_nutrition_cache.json:/app/data/barcode_nutrition_cache.json:ro" \
-#           nutri-fusion-agent
+# Run:    docker run --rm -p 8000:8000 nutri-fusion-agent
 #
 # Ollama is expected on the host (ollama serve). If it is unreachable the
 # system falls back to deterministic fusion rules.

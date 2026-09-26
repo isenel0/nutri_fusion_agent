@@ -43,7 +43,13 @@ python src/vision_gui.py   # vision-only GUI
 
 ### Docker
 
-Run `python download_models.py` first; the image bundles the weights.
+A prebuilt image with all model weights is on Docker Hub: [`irfansenel/nutri-fusion-agent`](https://hub.docker.com/r/irfansenel/nutri-fusion-agent). No clone or model download needed:
+
+```bash
+docker run --rm -p 8000:8000 irfansenel/nutri-fusion-agent:latest
+```
+
+The published image is built for `linux/arm64` (Apple Silicon, ARM servers). On Intel/AMD machines, build it yourself instead. Run `python download_models.py` first, since the image bundles the weights:
 
 ```bash
 docker build -t nutri-fusion-agent .
@@ -102,7 +108,7 @@ scripts/evaluate_dataset.py              Evaluation over the test set
 download_models.py                       Fetches model weights
 ```
 
-Model weights are hosted at [huggingface.co/kingkuntairfan/nutri-fusion](https://huggingface.co/kingkuntairfan/nutri-fusion).
+Model weights are hosted at [huggingface.co/kingkuntairfan/nutri-fusion](https://huggingface.co/kingkuntairfan/nutri-fusion). The Docker image is at [hub.docker.com/r/irfansenel/nutri-fusion-agent](https://hub.docker.com/r/irfansenel/nutri-fusion-agent).
 
 ## Diagrams
 
